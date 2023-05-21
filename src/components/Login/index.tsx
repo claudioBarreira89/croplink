@@ -26,7 +26,6 @@ export default function Login() {
   }, [replace]);
 
   useEffect(() => {
-    console.log({ authState });
     if (authState.user) handleRedirect();
   }, [authState, handleRedirect]);
 

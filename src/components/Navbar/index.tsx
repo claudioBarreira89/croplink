@@ -23,8 +23,7 @@ const Navbar = () => {
             </Heading>
           </Flex>
 
-          <Box display="flex" width="auto" alignItems="center" gap={"2"}>
-            <ConnectWalletButton />
+          <Box display="flex" width="auto" alignItems="center">
             {state?.user && <SignInButton />}
           </Box>
         </Flex>
