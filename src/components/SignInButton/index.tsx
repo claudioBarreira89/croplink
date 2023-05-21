@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useAccount, useNetwork, useSignMessage } from "wagmi";
 import { SiweMessage } from "siwe";
-import { Button } from "@chakra-ui/react";
+import { Button, Spinner, useToast } from "@chakra-ui/react";
 import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
 
 function SignInButton({
@@ -15,6 +15,7 @@ function SignInButton({
   const { address, isConnected } = useAccount();
   const { chain } = useNetwork();
   const { signMessageAsync } = useSignMessage();
+  const toast = useToast();
 
   const [state, setState] = React.useState<{
     loading?: boolean;
@@ -71,6 +72,13 @@ function SignInButton({
       setState((x) => ({ ...x, loading: false }));
       dispatch({ type: "LOGIN", payload: address });
       if (onSuccess) onSuccess({ address });
+
+      toast({
+        title: "Login successful",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
     } catch (error) {
       setState((x) => ({ ...x, loading: false, nonce: undefined }));
       if (onError) onError({ error: error as Error });
@@ -112,10 +120,11 @@ function SignInButton({
       _disabled={{
         bg: "gray.500",
       }}
-      disabled={!state.nonce || state.loading || !isConnected}
+      isDisabled={!state.nonce || state.loading || !isConnected}
       onClick={signIn}
+      isLoading={state.loading}
     >
-      Sign-In {!isConnected && " (Connect wallet)"}
+      Sign-In {!isConnected && " (Connect wallet first)"}
     </Button>
   );
 }

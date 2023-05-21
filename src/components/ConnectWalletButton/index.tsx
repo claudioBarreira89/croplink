@@ -14,17 +14,15 @@ const ConnectWalletButton: FC = () => {
 
   const connectWallet = () => {
     connect();
-    localStorage.setItem("walletConnected", "true");
   };
 
   const disconnectWallet = () => {
     disconnect();
-    localStorage.removeItem("walletConnected");
   };
 
   useEffect(() => {
     const connectWalletOnPageLoad = () => {
-      if (localStorage?.getItem("walletConnected") === "true" && !isConnected) {
+      if (localStorage?.getItem("wagmi.connected") === "true" && !isConnected) {
         connect();
       }
     };
@@ -61,6 +59,8 @@ const ConnectWalletButton: FC = () => {
       bg={"green.400"}
       _hover={{ bg: "green.500" }}
       onClick={() => connectWallet()}
+      isDisabled={isLoading}
+      isLoading={isLoading}
     >
       <Image
         mr="2"
