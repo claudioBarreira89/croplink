@@ -1,6 +1,6 @@
 const ironOptions = {
   cookieName: "siwe",
-  password: "complex_password_at_least_32_characters_long",
+  password: process.env.IRON_SESSION_PW,
   cookieOptions: {
     secure: false,
   },
