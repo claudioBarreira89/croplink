@@ -4,6 +4,7 @@ import { Box, Container } from "@chakra-ui/react";
 import { useEffect } from "react";
 import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
 import { useRouter } from "next/router";
+import Sidebar from "../Sidebar";
 
 export default function Home() {
   const { state } = useAuthContext() as AuthContextProps;
@@ -26,7 +27,7 @@ export default function Home() {
       <Box>
         <Navbar />
         <Container maxW={"7xl"} mt="10">
-          Home page
+          <Sidebar>My listings</Sidebar>
         </Container>
       </Box>
     </>
