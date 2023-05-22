@@ -1,7 +1,8 @@
+import { Spinner } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 
-const Index = () => {
+const LoginPage = () => {
   const Login = dynamic(
     () => import("../../components/Login").then((res) => res.default),
     {
@@ -10,10 +11,10 @@ const Index = () => {
   );
 
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={<Spinner />}>
       <Login />
     </Suspense>
   );
 };
 
-export default Index;
+export default LoginPage;

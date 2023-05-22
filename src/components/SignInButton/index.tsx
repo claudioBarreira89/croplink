@@ -83,8 +83,11 @@ const SignInButton = ({}: any) => {
       });
       if (!verifyRes.ok) throw new Error("Error verifying message");
 
+      const res = await fetch("/api/me");
+      const json = await res.json();
+
       setState((x) => ({ ...x, loading: false }));
-      dispatch({ type: "LOGIN", payload: address });
+      dispatch({ type: "LOGIN", payload: address, role: json.role });
 
       toast({
         title: "Login successful",
@@ -110,7 +113,7 @@ const SignInButton = ({}: any) => {
 
   const { connect, isLoading } = useConnect({
     connector: new MetaMaskConnector(),
-    onSuccess: signIn,
+    ...(!authState?.user && { onSuccess: signIn }),
   });
 
   const connectWallet = useCallback(() => {
@@ -130,10 +133,18 @@ const SignInButton = ({}: any) => {
     fetchNonce();
   }, [fetchNonce]);
 
-  if (isConnected) {
+  useEffect(() => {
+    const connectWalletOnPageLoad = () => {
+      if (localStorage?.getItem("wagmi.connected") === "true" && !isConnected) {
+        connect();
+      }
+    };
+    connectWalletOnPageLoad();
+  }, [connect, isConnected]);
+
+  if (authState?.user) {
     return (
       <Button
-        ml={4}
         rounded={"full"}
         size={"lg"}
         fontWeight={"normal"}

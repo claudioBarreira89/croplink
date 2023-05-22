@@ -3,9 +3,9 @@ import { Spinner } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 
-const Index = () => {
-  const Main = dynamic(
-    () => import("../components/Main").then((res) => res.default),
+const RegisterPage = () => {
+  const Register = dynamic(
+    () => import("../../components/Register").then((res) => res.default),
     {
       ssr: false,
     }
@@ -14,10 +14,10 @@ const Index = () => {
   return (
     <Suspense fallback={<Spinner />}>
       <ProtectedRoute>
-        <Main />
+        <Register />
       </ProtectedRoute>
     </Suspense>
   );
 };
 
-export default Index;
+export default RegisterPage;

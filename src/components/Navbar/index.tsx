@@ -1,6 +1,5 @@
 import * as React from "react";
-import { Box, Container, Flex, Heading } from "@chakra-ui/react";
-import ConnectWalletButton from "../ConnectWalletButton";
+import { Box, Container, Flex, Heading, Stack } from "@chakra-ui/react";
 import SignInButton from "../SignInButton";
 import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
 
@@ -10,14 +9,15 @@ const Navbar = () => {
   return (
     <Box bg="whitesmoke">
       <Container maxW={"7xl"}>
-        <Flex
+        <Stack
           as="nav"
           align="center"
-          justify="space-between"
           wrap="wrap"
           py={3}
+          direction={{ base: "column", sm: "row" }}
+          justify={{ base: "center", sm: "space-between" }}
         >
-          <Flex align="center" mr={5}>
+          <Flex align="center">
             <Heading as="h1" size="lg">
               CROPLINK
             </Heading>
@@ -26,7 +26,7 @@ const Navbar = () => {
           <Box display="flex" width="auto" alignItems="center">
             {state?.user && <SignInButton />}
           </Box>
-        </Flex>
+        </Stack>
       </Container>
     </Box>
   );

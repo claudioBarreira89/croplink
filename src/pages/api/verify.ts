@@ -24,8 +24,9 @@ const createUser = async (address: string, res: NextApiResponse) => {
   if (userExists.length > 0) {
     return res.status(200).json({
       title: "VERIFIED",
-      message: `Wallet address ${truncateAddress(address)} is logged in`,
+      message: `Account ${truncateAddress(address)} logged in`,
       userId: address,
+      user: userExists,
     });
   }
 
@@ -42,10 +43,7 @@ const createUser = async (address: string, res: NextApiResponse) => {
   return res.status(201).json({
     ok: true,
     title: "CREATED",
-    message: `Your account with wallet address ${truncateAddress(
-      address
-    )} has been created`,
-    userId: result._id,
+    message: `Account ${truncateAddress(address)} created`,
   });
 };
 
@@ -56,17 +54,15 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       try {
         const { message, signature } = req.body;
         const siweMessage = new SiweMessage(message);
-        const fields = await siweMessage.validate(signature);
+        const fields = await siweMessage.verify({ signature });
 
-        if (fields.nonce !== req.session.nonce)
+        if (fields.data.nonce !== req.session.nonce)
           return res.status(422).json({ message: "Invalid nonce." });
 
-        req.session.siwe = fields;
+        req.session.siwe = fields.data;
         await req.session.save();
 
-        await createUser(fields.address, res);
-
-        res.json({ ok: true });
+        await createUser(fields.data.address, res);
       } catch (_error) {
         console.log(_error);
         res.json({ ok: false });

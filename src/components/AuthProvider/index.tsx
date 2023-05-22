@@ -1,28 +1,36 @@
 import AuthContext from "@/context/useUserContext";
-import { useEffect, useReducer } from "react";
+import { useRouter } from "next/router";
+import { useEffect, useReducer, useRef, useState } from "react";
 
 const initialState = {
   user: undefined,
 };
 
 const AuthProvider = ({ children }: any) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [state, dispatch] = useReducer(Reducer, initialState);
+  const { push } = useRouter();
+
+  const handler = async () => {
+    setIsLoading(true);
+
+    try {
+      const res = await fetch("/api/me");
+      const json = await res.json();
+      dispatch({ type: "LOGIN", payload: json.address, role: json.role });
+
+      setIsLoading(false);
+    } catch (_error) {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const handler = async () => {
-      try {
-        const res = await fetch("/api/me");
-        const json = await res.json();
-        dispatch({ type: "LOGIN", payload: json.address });
-      } catch (_error) {}
-    };
     handler();
-    // window.addEventListener("focus", handler);
-    // return () => window.removeEventListener("focus", handler);
   }, []);
 
   return (
-    <AuthContext.Provider value={{ state, dispatch }}>
+    <AuthContext.Provider value={{ state: { ...state, isLoading }, dispatch }}>
       {children}
     </AuthContext.Provider>
   );
@@ -34,6 +42,7 @@ const Reducer = (state: any, action: any) => {
       return {
         ...state,
         user: action.payload,
+        role: action.role,
       };
     case "LOGOUT":
       return initialState;

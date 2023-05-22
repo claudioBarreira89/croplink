@@ -1,8 +1,20 @@
 import Head from "next/head";
 import Navbar from "@/components/Navbar";
 import { Box, Container } from "@chakra-ui/react";
+import { useEffect } from "react";
+import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const { state } = useAuthContext() as AuthContextProps;
+  const { push } = useRouter();
+
+  useEffect(() => {
+    if (!state.isLoading && !state?.role) {
+      push("/register");
+    }
+  }, [push, state, state.user]);
+
   return (
     <>
       <Head>
