@@ -13,7 +13,7 @@ import { useCallback, useEffect, useState } from "react";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { truncateAddress } from "@/utils";
 
-const SignInButton = ({}: any) => {
+const SignInButton = () => {
   const { state: authState, dispatch } = useAuthContext() as AuthContextProps;
   const { address, isConnected } = useAccount();
   const { data: ensName } = useEnsName({ address });

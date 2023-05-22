@@ -18,7 +18,7 @@ import { useCallback, useEffect } from "react";
 import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
 
 export default function Login() {
-  const { state: authState } = useAuthContext() as AuthContextProps;
+  const { state } = useAuthContext() as AuthContextProps;
   const router = useRouter();
 
   const handleRedirect = useCallback(() => {
@@ -26,8 +26,9 @@ export default function Login() {
   }, [router]);
 
   useEffect(() => {
-    if (authState.user) handleRedirect();
-  }, [authState, handleRedirect]);
+    console.log(state);
+    if (state.user && !state.isLoading) handleRedirect();
+  }, [state, handleRedirect]);
 
   return (
     <Box position={"relative"} bg="green.100" h="100vh">

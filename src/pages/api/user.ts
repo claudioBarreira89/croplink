@@ -7,7 +7,13 @@ import { truncateAddress } from "@/utils";
 const updateUser = async (body: any, res: NextApiResponse) => {
   const { id, role } = body;
 
-  const result = client.patch(id).set({ role });
+  const userDoc = {
+    _type: "users",
+    _id: id,
+    role,
+  };
+
+  await client.createOrReplace(userDoc);
 
   return res.status(201).json({
     ok: true,
