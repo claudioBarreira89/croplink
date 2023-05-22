@@ -1,6 +1,7 @@
 import AuthProvider from "@/components/AuthProvider";
 import "@/styles/globals.css";
 import { ChakraProvider } from "@chakra-ui/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
 import { goerli } from "viem/chains";
 import { WagmiConfig, configureChains, createConfig } from "wagmi";
@@ -19,13 +20,17 @@ const config = createConfig({
   webSocketPublicClient,
 });
 
+const queryClient = new QueryClient();
+
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig config={config}>
       <ChakraProvider>
-        <AuthProvider>
-          <Component {...pageProps} />
-        </AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <AuthProvider>
+            <Component {...pageProps} />
+          </AuthProvider>
+        </QueryClientProvider>
       </ChakraProvider>
     </WagmiConfig>
   );

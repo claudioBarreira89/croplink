@@ -7,13 +7,13 @@ import { useRouter } from "next/router";
 
 export default function Home() {
   const { state } = useAuthContext() as AuthContextProps;
-  const { push } = useRouter();
+  const router = useRouter();
 
   useEffect(() => {
-    if (!state.isLoading && !state?.role) {
-      push("/register");
+    if (state.user && !state.isLoading && !state?.role) {
+      router.push("/register");
     }
-  }, [push, state, state.user]);
+  }, [router, state]);
 
   return (
     <>

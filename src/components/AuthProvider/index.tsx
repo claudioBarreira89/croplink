@@ -1,6 +1,6 @@
+import { getAuth } from "@/api/getAuth";
 import AuthContext from "@/context/useUserContext";
-import { useRouter } from "next/router";
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 
 const initialState = {
   user: undefined,
@@ -9,14 +9,12 @@ const initialState = {
 const AuthProvider = ({ children }: any) => {
   const [isLoading, setIsLoading] = useState(true);
   const [state, dispatch] = useReducer(Reducer, initialState);
-  const { push } = useRouter();
 
   const handler = async () => {
     setIsLoading(true);
 
     try {
-      const res = await fetch("/api/me");
-      const json = await res.json();
+      const json = await getAuth();
       dispatch({ type: "LOGIN", payload: json.address, role: json.role });
 
       setIsLoading(false);
