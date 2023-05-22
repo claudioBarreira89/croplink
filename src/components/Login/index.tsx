@@ -19,11 +19,11 @@ import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
 
 export default function Login() {
   const { state: authState } = useAuthContext() as AuthContextProps;
-  const { replace } = useRouter();
+  const router = useRouter();
 
   const handleRedirect = useCallback(() => {
-    replace("/");
-  }, [replace]);
+    router.push("/");
+  }, [router]);
 
   useEffect(() => {
     if (authState.user) handleRedirect();
