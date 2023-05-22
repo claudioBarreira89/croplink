@@ -42,6 +42,8 @@ const Reducer = (state: any, action: any) => {
         user: action.payload,
         role: action.role,
       };
+    case "UPDATE_ROLE":
+      return { ...state, role: action.payload };
     case "LOGOUT":
       return initialState;
     default:

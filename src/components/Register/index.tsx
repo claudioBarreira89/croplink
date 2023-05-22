@@ -10,6 +10,7 @@ import {
   Button,
   Icon,
   Container,
+  useToast,
 } from "@chakra-ui/react";
 import Navbar from "../Navbar";
 import { FaViadeo, FaShoppingBag } from "react-icons/fa";
@@ -48,7 +49,8 @@ function RoleWrapper({
 }
 
 export default function Register() {
-  const { state: authState } = useAuthContext() as AuthContextProps;
+  const toast = useToast();
+  const { state: authState, dispatch } = useAuthContext() as AuthContextProps;
 
   const [selected, setSelected] = useState<string | undefined>(undefined);
   const [isLoading, setIsLoading] = useState(false);
@@ -66,7 +68,15 @@ export default function Register() {
         body: JSON.stringify({ id: authState.user, role: selected }),
       });
 
+      dispatch({ type: "UPDATE_ROLE", payload: selected });
       setIsLoading(false);
+
+      toast({
+        title: "Role selected",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
 
       push("/");
     } catch (_error) {
