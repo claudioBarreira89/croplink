@@ -40,7 +40,12 @@ const SignInButton = () => {
   }, []);
 
   const signOut = useCallback(async () => {
-    await fetch("/api/logout");
+    await fetch("/api/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     dispatch({ type: "LOGOUT" });
     setState({});
   }, [dispatch]);
