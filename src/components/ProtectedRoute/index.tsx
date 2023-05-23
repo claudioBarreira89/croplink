@@ -2,6 +2,12 @@ import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
 import { Spinner } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
+import {
+  buyerPaths,
+  farmerPaths,
+  privatePaths,
+  publicPaths,
+} from "../../../constants/paths";
 
 function ProtectedRoute({ children }: any) {
   const { state } = useAuthContext() as AuthContextProps;
@@ -10,19 +16,39 @@ function ProtectedRoute({ children }: any) {
 
   const authCheck = useCallback(
     (url: string) => {
-      if (state?.isLoading) return;
+      const { user, role, isLoading } = state || {};
 
-      const publicPaths = ["/login"];
-      const path = url.split("?")[0];
-      if (!state?.user && !publicPaths.includes(path)) {
+      if (isLoading) return;
+
+      const path = url.split("?")[0].split("#")[0];
+      // if (!state?.user && !publicPaths.includes(path)) {
+      //   setAuthorized(false);
+      //   router.push({
+      //     pathname: "/login",
+      //     query: { returnUrl: router.asPath },
+      //   });
+      // } else {
+      //   setAuthorized(true);
+      // }
+      console.log(role, path);
+      if (!user && !publicPaths.includes(path)) {
         setAuthorized(false);
-        router.push({
-          pathname: "/login",
-          query: { returnUrl: router.asPath },
-        });
-      } else {
-        setAuthorized(true);
+        return router.push({ pathname: "/login" });
       }
+      if (user && !role && !privatePaths.includes(path)) {
+        setAuthorized(false);
+        return router.push({ pathname: "/register" });
+      }
+      if (user && role === "farmer" && !farmerPaths.includes(path)) {
+        setAuthorized(false);
+        return router.push({ pathname: "/my-listings" });
+      }
+      if (user && role === "buyer" && !buyerPaths.includes(path)) {
+        setAuthorized(false);
+        return router.push({ pathname: "/listings" });
+      }
+
+      setAuthorized(true);
     },
     [router, state]
   );

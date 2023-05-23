@@ -16,6 +16,8 @@ import Navbar from "../Navbar";
 import { FaViadeo, FaShoppingBag } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
+import { useContractWrite, usePrepareContractWrite } from "wagmi";
+import { abi, contractAddress } from "../../../constants/croplink";
 
 function RoleWrapper({
   isSelected,
@@ -56,9 +58,20 @@ export default function Register() {
   const [isLoading, setIsLoading] = useState(false);
   const { push } = useRouter();
 
+  // const { config: farmerConfig } = usePrepareContractWrite({
+  //   address: contractAddress,
+  //   abi: abi.output.abi,
+  //   functionName: "registerAsFarmer",
+  // });
+  // const { config: buyerConfig } = usePrepareContractWrite({
+  //   address: contractAddress,
+  //   abi: abi.output.abi,
+  //   functionName: "registerAsBuyer",
+  // });
+
+  // const onSuccess = async (role: string) => {
   const onSubmit = async () => {
     setIsLoading(true);
-
     try {
       await fetch("/api/user", {
         method: "PATCH",
@@ -83,6 +96,28 @@ export default function Register() {
       setIsLoading(false);
     }
   };
+
+  // const farmerAction = useContractWrite({
+  //   ...farmerConfig,
+  //   onSuccess: () => onSuccess("farmer"),
+  // });
+  // const buyerAction = useContractWrite({
+  //   ...buyerConfig,
+  //   onSuccess: () => onSuccess("buyer"),
+  // });
+
+  // const onSubmit = () => {
+  //   if (selected === "farmer") {
+  //     if (farmerAction.write) farmerAction.write();
+  //   }
+  //   if (selected === "buyer") {
+  //     if (buyerAction.write) buyerAction.write();
+  //   }
+  // };
+
+  // const buttonLoading =
+  //   farmerAction.isLoading || buyerAction.isLoading || isLoading;
+  const buttonLoading = isLoading;
 
   return (
     <Box>
@@ -145,7 +180,7 @@ export default function Register() {
               w="sm"
               py="6"
               isDisabled={!selected}
-              isLoading={isLoading}
+              isLoading={buttonLoading}
               onClick={onSubmit}
             >
               Submit

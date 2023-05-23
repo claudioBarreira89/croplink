@@ -1,4 +1,6 @@
 import React, { ReactNode } from "react";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import {
   IconButton,
   Box,
@@ -6,7 +8,6 @@ import {
   Flex,
   Icon,
   useColorModeValue,
-  Link,
   Drawer,
   DrawerContent,
   useDisclosure,
@@ -22,6 +23,13 @@ import {
   FiMenu,
 } from "react-icons/fi";
 import { IconType } from "react-icons";
+import {
+  BENEFITS,
+  FIND_BUYER,
+  MY_LISTINGS,
+  PRICE_FEEDS,
+  VERIFY,
+} from "../../../constants/paths";
 
 interface LinkItemProps {
   name: string;
@@ -29,11 +37,11 @@ interface LinkItemProps {
   link?: string;
 }
 const LinkItems: Array<LinkItemProps> = [
-  { name: "My listings", icon: FiHome, link: "/" },
-  { name: "Find buyer", icon: FiTrendingUp },
-  { name: "Price feeds", icon: FiCompass },
-  { name: "Verify", icon: FiStar },
-  { name: "Benefits", icon: FiSettings },
+  { name: "My listings", icon: FiHome, link: MY_LISTINGS },
+  { name: "Find buyer", icon: FiTrendingUp, link: FIND_BUYER },
+  { name: "Price feeds", icon: FiCompass, link: PRICE_FEEDS },
+  { name: "Verify", icon: FiStar, link: VERIFY },
+  { name: "Benefits", icon: FiSettings, link: BENEFITS },
 ];
 
 export default function Sidebar({ children }: { children: ReactNode }) {
@@ -89,9 +97,9 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       >
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
-      {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
-          {link.name}
+      {LinkItems.map((item) => (
+        <NavItem key={item.name} icon={item.icon} link={item.link}>
+          {item.name}
         </NavItem>
       ))}
     </Box>
@@ -101,14 +109,13 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
 interface NavItemProps extends FlexProps {
   icon: IconType;
   children: any;
+  link?: string;
 }
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, children, link = "", ...rest }: NavItemProps) => {
+  const router = useRouter();
+
   return (
-    <Link
-      href="#"
-      style={{ textDecoration: "none" }}
-      _focus={{ boxShadow: "none" }}
-    >
+    <Link href={link}>
       <Flex
         align="center"
         p="4"
@@ -120,6 +127,12 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
           bg: "green.400",
           color: "white",
         }}
+        {...(router.pathname === link
+          ? {
+              bg: "green.400",
+              color: "white",
+            }
+          : {})}
         {...rest}
       >
         {icon && (
