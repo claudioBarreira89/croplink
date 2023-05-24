@@ -1,4 +1,5 @@
-import React, { FC } from "react";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import isEqual from "lodash.isequal";
 import {
   Box,
   Button,
@@ -9,73 +10,46 @@ import {
   Heading,
   useDisclosure,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  FormControl,
-  FormLabel,
-  Input,
-  ModalFooter,
-  Stack,
 } from "@chakra-ui/react";
 import Navbar from "../Navbar";
 import Sidebar from "../Sidebar";
 import { abi, contractAddress } from "../../../constants/croplink";
 import { useAccount, useContractRead } from "wagmi";
+import LoadingPage from "../LoadingPage";
+import ProductForm from "../ProductForm";
 
 type Product = {
-  id: number;
   name: string;
-  category: string;
-  description: string;
-  price: number;
-  quantity: number;
-  imageUrl: string;
+  price: BigInt;
+  quantity: BigInt;
 };
 
 type Props = {
   products: Product[];
 };
 
-const products = [
-  {
-    id: 1,
-    name: "Fresh Apples",
-    price: 20,
-    quantity: 100,
-  },
-  {
-    id: 2,
-    name: "Organic Carrots",
-    price: 15,
-    quantity: 80,
-  },
-  {
-    id: 3,
-    name: "Free-range Eggs",
-    price: 10,
-    quantity: 50,
-  },
-  {
-    id: 4,
-    name: "Fresh Milk",
-    price: 12,
-    quantity: 70,
-  },
-];
-
-const ProductsPage: FC = () => {
+const MyListings: FC = () => {
   const { address } = useAccount();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [products, setProducts] = useState([]);
 
-  // const { data } = useContractRead({
-  //   address: contractAddress,
-  //   abi: abi.output.abi,
-  //   functionName: address && "getProduceList",
-  //   args: [address],
-  // });
+  const { data, isLoading, refetch } = useContractRead({
+    address: contractAddress,
+    abi,
+    functionName: address && "getProduceList",
+    args: [address],
+  }) as any;
+
+  const onSubmit = async () => {
+    const res = await refetch();
+    setProducts(res.data);
+  };
+
+  useEffect(() => {
+    setProducts(data);
+  }, [data]);
+
+  if (isLoading) return <LoadingPage />;
 
   return (
     <Box>
@@ -94,9 +68,9 @@ const ProductsPage: FC = () => {
             </Flex>
 
             <VStack spacing={3} marginBottom={5}>
-              {products.map((product) => (
+              {products?.map((product: Product, i: number) => (
                 <Box
-                  key={product.id}
+                  key={i}
                   borderWidth="1px"
                   borderRadius="lg"
                   padding={3}
@@ -114,7 +88,8 @@ const ProductsPage: FC = () => {
                       {product.name}
                     </Text>
                     <Text fontSize="sm">
-                      {product.price} USD - {product.quantity} in stock
+                      Price: {product.price.toString()} - Stock:{" "}
+                      {product.quantity.toString()}
                     </Text>
                   </Box>
 
@@ -138,39 +113,10 @@ const ProductsPage: FC = () => {
       </Container>
 
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Add a new product</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Stack spacing={3}>
-              <FormControl id="product-name" isRequired>
-                <FormLabel>Product Name</FormLabel>
-                <Input type="text" />
-              </FormControl>
-
-              <FormControl id="product-price" isRequired>
-                <FormLabel>Price</FormLabel>
-                <Input type="number" />
-              </FormControl>
-
-              <FormControl id="product-quantity" isRequired>
-                <FormLabel>Quantity</FormLabel>
-                <Input type="number" />
-              </FormControl>
-            </Stack>
-          </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="teal" mr={3}>
-              Save
-            </Button>
-            <Button onClick={onClose}>Cancel</Button>
-          </ModalFooter>
-        </ModalContent>
+        <ProductForm onClose={onClose} onSubmit={onSubmit} />
       </Modal>
     </Box>
   );
 };
 
-export default ProductsPage;
+export default MyListings;

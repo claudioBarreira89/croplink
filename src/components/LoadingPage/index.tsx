@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Spinner, Text } from "@chakra-ui/react";
+import { Box, Spinner } from "@chakra-ui/react";
 
 const LoadingPage = () => {
   return (
@@ -10,7 +10,7 @@ const LoadingPage = () => {
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
-      position={"fixed"}
+      position="fixed"
       top={0}
     >
       <Spinner size="xl" thickness="4px" color="teal.500" />

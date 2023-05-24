@@ -14,14 +14,9 @@ import {
   BoxProps,
   FlexProps,
 } from "@chakra-ui/react";
-import {
-  FiHome,
-  FiTrendingUp,
-  FiCompass,
-  FiStar,
-  FiSettings,
-  FiMenu,
-} from "react-icons/fi";
+import { FiList, FiCheckCircle, FiMenu, FiDollarSign } from "react-icons/fi";
+import { GiReceiveMoney } from "react-icons/gi";
+import { HiOutlineEmojiHappy } from "react-icons/hi";
 import { IconType } from "react-icons";
 import {
   BENEFITS,
@@ -37,11 +32,11 @@ interface LinkItemProps {
   link?: string;
 }
 const LinkItems: Array<LinkItemProps> = [
-  { name: "My listings", icon: FiHome, link: MY_LISTINGS },
-  { name: "Find buyer", icon: FiTrendingUp, link: FIND_BUYER },
-  { name: "Price feeds", icon: FiCompass, link: PRICE_FEEDS },
-  { name: "Verify", icon: FiStar, link: VERIFY },
-  { name: "Benefits", icon: FiSettings, link: BENEFITS },
+  { name: "My listings", icon: FiList, link: MY_LISTINGS },
+  { name: "Find buyer", icon: GiReceiveMoney, link: FIND_BUYER },
+  { name: "Price feeds", icon: FiDollarSign, link: PRICE_FEEDS },
+  { name: "Verify", icon: FiCheckCircle, link: VERIFY },
+  { name: "Benefits", icon: HiOutlineEmojiHappy, link: BENEFITS },
 ];
 
 export default function Sidebar({ children }: { children: ReactNode }) {

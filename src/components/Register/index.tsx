@@ -58,19 +58,18 @@ export default function Register() {
   const [isLoading, setIsLoading] = useState(false);
   const { push } = useRouter();
 
-  // const { config: farmerConfig } = usePrepareContractWrite({
-  //   address: contractAddress,
-  //   abi: abi.output.abi,
-  //   functionName: "registerAsFarmer",
-  // });
-  // const { config: buyerConfig } = usePrepareContractWrite({
-  //   address: contractAddress,
-  //   abi: abi.output.abi,
-  //   functionName: "registerAsBuyer",
-  // });
+  const { config: farmerConfig } = usePrepareContractWrite({
+    address: contractAddress,
+    abi,
+    functionName: "registerAsFarmer",
+  });
+  const { config: buyerConfig } = usePrepareContractWrite({
+    address: contractAddress,
+    abi,
+    functionName: "registerAsBuyer",
+  });
 
-  // const onSuccess = async (role: string) => {
-  const onSubmit = async () => {
+  const onSuccess = async (role: string) => {
     setIsLoading(true);
     try {
       await fetch("/api/user", {
@@ -97,27 +96,26 @@ export default function Register() {
     }
   };
 
-  // const farmerAction = useContractWrite({
-  //   ...farmerConfig,
-  //   onSuccess: () => onSuccess("farmer"),
-  // });
-  // const buyerAction = useContractWrite({
-  //   ...buyerConfig,
-  //   onSuccess: () => onSuccess("buyer"),
-  // });
+  const farmerAction = useContractWrite({
+    ...farmerConfig,
+    onSuccess: () => onSuccess("farmer"),
+  });
+  const buyerAction = useContractWrite({
+    ...buyerConfig,
+    onSuccess: () => onSuccess("buyer"),
+  });
 
-  // const onSubmit = () => {
-  //   if (selected === "farmer") {
-  //     if (farmerAction.write) farmerAction.write();
-  //   }
-  //   if (selected === "buyer") {
-  //     if (buyerAction.write) buyerAction.write();
-  //   }
-  // };
+  const onSubmit = () => {
+    if (selected === "farmer") {
+      if (farmerAction.write) farmerAction.write();
+    }
+    if (selected === "buyer") {
+      if (buyerAction.write) buyerAction.write();
+    }
+  };
 
-  // const buttonLoading =
-  //   farmerAction.isLoading || buyerAction.isLoading || isLoading;
-  const buttonLoading = isLoading;
+  const buttonLoading =
+    farmerAction.isLoading || buyerAction.isLoading || isLoading;
 
   return (
     <Box>
