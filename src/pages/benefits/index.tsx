@@ -1,5 +1,5 @@
+import LoadingPage from "@/components/LoadingPage";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import { Spinner } from "@chakra-ui/react";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 
@@ -12,7 +12,7 @@ const BenefitsPage = () => {
   );
 
   return (
-    <Suspense fallback={<Spinner />}>
+    <Suspense fallback={<LoadingPage />}>
       <ProtectedRoute>
         <Benefits />
       </ProtectedRoute>

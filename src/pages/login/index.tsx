@@ -1,4 +1,4 @@
-import { Spinner } from "@chakra-ui/react";
+import LoadingPage from "@/components/LoadingPage";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
 
@@ -11,7 +11,7 @@ const LoginPage = () => {
   );
 
   return (
-    <Suspense fallback={<Spinner />}>
+    <Suspense fallback={<LoadingPage />}>
       <Login />
     </Suspense>
   );

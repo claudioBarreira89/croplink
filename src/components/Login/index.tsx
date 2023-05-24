@@ -32,7 +32,6 @@ export default function Login() {
 
   return (
     <Box position={"relative"} bg="green.100" h="100vh">
-      <Navbar />
       <Container maxW={"7xl"}>
         <Stack
           align={"center"}

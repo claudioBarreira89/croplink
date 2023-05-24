@@ -1,5 +1,4 @@
 import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
-import { Spinner } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
 import {
@@ -8,6 +7,7 @@ import {
   privatePaths,
   publicPaths,
 } from "../../../constants/paths";
+import LoadingPage from "../LoadingPage";
 
 function ProtectedRoute({ children }: any) {
   const { state } = useAuthContext() as AuthContextProps;
@@ -71,7 +71,7 @@ function ProtectedRoute({ children }: any) {
     };
   }, [authCheck, router.asPath, router.events]);
 
-  if (state.isLoading) return <Spinner />;
+  if (state.isLoading) return <LoadingPage />;
   return authorized && children;
 }
 

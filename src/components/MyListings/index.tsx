@@ -79,7 +79,6 @@ const ProductsPage: FC = () => {
 
   return (
     <Box>
-      <Navbar />
       <Container maxW={"7xl"} mt="10">
         <Sidebar>
           <Box>

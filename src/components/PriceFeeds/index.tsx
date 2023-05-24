@@ -5,7 +5,6 @@ import Sidebar from "../Sidebar";
 export default function PriceFeeds() {
   return (
     <Box>
-      <Navbar />
       <Container maxW={"7xl"} mt="10">
         <Sidebar>PriceFeeds</Sidebar>
       </Container>

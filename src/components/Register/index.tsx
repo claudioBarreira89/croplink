@@ -121,7 +121,6 @@ export default function Register() {
 
   return (
     <Box>
-      <Navbar />
       <Container maxW={"7xl"}>
         <Box py={12}>
           <VStack spacing={2} textAlign="center">

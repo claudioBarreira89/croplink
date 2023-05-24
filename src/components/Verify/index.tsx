@@ -5,7 +5,6 @@ import Sidebar from "../Sidebar";
 export default function Verify() {
   return (
     <Box>
-      <Navbar />
       <Container maxW={"7xl"} mt="10">
         <Sidebar>Verify</Sidebar>
       </Container>
