@@ -6,6 +6,7 @@ export const FIND_BUYER = "/find-buyer";
 export const PRICE_FEEDS = "/price-feeds";
 export const VERIFY = "/verify";
 export const BENEFITS = "/benefits";
+export const FIND_FARMERS = "/find-farmers";
 
 const publicPaths = [LOGIN];
 
@@ -23,6 +24,8 @@ const farmerPaths = [
   ]),
 ];
 
-const buyerPaths = [...new Set([...publicPaths, ...privatePaths, LISTINGS])];
+const buyerPaths = [
+  ...new Set([...publicPaths, ...privatePaths, LISTINGS, FIND_FARMERS]),
+];
 
 export { publicPaths, privatePaths, farmerPaths, buyerPaths };

@@ -21,23 +21,19 @@ import { IconType } from "react-icons";
 import {
   BENEFITS,
   FIND_BUYER,
+  FIND_FARMERS,
+  LISTINGS,
   MY_LISTINGS,
   PRICE_FEEDS,
   VERIFY,
 } from "../../../constants/paths";
+import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
 
 interface LinkItemProps {
   name: string;
   icon: IconType;
   link?: string;
 }
-const LinkItems: Array<LinkItemProps> = [
-  { name: "My listings", icon: FiList, link: MY_LISTINGS },
-  { name: "Find buyer", icon: GiReceiveMoney, link: FIND_BUYER },
-  { name: "Price feeds", icon: FiDollarSign, link: PRICE_FEEDS },
-  { name: "Verify", icon: FiCheckCircle, link: VERIFY },
-  { name: "Benefits", icon: HiOutlineEmojiHappy, link: BENEFITS },
-];
 
 export default function Sidebar({ children }: { children: ReactNode }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -74,6 +70,27 @@ interface SidebarProps extends BoxProps {
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const { state } = useAuthContext() as AuthContextProps;
+  const { role } = state;
+
+  const linkItems: Array<LinkItemProps> = [
+    ...(role === "farmer"
+      ? [
+          { name: "My listings", icon: FiList, link: MY_LISTINGS },
+          { name: "Find buyer", icon: GiReceiveMoney, link: FIND_BUYER },
+          { name: "Price feeds", icon: FiDollarSign, link: PRICE_FEEDS },
+          { name: "Verify", icon: FiCheckCircle, link: VERIFY },
+          { name: "Benefits", icon: HiOutlineEmojiHappy, link: BENEFITS },
+        ]
+      : []),
+    ...(role === "buyer"
+      ? [
+          { name: "Listings", icon: FiList, link: LISTINGS },
+          { name: "Find farmer", icon: GiReceiveMoney, link: FIND_FARMERS },
+        ]
+      : []),
+  ];
+
   return (
     <Box
       bg={useColorModeValue("white", "gray.900")}
@@ -92,7 +109,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       >
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
-      {LinkItems.map((item) => (
+      {linkItems.map((item) => (
         <NavItem key={item.name} icon={item.icon} link={item.link}>
           {item.name}
         </NavItem>
