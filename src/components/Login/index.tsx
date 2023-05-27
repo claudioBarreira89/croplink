@@ -10,6 +10,7 @@ import {
   Icon,
   Image,
   useColorModeValue,
+  Divider,
 } from "@chakra-ui/react";
 import Navbar from "../Navbar";
 import SignInButton from "../SignInButton";
@@ -26,74 +27,125 @@ export default function Login() {
   }, [router]);
 
   useEffect(() => {
-    console.log(state);
     if (state.user && !state.isLoading) handleRedirect();
   }, [state, handleRedirect]);
 
   return (
-    <Box position={"relative"} bg="green.100" h="100vh">
+    <Box>
+      <Box position={"relative"} bgGradient="linear(to-r, green.100,green.300)">
+        <Container maxW={"7xl"}>
+          <Stack
+            align={"center"}
+            spacing={{ base: 8, md: 20 }}
+            py={{ base: 20, md: 32 }}
+            direction={{ base: "column", md: "row" }}
+          >
+            <Stack flex={1} spacing={{ base: 5, md: 10 }}>
+              <Stack>
+                <Heading
+                  lineHeight={1.1}
+                  fontSize={{ base: "4xl", sm: "5xl", md: "6xl", lg: "8xl" }}
+                  bgGradient="linear(to-r, green.300,blue.500)"
+                  bgClip="text"
+                >
+                  CropLink
+                </Heading>
+                <Heading
+                  fontSize={{ base: "xl", sm: "2xl", md: "3xl", lg: "4xl" }}
+                >
+                  revolutionizes produce sales, empowering farmers with secure
+                  and efficient transactions.
+                </Heading>
+              </Stack>
+              <Stack>
+                <Text color={"gray.500"}>Connect your wallet and sign in:</Text>
+                <SignInButton />
+              </Stack>
+            </Stack>
+            <Flex
+              flex={1}
+              justify={"center"}
+              align={"center"}
+              position={"relative"}
+              w={"full"}
+            >
+              <Blob
+                w={"150%"}
+                h={"150%"}
+                position={"absolute"}
+                top={"-20%"}
+                left={0}
+                zIndex={-1}
+                color={useColorModeValue("green.50", "green.400")}
+              />
+              <Box
+                position={"relative"}
+                rounded={"2xl"}
+                boxShadow={"2xl"}
+                width={"full"}
+                overflow={"hidden"}
+              >
+                <Image
+                  alt={"Hero Image"}
+                  fit={"cover"}
+                  align={"center"}
+                  w={"100%"}
+                  h={"100%"}
+                  src={"/assets/hero.webp"}
+                />
+              </Box>
+            </Flex>
+          </Stack>
+        </Container>
+      </Box>
       <Container maxW={"7xl"}>
         <Stack
           align={"center"}
           spacing={{ base: 8, md: 10 }}
-          py={{ base: 20, md: 28 }}
-          direction={{ base: "column", md: "row" }}
+          py={{ base: 20, md: 40 }}
+          direction={{ base: "column" }}
         >
-          <Stack flex={1} spacing={{ base: 5, md: 10 }}>
-            <Stack>
-              <Heading
-                lineHeight={1.1}
-                fontSize={{ base: "4xl", sm: "5xl", md: "6xl", lg: "8xl" }}
-                bgGradient="linear(to-r, green.300,blue.500)"
-                bgClip="text"
-              >
-                CropLink
-              </Heading>
-              <Heading
-                fontSize={{ base: "xl", sm: "2xl", md: "3xl", lg: "4xl" }}
-              >
-                revolutionizes produce sales, empowering farmers with secure and
-                efficient transactions.
-              </Heading>
-            </Stack>
-            <Stack>
-              <Text color={"gray.500"}>Connect your wallet and sign in:</Text>
-              <SignInButton />
-            </Stack>
-          </Stack>
-          <Flex
-            flex={1}
-            justify={"center"}
-            align={"center"}
-            position={"relative"}
-            w={"full"}
+          <Heading
+            lineHeight={1.1}
+            fontSize={{ base: "2xl", sm: "2xl", md: "3xl", lg: "5xl" }}
+            bgGradient="linear(to-r, green.300,orange.300)"
+            bgClip="text"
+            textAlign="center"
+            maxW={{ base: "lg", sm: "xl", md: "2xl", lg: "4xl" }}
+            m="auto"
           >
-            <Blob
-              w={"150%"}
-              h={"150%"}
-              position={"absolute"}
-              top={"-20%"}
-              left={0}
-              zIndex={-1}
-              color={useColorModeValue("green.50", "green.400")}
+            An AgriTech Dapp with weather-savvy smart contracts for bountiful
+            selling
+          </Heading>
+          <Heading
+            lineHeight={1.1}
+            fontSize={{ base: "xl", sm: "xl", md: "2xl", lg: "3xl" }}
+            textAlign="center"
+            maxW={{ base: "lg", sm: "xl", md: "2xl", lg: "3xl" }}
+            m="auto"
+            pb="20"
+          >
+            Where farmers sow, Chainlink oracle grows, and sellers reap the
+            harvest of decentralized agri-trade
+          </Heading>
+
+          <Box
+            position={"relative"}
+            rounded={"2xl"}
+            boxShadow={"2xl"}
+            width={"full"}
+            overflow={"hidden"}
+            maxW="4xl"
+          >
+            <Image
+              alt={"Hero Image"}
+              fit={"cover"}
+              align={"center"}
+              w={"100%"}
+              h={"100%"}
+              src={"/assets/agriculture.jpg"}
             />
-            <Box
-              position={"relative"}
-              rounded={"2xl"}
-              boxShadow={"2xl"}
-              width={"full"}
-              overflow={"hidden"}
-            >
-              <Image
-                alt={"Hero Image"}
-                fit={"cover"}
-                align={"center"}
-                w={"100%"}
-                h={"100%"}
-                src={"/assets/hero.webp"}
-              />
-            </Box>
-          </Flex>
+          </Box>
         </Stack>
       </Container>
     </Box>
