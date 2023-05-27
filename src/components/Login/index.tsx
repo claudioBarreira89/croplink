@@ -12,10 +12,12 @@ import {
   useColorModeValue,
   Divider,
 } from "@chakra-ui/react";
-import Navbar from "../Navbar";
-import SignInButton from "../SignInButton";
 import { useRouter } from "next/router";
 import { useCallback, useEffect } from "react";
+
+import Navbar from "../Navbar";
+import SignInButton from "../SignInButton";
+
 import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
 
 export default function Login() {

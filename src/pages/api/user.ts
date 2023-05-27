@@ -1,7 +1,9 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { NextApiRequest, NextApiResponse } from "next";
+
 import { ironOptions } from "../../../config/";
 import client from "../../../services/sanity";
+
 import { truncateAddress } from "@/utils";
 
 const updateUser = async (body: any, res: NextApiResponse) => {

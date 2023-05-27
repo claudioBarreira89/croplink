@@ -1,7 +1,8 @@
-import LoadingPage from "@/components/LoadingPage";
-import ProtectedRoute from "@/components/ProtectedRoute";
 import dynamic from "next/dynamic";
 import { Suspense } from "react";
+
+import LoadingPage from "@/components/LoadingPage";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 const BenefitsPage = () => {
   const Benefits = dynamic(

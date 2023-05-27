@@ -1,8 +1,10 @@
 import { withIronSessionApiRoute } from "iron-session/next";
 import { NextApiRequest, NextApiResponse } from "next";
 import { SiweMessage } from "siwe";
+
 import { ironOptions } from "../../../config/";
 import client from "../../../services/sanity";
+
 import { truncateAddress } from "@/utils";
 
 interface NewUser {

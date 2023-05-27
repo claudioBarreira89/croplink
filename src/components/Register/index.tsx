@@ -1,4 +1,3 @@
-import { ReactNode, useState } from "react";
 import {
   Box,
   Stack,
@@ -12,12 +11,15 @@ import {
   Container,
   useToast,
 } from "@chakra-ui/react";
-import Navbar from "../Navbar";
-import { FaViadeo, FaShoppingBag } from "react-icons/fa";
 import { useRouter } from "next/router";
-import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
+import { ReactNode, useState } from "react";
+import { FaViadeo, FaShoppingBag } from "react-icons/fa";
 import { useContractWrite, usePrepareContractWrite } from "wagmi";
+
 import { abi, contractAddress } from "../../../constants/croplink";
+import Navbar from "../Navbar";
+
+import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
 
 function RoleWrapper({
   isSelected,

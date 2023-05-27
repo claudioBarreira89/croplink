@@ -1,6 +1,7 @@
+import { useEffect, useReducer, useState } from "react";
+
 import { getAuth } from "@/api/getAuth";
 import AuthContext from "@/context/useUserContext";
-import { useEffect, useReducer, useState } from "react";
 
 const initialState = {
   user: undefined,

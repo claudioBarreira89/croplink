@@ -1,6 +1,6 @@
-import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
+
 import {
   buyerPaths,
   farmerPaths,
@@ -8,6 +8,8 @@ import {
   publicPaths,
 } from "../../../constants/paths";
 import LoadingPage from "../LoadingPage";
+
+import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
 
 function ProtectedRoute({ children }: any) {
   const { state } = useAuthContext() as AuthContextProps;

@@ -1,6 +1,8 @@
-import * as React from "react";
 import { Box, Container, Flex, Heading, Image, Stack } from "@chakra-ui/react";
+import * as React from "react";
+
 import SignInButton from "../SignInButton";
+
 import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
 
 const Navbar = () => {

@@ -1,3 +1,6 @@
+import { Button, Image, useToast } from "@chakra-ui/react";
+import { useCallback, useEffect, useState } from "react";
+import { SiweMessage } from "siwe";
 import {
   useAccount,
   useConnect,
@@ -6,11 +9,9 @@ import {
   useNetwork,
   useSignMessage,
 } from "wagmi";
-import { SiweMessage } from "siwe";
-import { Button, Image, useToast } from "@chakra-ui/react";
-import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
-import { useCallback, useEffect, useState } from "react";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
+
+import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
 import { truncateAddress } from "@/utils";
 
 const SignInButton = () => {

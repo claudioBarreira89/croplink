@@ -1,13 +1,15 @@
-import AuthProvider from "@/components/AuthProvider";
-import Navbar from "@/components/Navbar";
-import "@/styles/globals.css";
 import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
-import { goerli, sepolia } from "viem/chains";
+import { sepolia } from "viem/chains";
 import { WagmiConfig, configureChains, createConfig } from "wagmi";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { publicProvider } from "wagmi/providers/public";
+
+import "@/styles/globals.css";
+
+import AuthProvider from "@/components/AuthProvider";
+import Navbar from "@/components/Navbar";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [sepolia],

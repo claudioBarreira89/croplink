@@ -1,4 +1,5 @@
 import { Box, Container } from "@chakra-ui/react";
+
 import Sidebar from "../Sidebar";
 
 export default function FindBuyer() {

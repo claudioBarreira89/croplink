@@ -1,5 +1,3 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
-import isEqual from "lodash.isequal";
 import {
   Box,
   Button,
@@ -11,12 +9,15 @@ import {
   useDisclosure,
   Modal,
 } from "@chakra-ui/react";
-import Navbar from "../Navbar";
-import Sidebar from "../Sidebar";
-import { abi, contractAddress } from "../../../constants/croplink";
+import isEqual from "lodash.isequal";
+import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import { useAccount, useContractRead } from "wagmi";
+
+import { abi, contractAddress } from "../../../constants/croplink";
 import LoadingPage from "../LoadingPage";
+import Navbar from "../Navbar";
 import ProductForm from "../ProductForm";
+import Sidebar from "../Sidebar";
 
 type Product = {
   name: string;
