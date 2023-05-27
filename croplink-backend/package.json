@@ -1,0 +1,17 @@
+{
+  "name": "croplink-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon --config nodemon.json src/app.ts"
+  },
+  "dependencies": {
+    "@types/config": "^3.3.0",
+    "@types/express": "^4.17.17",
+    "@types/node": "^20.2.5",
+    "aws-sdk": "^2.1386.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  }
+}
