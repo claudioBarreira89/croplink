@@ -54,7 +54,7 @@ const MyListings: FC = () => {
 
   return (
     <Box>
-      <Container maxW={"7xl"} mt="10">
+      <Container maxW={"7xl"}>
         <Sidebar>
           <Box>
             <Flex

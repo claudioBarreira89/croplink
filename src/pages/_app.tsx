@@ -1,4 +1,4 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
 import { sepolia } from "viem/chains";
@@ -9,7 +9,7 @@ import { publicProvider } from "wagmi/providers/public";
 import "@/styles/globals.css";
 
 import AuthProvider from "@/components/AuthProvider";
-import Navbar from "@/components/Navbar";
+import Layout from "@/components/Layout";
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [sepolia],
@@ -31,8 +31,9 @@ export default function App({ Component, pageProps }: AppProps) {
       <ChakraProvider>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
-            <Navbar />
-            <Component {...pageProps} />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
           </AuthProvider>
         </QueryClientProvider>
       </ChakraProvider>
