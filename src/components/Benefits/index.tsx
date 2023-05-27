@@ -79,7 +79,7 @@ function Benefits() {
         return (
           <>
             <Text>
-              Congratulations! You're verified. Now, you can collect your
+              Congratulations! You are verified. Now, you can collect your
               benefits.
             </Text>
             <Button
