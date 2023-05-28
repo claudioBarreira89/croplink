@@ -1,10 +1,14 @@
 import express from "express";
 const app = express();
 import dotenv from "dotenv";
+import {
+  validateRequestBodyUser,
+  validateProperty,
+} from "./middleware/validation";
 dotenv.config();
 const {
   getUsers,
-  addOrUpdateUser,
+  updateUser,
   getUserById,
   deleteUser,
   setIsRegistered,
@@ -19,6 +23,7 @@ const {
   getClaimTimestamp,
   isFarmer,
   isBuyer,
+  createUser,
   setIsFarmer,
   setIsBuyer,
 } = require("./controllers/dynamo");
@@ -35,9 +40,9 @@ app.get("/", (req, res) => {
   res.send(`API running on port ${process.env.port}`);
 });
 
-app.post("/api/ddb/users", async (req, res) => {
+app.post("/api/ddb/users/", validateProperty("id"), async (req, res) => {
   try {
-    const data = await addOrUpdateUser(req.body);
+    const data = await createUser(req.body.id);
     res.json(data);
   } catch (error) {
     console.error(error);
@@ -45,12 +50,12 @@ app.post("/api/ddb/users", async (req, res) => {
   }
 });
 
-app.put("/api/ddb/users/:id", async (req, res) => {
+app.put("/api/ddb/users/:id", validateRequestBodyUser, async (req, res) => {
   try {
     const user = req.body;
     const id = req.params.id;
     user.id = id;
-    const data = await addOrUpdateUser(user);
+    const data = await updateUser(user);
     res.json(data);
   } catch (error) {
     console.error(error);
@@ -58,65 +63,117 @@ app.put("/api/ddb/users/:id", async (req, res) => {
   }
 });
 
-app.put("/api/ddb/users/:id/setIsRegistered", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const value = req.body.registered;
-    const data = await setIsRegistered(id, value);
-    res.json(data);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ "Error occurred": error });
+app.put(
+  "/api/ddb/users/:id/setIsRegistered",
+  validateProperty("registered"),
+  async (req, res) => {
+    try {
+      const id = req.params.id;
+      const value = req.body.registered;
+      await setIsRegistered(id, value);
+      res.json({ success: true });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ "Error occurred": error });
+    }
   }
-});
+);
 
-app.put("/api/ddb/users/:id/setTreasuryBalance", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const value = req.body.treasuryBalance;
-    const data = await setTreasuryBalance(id, value);
-    res.json(data);
-  } catch (error: any) {
-    console.error(error);
-    res.status(500).json({ "Error occurred": error });
+app.put(
+  "/api/ddb/users/:id/setIsVerified",
+  validateProperty("verified"),
+  async (req, res) => {
+    try {
+      const id = req.params.id;
+      const value = req.body.verified;
+      await setIsVerified(id, value);
+      res.json({ success: true });
+    } catch (error: any) {
+      console.error(error);
+      res.status(500).json({ error: error.message || "An error occurred" });
+    }
   }
-});
+);
 
-app.put("/api/ddb/users/:id/setGovernmentId", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const value = req.body.governemntId;
-    const data = await setGovernmentId(id, value);
-    res.json(data);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ "Error occurred": error });
+app.put(
+  "/api/ddb/users/:id/setGovernmentId",
+  validateProperty("governmentId"),
+  async (req, res) => {
+    try {
+      const id = req.params.id;
+      const value = req.body.governmentId;
+      await setGovernmentId(id, value);
+      res.json({ success: true });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ "Error occurred": error });
+    }
   }
-});
+);
 
-app.put("/api/ddb/users/:id/setIsVerified", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const value = req.body.verified;
-    const data = await setIsVerified(id, value);
-    res.json(data);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ "Error occurred": error });
+app.put(
+  "/api/ddb/users/:id/setClaimTimestamp",
+  validateProperty("claimTimestamp"),
+  async (req, res) => {
+    try {
+      const id = req.params.id;
+      const value = req.body.claimTimestamp;
+      await setClaimTimestamp(id, value);
+      res.json({ success: true });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ "Error occurred": error });
+    }
   }
-});
+);
 
-app.put("/api/ddb/users/:id/setClaimTimestamp", async (req, res) => {
-  try {
-    const id = req.params.id;
-    const value = req.body.claimTimestamp;
-    const data = await setClaimTimestamp(id, value);
-    res.json(data);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ "Error occurred": error });
+app.put(
+  "/api/ddb/users/:id/setTreasuryBalance",
+  validateProperty("treasuryBalance"),
+  async (req, res) => {
+    try {
+      const id = req.params.id;
+      const value = req.body.treasuryBalance;
+      await setTreasuryBalance(id, value);
+      res.json({ success: true });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ "Error occurred": error });
+    }
   }
-});
+);
+
+app.put(
+  "/api/ddb/users/:id/setIsFarmer",
+  validateProperty("farmer"),
+  async (req, res) => {
+    try {
+      const id = req.params.id;
+      const value = req.body.farmer;
+      await setIsFarmer(id, value);
+      res.json({ success: true });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ "Error occurred": error });
+    }
+  }
+);
+
+app.put(
+  "/api/ddb/users/:id/setIsBuyer",
+  validateProperty("buyer"),
+  async (req, res) => {
+    try {
+      const id = req.params.id;
+      const value = req.body.buyer;
+      await setIsBuyer(id, value);
+      res.json({ success: true });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ "Error occurred": error });
+    }
+  }
+);
 
 app.get("/api/ddb/users", async (_, res) => {
   try {

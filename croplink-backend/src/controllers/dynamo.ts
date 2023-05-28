@@ -1,6 +1,7 @@
 import AWS from "aws-sdk";
 import { bool } from "aws-sdk/clients/signer";
 import dotenv from "dotenv";
+import { stringify } from "querystring";
 dotenv.config();
 
 AWS.config.update({
@@ -19,10 +20,28 @@ const getUsers = async () => {
   return await dynamoClient.scan(params).promise();
 };
 
-const addOrUpdateUser = async (user: object) => {
+const updateUser = async (user: object) => {
   const params = {
     TableName: USERS_TABLE_NAME,
     Item: user,
+  };
+  return await dynamoClient.put(params).promise();
+};
+
+const createUser = async (userId: string) => {
+  const newUser = {
+    id: userId,
+    farmer: false,
+    buyer: false,
+    isRegistered: false,
+    isVerified: false,
+    governmentId: "",
+    treasuryBalance: 0,
+    claimTimestamp: 0,
+  };
+  const params = {
+    TableName: USERS_TABLE_NAME,
+    Item: newUser,
   };
   return await dynamoClient.put(params).promise();
 };
@@ -51,8 +70,8 @@ const setIsRegistered = async (id: string, isRegistered: boolean) => {
   const user = await getUserById(id);
   if (user.Item) {
     user.Item.isRegistered = isRegistered;
-    console.log(user.Item.isRegistered);
-    await addOrUpdateUser(user.Item);
+    console.log(user.Item);
+    await updateUser(user.Item);
   }
 };
 
@@ -60,7 +79,7 @@ const setIsVerified = async (id: string, isVerified: boolean) => {
   const user = await getUserById(id);
   if (user.Item) {
     user.Item.isVerified = isVerified;
-    await addOrUpdateUser(user.Item);
+    await updateUser(user.Item);
   }
 };
 
@@ -68,7 +87,7 @@ const setGovernmentId = async (id: string, governmentId: string) => {
   const user = await getUserById(id);
   if (user.Item) {
     user.Item.governmentId = governmentId;
-    await addOrUpdateUser(user.Item);
+    await updateUser(user.Item);
   }
 };
 
@@ -79,7 +98,7 @@ const setTreasuryBalance = async (id: string, treasuryBalance: number) => {
   }
   if (user.Item) {
     user.Item.treasuryBalance = treasuryBalance;
-    await addOrUpdateUser(user.Item);
+    await updateUser(user.Item);
   }
 };
 
@@ -87,7 +106,7 @@ const setClaimTimestamp = async (id: string, claimTimestamp: number) => {
   const user = await getUserById(id);
   if (user.Item) {
     user.Item.claimTimestamp = claimTimestamp;
-    await addOrUpdateUser(user.Item);
+    await updateUser(user.Item);
   }
 };
 
@@ -147,7 +166,7 @@ const setIsFarmer = async (id: string, farmer: boolean) => {
       throw new Error("User is already a buyer. User cannot be both!");
     } else {
       user.Item.farmer = farmer;
-      await addOrUpdateUser(user.Item);
+      await updateUser(user.Item);
     }
   }
 };
@@ -158,7 +177,7 @@ const setIsBuyer = async (id: string, buyer: boolean) => {
       throw new Error("User is already a farmer. User cannot be both!");
     } else {
       user.Item.buyer = buyer;
-      await addOrUpdateUser(user.Item);
+      await updateUser(user.Item);
     }
   }
 };
@@ -175,7 +194,7 @@ const setIsBuyer = async (id: string, buyer: boolean) => {
 
 module.exports = {
   getUsers,
-  addOrUpdateUser,
+  updateUser,
   getUserById,
   deleteUser,
   setIsRegistered,
@@ -192,4 +211,5 @@ module.exports = {
   isBuyer,
   setIsFarmer,
   setIsBuyer,
+  createUser,
 };
