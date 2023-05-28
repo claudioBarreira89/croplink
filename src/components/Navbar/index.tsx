@@ -9,7 +9,7 @@ const Navbar = () => {
   const { state } = useAuthContext() as AuthContextProps;
 
   return (
-    <Box bg="whitesmoke" position={"sticky"} top="0" zIndex={1}>
+    <Box bg="whitesmoke" position={"sticky"} top="0" zIndex={99}>
       <Container maxW={"7xl"}>
         <Stack
           as="nav"

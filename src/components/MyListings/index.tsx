@@ -9,13 +9,11 @@ import {
   useDisclosure,
   Modal,
 } from "@chakra-ui/react";
-import isEqual from "lodash.isequal";
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useAccount, useContractRead } from "wagmi";
 
 import { abi, contractAddress } from "../../../constants/croplink";
 import LoadingPage from "../LoadingPage";
-import Navbar from "../Navbar";
 import ProductForm from "../ProductForm";
 import Sidebar from "../Sidebar";
 
@@ -53,7 +51,7 @@ const MyListings: FC = () => {
   if (isLoading) return <LoadingPage />;
 
   return (
-    <Box>
+    <Box my={10}>
       <Container maxW={"7xl"}>
         <Sidebar>
           <Box>

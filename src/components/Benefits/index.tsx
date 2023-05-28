@@ -1,18 +1,18 @@
 import {
   Box,
-  VStack,
   Heading,
   Text,
   Button,
-  Image,
   Input,
   Container,
   useColorModeValue,
   FormControl,
-  Divider,
+  Card,
+  CardBody,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
+import FileUploader from "../FileUploader";
 import Sidebar from "../Sidebar";
 
 function Benefits() {
@@ -97,29 +97,42 @@ function Benefits() {
   };
 
   return (
-    <Container maxW={"7xl"}>
+    <Container maxW={"7xl"} my={10}>
       <Sidebar>
-        <Heading size="lg">Collect your benefits</Heading>
-        <VStack
-          spacing={6}
-          margin="auto"
-          p={4}
-          backgroundColor={useColorModeValue("white", "gray.700")}
-          borderRadius="md"
-        >
-          <Box p={5} borderWidth={1} borderRadius="md" mt="10">
-            <Text
-              fontSize="md"
-              color={useColorModeValue("gray.600", "gray.300")}
-            >
-              Here, you can collect your farming benefits in crypto. Please
-              follow the steps to verify your account.
-            </Text>
-            <Divider my={5} />
+        <Heading size="lg" mb="5">
+          Collect your benefits
+        </Heading>
 
-            {renderStepContent()}
-          </Box>
-        </VStack>
+        <Card>
+          <CardBody
+            bg={useColorModeValue("gray.50", "gray.900")}
+            textAlign={"center"}
+          >
+            <Box>
+              <Heading size="md" mb="5" textAlign={"center"}>
+                Get verified to benefit from monthly rewards!
+              </Heading>
+
+              <Text flex={1} textAlign={"center"} mb="10">
+                You can benefit from receiving a monthly crypto payment from our
+                treasury. <br />
+                First, we just need proof of you farmer activity
+              </Text>
+            </Box>
+
+            <FileUploader />
+
+            <Button
+              colorScheme="green"
+              mt={10}
+              rounded="full"
+              onClick={() => setVerificationStep(2)}
+              width={300}
+            >
+              Continue
+            </Button>
+          </CardBody>
+        </Card>
       </Sidebar>
     </Container>
   );

@@ -1,4 +1,12 @@
-import { Button, Image, useToast } from "@chakra-ui/react";
+import {
+  Button,
+  Image,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  useToast,
+} from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
 import { SiweMessage } from "siwe";
 import {
@@ -150,22 +158,27 @@ const SignInButton = () => {
 
   if (authState?.user) {
     return (
-      <Button
-        rounded={"full"}
-        size={"lg"}
-        fontWeight={"normal"}
-        px={6}
-        colorScheme={"green"}
-        bg={"green.400"}
-        _hover={{ bg: "green.500" }}
-        onClick={() => disconnectWallet()}
-        isDisabled={buttonLoading}
-        isLoading={buttonLoading}
-      >
-        {ensName
-          ? `${ensName} (${truncateAddress(address)})`
-          : truncateAddress(address)}
-      </Button>
+      <Menu>
+        <MenuButton
+          as={Button}
+          rounded={"full"}
+          size={"lg"}
+          fontWeight={"normal"}
+          px={6}
+          colorScheme={"green"}
+          bg={"green.400"}
+          _hover={{ bg: "green.500" }}
+          isDisabled={buttonLoading}
+          isLoading={buttonLoading}
+        >
+          {ensName
+            ? `${ensName} (${truncateAddress(address)})`
+            : truncateAddress(address)}
+        </MenuButton>
+        <MenuList>
+          <MenuItem onClick={() => disconnectWallet()}>Disconnect</MenuItem>
+        </MenuList>
+      </Menu>
     );
   }
 
