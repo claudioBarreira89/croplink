@@ -74,6 +74,9 @@ const setGovernmentId = async (id: string, governmentId: string) => {
 
 const setTreasuryBalance = async (id: string, treasuryBalance: number) => {
   const user = await getUserById(id);
+  if (!user.Item) {
+    throw new Error("User not found"); // Throw an error if the user does not exist
+  }
   if (user.Item) {
     user.Item.treasuryBalance = treasuryBalance;
     await addOrUpdateUser(user.Item);
@@ -159,13 +162,34 @@ const setIsBuyer = async (id: string, buyer: boolean) => {
     }
   }
 };
-const user = {
-  id: "FNDJKFNKSN",
-  farmer: false,
-  buyer: false,
-  isRegistered: false,
-  isVerified: false,
-  governmentId: "",
-  treasuryBalance: 0,
-  claimTimestamp: 12903013,
+// const user = {
+//   id: "FNDJKFNKSN",
+//   farmer: false,
+//   buyer: false,
+//   isRegistered: false,
+//   isVerified: false,
+//   governmentId: "",
+//   treasuryBalance: 0,
+//   claimTimestamp: 12903013,
+// };
+
+module.exports = {
+  getUsers,
+  addOrUpdateUser,
+  getUserById,
+  deleteUser,
+  setIsRegistered,
+  setIsVerified,
+  setGovernmentId,
+  setTreasuryBalance,
+  setClaimTimestamp,
+  getIsRegistered,
+  getIsVerified,
+  getGovernmentId,
+  getTreasuryBalance,
+  getClaimTimestamp,
+  isFarmer,
+  isBuyer,
+  setIsFarmer,
+  setIsBuyer,
 };
