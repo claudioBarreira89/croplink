@@ -1,5 +1,4 @@
-import { Request, Response, NextFunction } from "express";
-import Joi from "joi";
+const Joi = require("joi");
 
 // Define the validation schema for the request body
 const userSchema = Joi.object({
@@ -13,13 +12,13 @@ const userSchema = Joi.object({
   claimTimestamp: Joi.number().required(),
 });
 
-type PropertySchemaMap = {
-  [key: string]:
-    | Joi.BooleanSchema<boolean>
-    | Joi.NumberSchema<number>
-    | Joi.StringSchema<string>;
-};
-const propertySchemaMap: PropertySchemaMap = {
+// type PropertySchemaMap = {
+//   [key: string]:
+//     | Joi.BooleanSchema<boolean>
+//     | Joi.NumberSchema<number>
+//     | Joi.StringSchema<string>;
+// };
+const propertySchemaMap: any = {
   id: Joi.string().required(),
   farmer: Joi.boolean().required(),
   buyer: Joi.boolean().required(),
@@ -31,11 +30,7 @@ const propertySchemaMap: PropertySchemaMap = {
 };
 
 // Middleware function for validating request body
-export const validateRequestBodyUser = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+exports.validateRequestBodyUser = (req: any, res: any, next: any) => {
   const { error } = userSchema.validate(req.body);
 
   if (error) {
@@ -47,8 +42,8 @@ export const validateRequestBodyUser = (
   next();
 };
 
-export const validateProperty = (property: string) => {
-  return (req: Request, res: Response, next: NextFunction) => {
+exports.validateProperty = (property: string) => {
+  return (req: any, res: any, next: any) => {
     const { error } = propertySchemaMap[property].validate(req.body[property]);
 
     if (error) {

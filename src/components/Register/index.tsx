@@ -1,7 +1,6 @@
 import {
   Box,
   Stack,
-  HStack,
   Heading,
   Text,
   VStack,
@@ -17,7 +16,6 @@ import { FaViadeo, FaShoppingBag } from "react-icons/fa";
 import { useContractWrite, usePrepareContractWrite } from "wagmi";
 
 import { abi, contractAddress } from "../../../constants/croplink";
-import Navbar from "../Navbar";
 
 import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
 
@@ -74,13 +72,20 @@ export default function Register() {
   const onSuccess = async (role: string) => {
     setIsLoading(true);
     try {
-      await fetch("/api/user", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ id: authState.user, role: selected }),
-      });
+      if (selected === "farmer") {
+        await fetch(`/api/ddb/users/${authState.user}/setIsFarmer`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ farmer: true }),
+        });
+      }
+      if (selected === "buyer") {
+        await fetch(`/api/ddb/users/${authState.user}/setIsBuyer`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ buyer: true }),
+        });
+      }
 
       dispatch({ type: "UPDATE_ROLE", payload: selected });
       setIsLoading(false);

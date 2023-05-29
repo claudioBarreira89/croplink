@@ -1,5 +1,7 @@
-import AWS from "aws-sdk";
-import dotenv from "dotenv";
+// @ts-ignore
+const AWS = require("aws-sdk");
+const dotenv = require("dotenv");
+
 dotenv.config();
 
 AWS.config.update({
@@ -190,7 +192,7 @@ const setIsBuyer = async (id: string, buyer: boolean) => {
 //   claimTimestamp: 12903013,
 // };
 
-export {
+module.exports = {
   getUsers,
   updateUser,
   getUserById,

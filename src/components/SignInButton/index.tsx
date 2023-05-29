@@ -7,6 +7,7 @@ import {
   MenuList,
   useToast,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { SiweMessage } from "siwe";
 import {
@@ -88,7 +89,7 @@ const SignInButton = () => {
       });
 
       // Verify signature
-      const verifyRes = await fetch("/api/verify", {
+      const verifyRes = await fetch("/api/ddb/verify", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -97,7 +98,7 @@ const SignInButton = () => {
       });
       if (!verifyRes.ok) throw new Error("Error verifying message");
 
-      const res = await fetch("/api/me");
+      const res = await fetch("/api/ddb/me");
       const json = await res.json();
 
       setState((x) => ({ ...x, loading: false }));
