@@ -5,9 +5,9 @@
   "scripts": {
     "dev": "yarn server",
     "dev:next": "next dev",
-    "server": "nodemon --config nodemon.json server/index.ts",
+    "server": "nodemon --config nodemon.json api/index.ts",
     "build": "next build",
-    "start": "NODE_ENV=production node -r ts-node/register server/index.ts",
+    "start": "NODE_ENV=production node -r ts-node/register api/index.ts",
     "start:next": "next start",
     "lint": "next lint"
   },
