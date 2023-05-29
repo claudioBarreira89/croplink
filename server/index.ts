@@ -29,7 +29,7 @@ import {
 
 const app = express();
 
-dotenv.config({ path: `${__dirname}/.env.local` });
+dotenv.config();
 
 const port = process.env.EXPRESS_PORT;
 
@@ -277,4 +277,3 @@ app.get("/api/ddb/users/:id/isBuyer", async (req, res) => {
     res.status(500).json({ "Error occurred": error });
   }
 });
-console.log("server", process.env.EXPRESS_PORT);

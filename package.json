@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "yarn server & next dev",
+    "dev": "concurrently \"yarn server\" \"next dev\"",
     "server": "nodemon --config nodemon.json server/index.ts",
     "build": "next build",
-    "start": "yarn server & next start",
+    "start": "concurrently \"yarn server\" \"next start\"",
     "lint": "next lint"
   },
   "dependencies": {
@@ -22,6 +22,7 @@
     "@types/react-dom": "18.2.4",
     "aws-sdk": "^2.1386.0",
     "axios": "^1.4.0",
+    "concurrently": "^8.0.1",
     "dotenv": "^16.0.3",
     "eslint": "8.41.0",
     "eslint-config-next": "13.4.3",
