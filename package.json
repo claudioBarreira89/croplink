@@ -8,6 +8,7 @@
     "server": "nodemon --config nodemon.json server/index.ts",
     "build": "next build",
     "start": "NODE_ENV=production node -r ts-node/register server/index.ts",
+    "start:next": "next start",
     "lint": "next lint"
   },
   "dependencies": {

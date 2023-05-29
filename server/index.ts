@@ -48,9 +48,9 @@ const ironOptions = {
   },
 };
 
-server.prepare().then(async () => {
-  const app = express();
+const app = express();
 
+server.prepare().then(async () => {
   app.use(express.json());
 
   app.listen(port, () => {
@@ -66,14 +66,14 @@ server.prepare().then(async () => {
           const user = await getUserById(address);
           const { Item } = user || {};
 
-          return res.send({
+          return res.json({
             address: req.session.siwe?.address,
             role:
               (Item.farmer && "farmer") || (Item.buyer && "buyer") || undefined,
             ...Item,
           });
         }
-        res.send({});
+        res.json({});
       } catch (error) {
         console.error(error);
         res.status(500).json({ "Error occurred": error });
@@ -370,3 +370,5 @@ server.prepare().then(async () => {
     handle(req, res);
   });
 });
+
+module.exports = app;
