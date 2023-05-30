@@ -3,24 +3,110 @@ import {
   Heading,
   Text,
   Button,
-  Input,
   Container,
   useColorModeValue,
-  FormControl,
   Card,
   CardBody,
+  Icon,
+  useToast,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { useState } from "react";
+import { FaEthereum, FaCheckCircle } from "react-icons/fa";
+import { useContractWrite, usePrepareContractWrite } from "wagmi";
 
+import { abi, contractAddress } from "../../../constants/croplink";
 import FileUploader from "../FileUploader";
+import LoadingPage from "../LoadingPage";
 import Sidebar from "../Sidebar";
 
+import { useAuth } from "@/api/getAuth";
+
 function Benefits() {
+  const toast = useToast();
+  const { data = {}, isLoading: isAuthLoading, refetch } = useAuth();
+  const { id, isVerified } = data;
+
   const [verificationStep, setVerificationStep] = useState(1);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
 
+  const [isVerificationLoading, setIsVerificationLoading] = useState(false);
+  const [isClaimingLoading, setIsClaimingLoading] = useState(false);
+
+  const { config } = usePrepareContractWrite({
+    address: contractAddress,
+    abi,
+    functionName: "verifyFarmer",
+  });
+  const { config: claimTreasuryConfig } = usePrepareContractWrite({
+    address: contractAddress,
+    abi,
+    functionName: "claimTreasury",
+  });
+
+  const {
+    write: verifyFarmer,
+    isLoading: isVerifyFarmerLoading,
+    isError: isVerifyFarmerError,
+  } = useContractWrite({ ...config, onSuccess: () => handleVerification() });
+  const {
+    write: claimTreasury,
+    isLoading: isClaimTreasuryLoading,
+    isError: isClaimTreasuryError,
+    error,
+  } = useContractWrite({
+    ...claimTreasuryConfig,
+    onSuccess: () => handleClaimTreasury(),
+  });
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedFile(e.target.files?.item(0)?.name ?? null);
+  };
+
+  const handleVerification = async () => {
+    setIsVerificationLoading(true);
+
+    try {
+      await axios.put(`/api/ddb/users/${id}/setIsVerified`, {
+        verified: true,
+      });
+      await refetch();
+
+      toast({
+        title: "Verified successfully",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+
+      setVerificationStep(2);
+    } catch (error) {
+      console.error(error);
+    }
+
+    setIsVerificationLoading(false);
+  };
+
+  const handleClaimTreasury = async () => {
+    setIsClaimingLoading(true);
+
+    try {
+      await axios.put(`/api/ddb/users/${id}/setClaimTimestamp`, {
+        claimTimestamp: Date.now(),
+      });
+      await refetch();
+
+      toast({
+        title: "Treasury claimed successfully",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+
+    setIsVerificationLoading(false);
   };
 
   const renderStepContent = () => {
@@ -28,86 +114,6 @@ function Benefits() {
       case 1:
         return (
           <>
-            <Text>
-              To verify your identity, please upload a proof of your farm (a
-              document, image, etc.).
-            </Text>
-            <FormControl mt={4}>
-              <Input
-                type="file"
-                id="file-upload"
-                accept="image/*,.pdf"
-                onChange={handleFileChange}
-                display="none"
-              />
-              <Button
-                as="label"
-                htmlFor="file-upload"
-                colorScheme="green"
-                width="full"
-              >
-                {selectedFile || "Choose a File"}
-              </Button>
-            </FormControl>
-            <Button
-              colorScheme="green"
-              mt={4}
-              onClick={() => setVerificationStep(2)}
-            >
-              Upload Document
-            </Button>
-          </>
-        );
-      case 2:
-        return (
-          <>
-            <Text>
-              Thank you! Your document is being verified. This process may take
-              a few minutes.
-            </Text>
-            {/* Simulating blockchain verification */}
-            <Button
-              colorScheme="green"
-              mt={4}
-              onClick={() => setVerificationStep(3)}
-            >
-              Next
-            </Button>
-          </>
-        );
-      case 3:
-        return (
-          <>
-            <Text>
-              Congratulations! You are verified. Now, you can collect your
-              benefits.
-            </Text>
-            <Button
-              colorScheme="green"
-              mt={4}
-              onClick={() => alert("Benefits collected!")}
-            >
-              Collect Benefits
-            </Button>
-          </>
-        );
-      default:
-        return null;
-    }
-  };
-
-  return (
-    <Container maxW={"7xl"} my={10}>
-      <Sidebar>
-        <Heading size="lg" mb="5">
-          Collect your benefits
-        </Heading>
-
-        <Card>
-          <CardBody
-            bg={useColorModeValue("gray.50", "gray.900")}
-            textAlign={"center"}
-          >
             <Box>
               <Heading size="md" mb="5" textAlign={"center"}>
                 Get verified to benefit from monthly rewards!
@@ -126,11 +132,101 @@ function Benefits() {
               colorScheme="green"
               mt={10}
               rounded="full"
-              onClick={() => setVerificationStep(2)}
+              isLoading={isVerifyFarmerLoading || isVerificationLoading}
+              onClick={verifyFarmer}
               width={300}
             >
               Continue
             </Button>
+          </>
+        );
+      case 2:
+        return (
+          <>
+            <Box>
+              <Heading size="md" mb="5" textAlign={"center"}>
+                You are now verified!
+              </Heading>
+
+              <Text flex={1} textAlign={"center"} mb="10">
+                You can now start collecting the benefits from our treasury,
+                <br />
+                {`don't`} forget to come back every month
+              </Text>
+
+              <Heading
+                size="4xl"
+                mb="10"
+                textAlign={"center"}
+                color={"green.500"}
+              >
+                <Icon as={FaCheckCircle} />
+              </Heading>
+            </Box>
+
+            <Button
+              colorScheme="green"
+              rounded="full"
+              onClick={() => setVerificationStep(0)}
+              width={300}
+              isLoading={isVerificationLoading}
+            >
+              Continue
+            </Button>
+          </>
+        );
+      default:
+        return null;
+    }
+  };
+
+  const cardBg = useColorModeValue("gray.50", "gray.900");
+
+  if (isAuthLoading) return <LoadingPage />;
+
+  return (
+    <Container maxW={"7xl"} my={10}>
+      <Sidebar>
+        <Heading size="lg" mb="5">
+          Collect your benefits
+        </Heading>
+
+        <Card>
+          <CardBody bg={cardBg} textAlign={"center"}>
+            {isVerified && verificationStep !== 2 ? (
+              <>
+                <Box>
+                  <Heading size="md" mb="5" textAlign={"center"}>
+                    Benefit ready to be collected!
+                  </Heading>
+
+                  <Text flex={1} textAlign={"center"} mb="10">
+                    Click the button to claim your monthly benefit
+                  </Text>
+
+                  <Heading
+                    size="4xl"
+                    mb="10"
+                    textAlign={"center"}
+                    color={"yellow.400"}
+                  >
+                    <Icon as={FaEthereum} />
+                  </Heading>
+                </Box>
+
+                <Button
+                  colorScheme="green"
+                  rounded="full"
+                  onClick={claimTreasury}
+                  width={300}
+                  isLoading={isClaimTreasuryLoading || isClaimingLoading}
+                >
+                  Claim your benefit
+                </Button>
+              </>
+            ) : (
+              renderStepContent()
+            )}
           </CardBody>
         </Card>
       </Sidebar>

@@ -17,7 +17,7 @@ function FileUploader() {
         title: "File Selected",
         description: `${file.name} is ready for upload.`,
         status: "success",
-        duration: 5000,
+        duration: 2000,
         isClosable: true,
       });
     }
