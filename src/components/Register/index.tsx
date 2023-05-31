@@ -11,9 +11,13 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { ReactNode, useState } from "react";
+import { ReactNode, useCallback, useEffect, useState } from "react";
 import { FaViadeo, FaShoppingBag } from "react-icons/fa";
-import { useContractWrite, usePrepareContractWrite } from "wagmi";
+import {
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
 
 import { abi, contractAddress } from "../../../constants/croplink";
 
@@ -69,7 +73,7 @@ export default function Register() {
     functionName: "registerAsBuyer",
   });
 
-  const onSuccess = async (role: string) => {
+  const onSuccess = useCallback(async () => {
     setIsLoading(true);
     try {
       if (selected === "farmer") {
@@ -101,15 +105,13 @@ export default function Register() {
     } catch (_error) {
       setIsLoading(false);
     }
-  };
+  }, [authState.user, dispatch, push, selected, toast]);
 
-  const farmerAction = useContractWrite({
-    ...farmerConfig,
-    onSuccess: () => onSuccess("farmer"),
-  });
-  const buyerAction = useContractWrite({
-    ...buyerConfig,
-    onSuccess: () => onSuccess("buyer"),
+  const farmerAction = useContractWrite(farmerConfig);
+  const buyerAction = useContractWrite(buyerConfig);
+
+  const { isLoading: waitForLoading, isSuccess } = useWaitForTransaction({
+    hash: farmerAction?.data?.hash || buyerAction?.data?.hash,
   });
 
   const onSubmit = () => {
@@ -121,8 +123,17 @@ export default function Register() {
     }
   };
 
+  useEffect(() => {
+    if (isSuccess) {
+      onSuccess();
+    }
+  }, [isSuccess, onSuccess]);
+
   const buttonLoading =
-    farmerAction.isLoading || buyerAction.isLoading || isLoading;
+    farmerAction.isLoading ||
+    buyerAction.isLoading ||
+    waitForLoading ||
+    isLoading;
 
   return (
     <Box>

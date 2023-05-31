@@ -13,33 +13,35 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { FC, useCallback, useEffect, useState } from "react";
-import { useContractWrite, usePrepareContractWrite } from "wagmi";
+import {
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
 
 import { abi, contractAddress } from "../../../constants/croplink";
 
-const ProductForm: FC<{
-  setHash: (hash?: `0x${string}`) => void;
+const EditProductForm: FC<{
+  details: { index: number; name: string; price: number; quantity: number };
+  refetch: () => void;
   onClose: () => void;
-}> = ({ setHash, onClose }) => {
-  const [name, setName] = useState<string>("");
-  const [price, setPrice] = useState<number>(0);
-  const [quantity, setQuantity] = useState<number>(0);
+}> = ({ details, refetch, onClose }) => {
+  const [name, setName] = useState<string>(details.name);
+  const [price, setPrice] = useState<number>(details.price);
+  const [quantity, setQuantity] = useState<number>(details.quantity);
+  const toast = useToast();
 
   const { config } = usePrepareContractWrite({
     address: contractAddress,
     abi,
-    functionName: "addProduce",
-    args: [name, price, quantity],
+    functionName: "editProduce",
+    args: [details.index, name, quantity, price],
   });
 
-  const { data, write, isLoading } = useContractWrite({
-    ...config,
-    onSuccess: () => {
-      onClose();
-      setName("");
-      setPrice(0);
-      setQuantity(0);
-    },
+  const { data, write, isLoading } = useContractWrite(config);
+
+  const { isLoading: isEditLoading, isSuccess } = useWaitForTransaction({
+    hash: data?.hash,
   });
 
   const onSubmitProduct = useCallback(() => {
@@ -48,26 +50,41 @@ const ProductForm: FC<{
   }, [name, price, quantity, write]);
 
   useEffect(() => {
-    setHash(data?.hash);
-  }, [data?.hash, setHash]);
+    if (isSuccess) {
+      refetch();
+      onClose();
+
+      toast({
+        title: "Product updated",
+        status: "success",
+        duration: 2000,
+        isClosable: true,
+      });
+    }
+  }, [isSuccess, onClose, refetch, toast]);
 
   return (
     <>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Add a new product</ModalHeader>
+        <ModalHeader>Edit product</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Stack spacing={3}>
             <FormControl id="product-name" isRequired>
               <FormLabel>Product Name</FormLabel>
-              <Input type="text" onChange={(e) => setName(e.target.value)} />
+              <Input
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
             </FormControl>
 
             <FormControl id="product-price" isRequired>
               <FormLabel>Price</FormLabel>
               <Input
                 type="number"
+                value={price.toString()}
                 onChange={(e) => setPrice(parseInt(e.target.value))}
               />
             </FormControl>
@@ -76,6 +93,7 @@ const ProductForm: FC<{
               <FormLabel>Quantity</FormLabel>
               <Input
                 type="number"
+                value={quantity.toString()}
                 onChange={(e) => setQuantity(parseInt(e.target.value))}
               />
             </FormControl>
@@ -87,7 +105,7 @@ const ProductForm: FC<{
             colorScheme="teal"
             mr={3}
             onClick={onSubmitProduct}
-            isLoading={isLoading}
+            isLoading={isLoading || isEditLoading}
           >
             Save
           </Button>
@@ -98,4 +116,4 @@ const ProductForm: FC<{
   );
 };
 
-export default ProductForm;
+export default EditProductForm;

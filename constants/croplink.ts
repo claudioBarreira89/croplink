@@ -1,4 +1,4 @@
-export const contractAddress = "0x61C6E74d8D5B9F3CbBDBf88Bc43debc2f6DD9cD0";
+export const contractAddress = "0x19F373D6E84309BB3F3a201b3fc835870832ad36";
 
 export const abi = [
   {
@@ -70,6 +70,47 @@ export const abi = [
   {
     inputs: [],
     name: "claimTreasury",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_index",
+        type: "uint256",
+      },
+    ],
+    name: "deleteProduce",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "_index",
+        type: "uint256",
+      },
+      {
+        internalType: "string",
+        name: "_name",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "_quantity",
+        type: "uint256",
+      },
+      {
+        internalType: "uint256",
+        name: "_price",
+        type: "uint256",
+      },
+    ],
+    name: "editProduce",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
