@@ -20,6 +20,28 @@ const getUsers = async () => {
   return await dynamoClient.scan(params).promise();
 };
 
+const getFarmers = async () => {
+  const params = {
+    TableName: USERS_TABLE_NAME,
+    FilterExpression: "farmer = :val",
+    ExpressionAttributeValues: {
+      ":val": true,
+    },
+  };
+  return await dynamoClient.scan(params).promise();
+};
+
+const getBuyers = async () => {
+  const params = {
+    TableName: USERS_TABLE_NAME,
+    FilterExpression: "buyer = :val",
+    ExpressionAttributeValues: {
+      ":val": true,
+    },
+  };
+  return await dynamoClient.scan(params).promise();
+};
+
 const updateUser = async (user: object) => {
   const params = {
     TableName: USERS_TABLE_NAME,
@@ -212,4 +234,6 @@ module.exports = {
   setIsFarmer,
   setIsBuyer,
   createUser,
+  getBuyers,
+  getFarmers,
 };

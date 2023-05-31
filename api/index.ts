@@ -25,6 +25,8 @@ const {
   createUser,
   setIsFarmer,
   setIsBuyer,
+  getBuyers,
+  getFarmers,
 } = require("./controllers/dynamo");
 const {
   validateRequestBodyUser,
@@ -127,7 +129,7 @@ app.post(
   async (req: any, res: any) => {
     try {
       const data = await createUser(req.body.id);
-      res.json(data);
+      res.json({ success: true });
     } catch (error) {
       console.error(error);
       res.status(500).json({ "Error occurred": error });
@@ -267,6 +269,28 @@ app.put(
 app.get("/api/ddb/users", async (_: any, res: any) => {
   try {
     const data = await getUsers();
+    console.log(data);
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ "Error occurred": error });
+  }
+});
+
+app.get("/api/ddb/users/farmers", async (_: any, res: any) => {
+  try {
+    const data = await getFarmers();
+    console.log(data);
+    res.json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ "Error occurred": error });
+  }
+});
+
+app.get("/api/ddb/users/buyers", async (_: any, res: any) => {
+  try {
+    const data = await getBuyers();
     console.log(data);
     res.json(data);
   } catch (error) {
