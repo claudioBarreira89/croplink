@@ -1,8 +1,8 @@
 // @ts-ignore
 const AWS = require("aws-sdk");
-const dotenv = require("dotenv");
+const dotenvDynamo = require("dotenv");
 
-dotenv.config();
+dotenvDynamo.config();
 
 AWS.config.update({
   region: process.env.AWS_DEFAULT_REGION,
@@ -92,7 +92,6 @@ const setIsRegistered = async (id: string, isRegistered: boolean) => {
   const user = await getUserById(id);
   if (user.Item) {
     user.Item.isRegistered = isRegistered;
-    console.log(user.Item);
     await updateUser(user.Item);
   }
 };
