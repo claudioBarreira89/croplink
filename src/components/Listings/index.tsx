@@ -32,7 +32,7 @@ const Listings: FC = () => {
   } = useContractRead({
     address: contractAddress,
     abi,
-    functionName: "produceList",
+    functionName: "getAllProduceList",
   }) as any;
 
   if (isListLoading) return <LoadingPage />;
@@ -67,7 +67,7 @@ const Listings: FC = () => {
                     <Th>{product.name}</Th>
                     <Th>{product.price.toString()}</Th>
                     <Th>{product.quantity.toString()}</Th>
-                    <Th></Th>
+                    <Th>Buy</Th>
                   </Tr>
                 ))}
               </Tbody>
