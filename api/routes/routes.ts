@@ -1,10 +1,11 @@
 const expressRoutes = require("express");
+const { SiweMessage } = require("siwe");
+
+const ddb = require("../controllers/dynamo");
 const {
   validateRequestBodyUser,
   validateProperty,
 } = require("../middleware/validation");
-
-const ddb = require("../controllers/dynamo");
 
 const ironOptions = {
   cookieName: "siwe",

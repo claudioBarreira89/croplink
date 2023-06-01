@@ -158,7 +158,7 @@ const MyListings: FC = () => {
         <EditProductForm
           details={{
             index: selectedItem,
-            ...data[selectedItem || 0],
+            ...(data?.length && data[selectedItem || 0]),
           }}
           onClose={onEditClose}
           refetch={refetch}

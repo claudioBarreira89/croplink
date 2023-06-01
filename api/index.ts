@@ -1,8 +1,8 @@
 const dotenv = require("dotenv");
 const express = require("express");
-const ddbRoutes = require("./routes/routes");
 const next = require("next");
-const { SiweMessage } = require("siwe");
+
+const ddbRoutes = require("./routes/routes");
 
 const dev = process.env.NODE_ENV !== "production";
 
