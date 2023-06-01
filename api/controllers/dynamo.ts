@@ -1,8 +1,7 @@
-// @ts-ignore
 const AWS = require("aws-sdk");
-const dotenv = require("dotenv");
+const dotenvDynamo = require("dotenv");
 
-dotenv.config();
+dotenvDynamo.config();
 
 AWS.config.update({
   region: process.env.AWS_DEFAULT_REGION,
@@ -16,6 +15,28 @@ const USERS_TABLE_NAME = "croplink-users";
 const getUsers = async () => {
   const params = {
     TableName: USERS_TABLE_NAME,
+  };
+  return await dynamoClient.scan(params).promise();
+};
+
+const getFarmers = async () => {
+  const params = {
+    TableName: USERS_TABLE_NAME,
+    FilterExpression: "farmer = :val",
+    ExpressionAttributeValues: {
+      ":val": true,
+    },
+  };
+  return await dynamoClient.scan(params).promise();
+};
+
+const getBuyers = async () => {
+  const params = {
+    TableName: USERS_TABLE_NAME,
+    FilterExpression: "buyer = :val",
+    ExpressionAttributeValues: {
+      ":val": true,
+    },
   };
   return await dynamoClient.scan(params).promise();
 };
@@ -70,7 +91,6 @@ const setIsRegistered = async (id: string, isRegistered: boolean) => {
   const user = await getUserById(id);
   if (user.Item) {
     user.Item.isRegistered = isRegistered;
-    console.log(user.Item);
     await updateUser(user.Item);
   }
 };
@@ -192,7 +212,7 @@ const setIsBuyer = async (id: string, buyer: boolean) => {
 //   claimTimestamp: 12903013,
 // };
 
-module.exports = {
+const db = {
   getUsers,
   updateUser,
   getUserById,
@@ -212,4 +232,8 @@ module.exports = {
   setIsFarmer,
   setIsBuyer,
   createUser,
+  getBuyers,
+  getFarmers,
 };
+
+module.exports = db;
