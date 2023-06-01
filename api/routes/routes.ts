@@ -4,29 +4,7 @@ const {
   validateProperty,
 } = require("../middleware/validation");
 
-const {
-  getUsers,
-  updateUser,
-  getUserById,
-  deleteUser,
-  setIsRegistered,
-  setIsVerified,
-  setGovernmentId,
-  setTreasuryBalance,
-  setClaimTimestamp,
-  getIsRegistered,
-  getIsVerified,
-  getGovernmentId,
-  getTreasuryBalance,
-  getClaimTimestamp,
-  isFarmer,
-  isBuyer,
-  createUser,
-  setIsFarmer,
-  setIsBuyer,
-  getBuyers,
-  getFarmers,
-} = require("../controllers/dynamo");
+const ddb = require("../controllers/dynamo");
 
 const ironOptions = {
   cookieName: "siwe",
@@ -45,7 +23,7 @@ router.get(
     try {
       if (req.session.siwe?.address) {
         const { address } = req.session.siwe;
-        const user = await getUserById(address);
+        const user = await ddb.getUserById(address);
         const { Item } = user || {};
 
         return res.json({
@@ -79,7 +57,7 @@ router.post(
 
       const { address } = fields.data;
 
-      const user = await getUserById(address);
+      const user = await ddb.getUserById(address);
 
       if (user.Item) {
         return res.status(200).json({
@@ -90,7 +68,7 @@ router.post(
         });
       }
 
-      await createUser(fields.data.address, res);
+      await ddb.createUser(fields.data.address, res);
 
       return res.status(201).json({
         ok: true,
@@ -106,7 +84,7 @@ router.post(
 
 router.post("/users/", validateProperty("id"), async (req: any, res: any) => {
   try {
-    const data = await createUser(req.body.id);
+    const data = await ddb.createUser(req.body.id);
     res.json({ success: true });
   } catch (error) {
     console.error(error);
@@ -122,7 +100,7 @@ router.put(
       const user = req.body;
       const id = req.params.id;
       user.id = id;
-      const data = await updateUser(user);
+      const data = await ddb.updateUser(user);
       res.json(data);
     } catch (error) {
       console.error(error);
@@ -138,7 +116,7 @@ router.put(
     try {
       const id = req.params.id;
       const value = req.body.registered;
-      await setIsRegistered(id, value);
+      await ddb.setIsRegistered(id, value);
       res.json({ success: true });
     } catch (error) {
       console.error(error);
@@ -154,7 +132,7 @@ router.put(
     try {
       const id = req.params.id;
       const value = req.body.verified;
-      await setIsVerified(id, value);
+      await ddb.setIsVerified(id, value);
       res.json({ success: true });
     } catch (error: any) {
       console.error(error);
@@ -170,7 +148,7 @@ router.put(
     try {
       const id = req.params.id;
       const value = req.body.governmentId;
-      await setGovernmentId(id, value);
+      await ddb.setGovernmentId(id, value);
       res.json({ success: true });
     } catch (error) {
       console.error(error);
@@ -186,7 +164,7 @@ router.put(
     try {
       const id = req.params.id;
       const value = req.body.claimTimestamp;
-      await setClaimTimestamp(id, value);
+      await ddb.setClaimTimestamp(id, value);
       res.json({ success: true });
     } catch (error) {
       console.error(error);
@@ -202,7 +180,7 @@ router.put(
     try {
       const id = req.params.id;
       const value = req.body.treasuryBalance;
-      await setTreasuryBalance(id, value);
+      await ddb.setTreasuryBalance(id, value);
       res.json({ success: true });
     } catch (error) {
       console.error(error);
@@ -218,7 +196,7 @@ router.put(
     try {
       const id = req.params.id;
       const value = req.body.farmer;
-      await setIsFarmer(id, value);
+      await ddb.setIsFarmer(id, value);
       res.json({ success: true });
     } catch (error) {
       console.error(error);
@@ -234,7 +212,7 @@ router.put(
     try {
       const id = req.params.id;
       const value = req.body.buyer;
-      await setIsBuyer(id, value);
+      await ddb.setIsBuyer(id, value);
       res.json({ success: true });
     } catch (error) {
       console.error(error);
@@ -245,7 +223,7 @@ router.put(
 
 router.get("/users", async (_: any, res: any) => {
   try {
-    const data = await getUsers();
+    const data = await ddb.getUsers();
     console.log(data);
     res.json(data);
   } catch (error) {
@@ -256,7 +234,7 @@ router.get("/users", async (_: any, res: any) => {
 
 router.get("/users/farmers", async (_: any, res: any) => {
   try {
-    const data = await getFarmers();
+    const data = await ddb.getFarmers();
     console.log(data);
     res.json(data);
   } catch (error) {
@@ -267,7 +245,7 @@ router.get("/users/farmers", async (_: any, res: any) => {
 
 router.get("/users/buyers", async (_: any, res: any) => {
   try {
-    const data = await getBuyers();
+    const data = await ddb.getBuyers();
     console.log(data);
     res.json(data);
   } catch (error) {
@@ -278,7 +256,7 @@ router.get("/users/buyers", async (_: any, res: any) => {
 
 router.delete("/users/:id", async (req: any, res: any) => {
   try {
-    const data = await deleteUser(req.params.id);
+    const data = await ddb.deleteUser(req.params.id);
     res.json(data);
   } catch (error) {
     console.error(error);
@@ -288,7 +266,7 @@ router.delete("/users/:id", async (req: any, res: any) => {
 
 router.get("/users/:id", async (req: any, res: any) => {
   try {
-    const data = await getUserById(req.params.id);
+    const data = await ddb.getUserById(req.params.id);
     res.json(data);
   } catch (error) {
     console.error(error);
@@ -298,7 +276,7 @@ router.get("/users/:id", async (req: any, res: any) => {
 
 router.get("/users/:id/isRegistered", async (req: any, res: any) => {
   try {
-    const data = await getIsRegistered(req.params.id);
+    const data = await ddb.getIsRegistered(req.params.id);
     res.json(data);
   } catch (error) {
     console.error(error);
@@ -308,7 +286,7 @@ router.get("/users/:id/isRegistered", async (req: any, res: any) => {
 
 router.get("/users/:id/isVerified", async (req: any, res: any) => {
   try {
-    const data = await getIsVerified(req.params.id);
+    const data = await ddb.getIsVerified(req.params.id);
     res.json(data);
   } catch (error) {
     console.error(error);
@@ -318,7 +296,7 @@ router.get("/users/:id/isVerified", async (req: any, res: any) => {
 
 router.get("/users/:id/governmentId", async (req: any, res: any) => {
   try {
-    const data = await getGovernmentId(req.params.id);
+    const data = await ddb.getGovernmentId(req.params.id);
     res.json(data);
   } catch (error) {
     console.error(error);
@@ -328,7 +306,7 @@ router.get("/users/:id/governmentId", async (req: any, res: any) => {
 
 router.get("/users/:id/treasuryBalance", async (req: any, res: any) => {
   try {
-    const data = await getTreasuryBalance(req.params.id);
+    const data = await ddb.getTreasuryBalance(req.params.id);
     res.json(data);
   } catch (error) {
     console.error(error);
@@ -338,7 +316,7 @@ router.get("/users/:id/treasuryBalance", async (req: any, res: any) => {
 
 router.get("/users/:id/claimTimestamp", async (req: any, res: any) => {
   try {
-    const data = await getClaimTimestamp(req.params.id);
+    const data = await ddb.getClaimTimestamp(req.params.id);
     res.json(data);
   } catch (error) {
     console.error(error);
@@ -348,7 +326,7 @@ router.get("/users/:id/claimTimestamp", async (req: any, res: any) => {
 
 router.get("/users/:id/isFarmer", async (req: any, res: any) => {
   try {
-    const data = await isFarmer(req.params.id);
+    const data = await ddb.isFarmer(req.params.id);
     res.json(data);
   } catch (error) {
     console.error(error);
@@ -358,7 +336,7 @@ router.get("/users/:id/isFarmer", async (req: any, res: any) => {
 
 router.get("/users/:id/isBuyer", async (req: any, res: any) => {
   try {
-    const data = await isBuyer(req.params.id);
+    const data = await ddb.isBuyer(req.params.id);
     res.json(data);
   } catch (error) {
     console.error(error);

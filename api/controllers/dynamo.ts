@@ -1,4 +1,3 @@
-// @ts-ignore
 const AWS = require("aws-sdk");
 const dotenvDynamo = require("dotenv");
 
@@ -213,7 +212,7 @@ const setIsBuyer = async (id: string, buyer: boolean) => {
 //   claimTimestamp: 12903013,
 // };
 
-module.exports = {
+const db = {
   getUsers,
   updateUser,
   getUserById,
@@ -236,3 +235,5 @@ module.exports = {
   getBuyers,
   getFarmers,
 };
+
+module.exports = db;
