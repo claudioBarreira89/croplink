@@ -1,6 +1,11 @@
-export const contractAddress = "0xBCaE71918E49830235143C66fd1aAB6795a841f6";
+export const contractAddress = "0x9E56E1b3B941b2F0D1E128be0891905feb505227";
 
 export const abi = [
+  {
+    inputs: [],
+    stateMutability: "nonpayable",
+    type: "constructor",
+  },
   {
     inputs: [
       {
@@ -22,6 +27,63 @@ export const abi = [
     name: "addProduce",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    name: "buyerAddresses",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "buyerVerifications",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "buyers",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -75,68 +137,17 @@ export const abi = [
   {
     inputs: [
       {
-        internalType: "address",
-        name: "_farmer",
-        type: "address",
-      },
-      {
         internalType: "uint256",
-        name: "_index",
+        name: "",
         type: "uint256",
       },
     ],
-    name: "purchaseProduce",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "registerAsBuyer",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "registerAsFarmer",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    stateMutability: "nonpayable",
-    type: "constructor",
-  },
-  {
-    inputs: [],
-    name: "verifyBuyer",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
-    name: "verifyFarmer",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
+    name: "farmerAddresses",
+    outputs: [
       {
         internalType: "address",
         name: "",
         type: "address",
-      },
-    ],
-    name: "buyers",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
       },
     ],
     stateMutability: "view",
@@ -150,7 +161,7 @@ export const abi = [
         type: "address",
       },
     ],
-    name: "buyerVerifications",
+    name: "farmerVerifications",
     outputs: [
       {
         internalType: "bool",
@@ -170,25 +181,6 @@ export const abi = [
       },
     ],
     name: "farmers",
-    outputs: [
-      {
-        internalType: "bool",
-        name: "",
-        type: "bool",
-      },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "",
-        type: "address",
-      },
-    ],
-    name: "farmerVerifications",
     outputs: [
       {
         internalType: "bool",
@@ -227,6 +219,57 @@ export const abi = [
           },
         ],
         internalType: "struct CropLink.Produce[]",
+        name: "",
+        type: "tuple[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getBuyers",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getFarmers",
+    outputs: [
+      {
+        internalType: "address[]",
+        name: "",
+        type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getMarketPrices",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "buyer",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "price",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct CropLink.MarketPrice[]",
         name: "",
         type: "tuple[]",
       },
@@ -282,6 +325,49 @@ export const abi = [
         name: "",
         type: "address",
       },
+    ],
+    name: "marketPriceVerified",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "marketPrices",
+    outputs: [
+      {
+        internalType: "address",
+        name: "buyer",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "price",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
       {
         internalType: "uint256",
         name: "",
@@ -317,20 +403,46 @@ export const abi = [
   {
     inputs: [
       {
+        internalType: "address",
+        name: "_farmer",
+        type: "address",
+      },
+      {
         internalType: "uint256",
-        name: "",
+        name: "_index",
         type: "uint256",
       },
     ],
-    name: "produceListKeys",
-    outputs: [
+    name: "purchaseProduce",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "registerAsBuyer",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "registerAsFarmer",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
       {
-        internalType: "address",
-        name: "",
-        type: "address",
+        internalType: "uint256",
+        name: "_price",
+        type: "uint256",
       },
     ],
-    stateMutability: "view",
+    name: "setMarketPrice",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -357,6 +469,20 @@ export const abi = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "verifyBuyer",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "verifyFarmer",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
 ];
