@@ -32,7 +32,7 @@ const Listings: FC = () => {
   } = useContractRead({
     address: contractAddress,
     abi,
-    functionName: "produceList",
+    functionName: "getAllProduceList",
   }) as any;
 
   if (isListLoading) return <LoadingPage />;

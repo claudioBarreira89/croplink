@@ -19,6 +19,9 @@ contract CropLink {
         uint256 price;
     }
 
+    address[] public farmerAddresses;
+    address[] public buyerAddresses;
+
     mapping(address => bool) public farmers;
     mapping(address => bool) public buyers;
     mapping(address => bool) public farmerVerifications;
@@ -33,11 +36,17 @@ contract CropLink {
     }
 
     function registerAsFarmer() public {
+        require(!farmers[msg.sender], "Already registered as farmer");
+
         farmers[msg.sender] = true;
+        farmerAddresses.push(msg.sender);
     }
 
     function registerAsBuyer() public {
+        require(!buyers[msg.sender], "Already registered as buyer");
+
         buyers[msg.sender] = true;
+        buyerAddresses.push(msg.sender);
     }
 
     function verifyFarmer() public {
@@ -76,6 +85,32 @@ contract CropLink {
     ) public {
         require(farmers[msg.sender], "Only registered farmers can add produce");
         produceList[msg.sender].push(Produce(_name, _quantity, _price, false));
+    }
+
+    function getFarmers() public view returns (address[] memory) {
+        return farmerAddresses;
+    }
+
+    function getBuyers() public view returns (address[] memory) {
+        return buyerAddresses;
+    }
+
+    function getAllProduceList() public view returns (Produce[] memory) {
+        uint totalProduces = 0;
+        for (uint i = 0; i < farmerAddresses.length; i++) {
+            totalProduces += produceList[farmerAddresses[i]].length;
+        }
+
+        Produce[] memory allProduces = new Produce[](totalProduces);
+        uint count = 0;
+        for (uint i = 0; i < farmerAddresses.length; i++) {
+            for (uint j = 0; j < produceList[farmerAddresses[i]].length; j++) {
+                allProduces[count] = produceList[farmerAddresses[i]][j];
+                count++;
+            }
+        }
+
+        return allProduces;
     }
 
     function getProduceList(

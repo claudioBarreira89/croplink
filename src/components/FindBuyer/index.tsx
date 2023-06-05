@@ -35,32 +35,27 @@ import { truncateAddress } from "@/utils";
 type Buyer = {
   id: string;
   price: number;
-  produceType: string;
   address: string;
 };
 
 const buyers: Buyer[] = [
   {
     id: "1",
-    produceType: "Apples",
     price: 2.5, // Price per kg
     address: "0x3C44CdDdB6a900fa2b585dd299e03d12FA4293BC",
   },
   {
     id: "2",
-    produceType: "Oranges",
     price: 3.0, // Price per kg
     address: "0x2B5634C42055806a59e9107ED44D43c426E58258",
   },
   {
     id: "3",
-    produceType: "Bananas",
     price: 1.5, // Price per kg
     address: "0x1F573D6FB3F13d689FF844B4cE37794d79a7FF1C",
   },
   {
     id: "4",
-    produceType: "Potatoes",
     price: 1.0, // Price per kg
     address: "0x6810e776880C02933D47DB1b9fc05908e5386b96",
   },
@@ -193,7 +188,6 @@ const BuyerListing = ({
         <Text fontSize="md" fontWeight="bold">
           {truncateAddress(buyer.address)}
         </Text>
-        <Text fontSize="sm">Produce Type: {buyer.produceType}</Text>
         <Text
           fontSize="lg"
           fontWeight="bold"
