@@ -120,6 +120,20 @@ contract CropLink {
         return produceList[_farmer];
     }
 
+    function getMarketPrices() public view returns (MarketPrice[] memory) {
+        MarketPrice[] memory allPrices = new MarketPrice[](
+            buyerAddresses.length
+        );
+
+        for (uint i = 0; i < buyerAddresses.length; i++) {
+            if (marketPrices[buyerAddresses[i]].price > 0) {
+                allPrices[i] = marketPrices[buyerAddresses[i]];
+            }
+        }
+
+        return allPrices;
+    }
+
     function purchaseProduce(address _farmer, uint256 _index) public payable {
         require(
             buyers[msg.sender],

@@ -13,7 +13,7 @@ import {
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { ReactNode } from "react";
-import { FiList, FiMenu, FiDollarSign } from "react-icons/fi";
+import { FiList, FiMenu, FiDollarSign, FiTrendingUp } from "react-icons/fi";
 import { GiReceiveMoney } from "react-icons/gi";
 import { HiOutlineEmojiHappy } from "react-icons/hi";
 
@@ -22,6 +22,7 @@ import {
   FIND_BUYER,
   FIND_FARMERS,
   LISTINGS,
+  MARKET_PRICES,
   MY_LISTINGS,
   PRICE_FEEDS,
 } from "../../../constants/paths";
@@ -82,6 +83,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       ? [
           { name: "Listings", icon: FiList, link: LISTINGS },
           { name: "Find farmer", icon: GiReceiveMoney, link: FIND_FARMERS },
+          { name: "Market prices", icon: FiTrendingUp, link: MARKET_PRICES },
         ]
       : []),
   ];

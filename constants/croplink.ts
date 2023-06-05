@@ -1,4 +1,4 @@
-export const contractAddress = "0xCFb5A93935E3A9118E19496be9692b8c662e77f6";
+export const contractAddress = "0x9E56E1b3B941b2F0D1E128be0891905feb505227";
 
 export const abi = [
   {
@@ -247,6 +247,31 @@ export const abi = [
         internalType: "address[]",
         name: "",
         type: "address[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getMarketPrices",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "buyer",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "price",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct CropLink.MarketPrice[]",
+        name: "",
+        type: "tuple[]",
       },
     ],
     stateMutability: "view",
