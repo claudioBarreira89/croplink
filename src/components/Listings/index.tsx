@@ -10,21 +10,29 @@ import {
   Tbody,
   Thead,
   Tr,
+  Button,
+  Modal,
+  useDisclosure,
 } from "@chakra-ui/react";
-import { FC } from "react";
-import { useAccount, useContractRead } from "wagmi";
+import { FC, useCallback, useState } from "react";
+import { useContractRead } from "wagmi";
 
 import { abi, contractAddress } from "../../../constants/croplink";
+import BuyProductForm from "../BuyProductForm";
 import LoadingPage from "../LoadingPage";
 import Sidebar from "../Sidebar";
 
 type Product = {
   name: string;
-  price: BigInt;
-  quantity: BigInt;
+  price: number;
+  quantity: number;
+  index: number;
+  farmer: string;
 };
 
 const Listings: FC = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const {
     data,
     isLoading: isListLoading,
@@ -34,6 +42,14 @@ const Listings: FC = () => {
     abi,
     functionName: "getAllProduceList",
   }) as any;
+
+  const onBuyModalOpen = useCallback(
+    (product: Product) => {
+      setSelectedProduct(product);
+      onOpen();
+    },
+    [onOpen]
+  );
 
   if (isListLoading) return <LoadingPage />;
 
@@ -67,7 +83,18 @@ const Listings: FC = () => {
                     <Th>{product.name}</Th>
                     <Th>{product.price.toString()}</Th>
                     <Th>{product.quantity.toString()}</Th>
-                    <Th>Buy</Th>
+                    <Th>
+                      <Button
+                        bg={"green.400"}
+                        _hover={{ bg: "green.500" }}
+                        colorScheme={"green"}
+                        fontWeight={"normal"}
+                        size="xs"
+                        onClick={() => onBuyModalOpen(product)}
+                      >
+                        Buy
+                      </Button>
+                    </Th>
                   </Tr>
                 ))}
               </Tbody>
@@ -75,6 +102,10 @@ const Listings: FC = () => {
           </TableContainer>
         </Sidebar>
       </Container>
+
+      <Modal isOpen={isOpen} onClose={onClose} isCentered>
+        <BuyProductForm details={selectedProduct} onClose={onClose} />
+      </Modal>
     </Box>
   );
 };

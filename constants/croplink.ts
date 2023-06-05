@@ -1,4 +1,4 @@
-export const contractAddress = "0xBCaE71918E49830235143C66fd1aAB6795a841f6";
+export const contractAddress = "0xF2Ff13d096c22B88e7b52D06D0C50962Df9816B2";
 
 export const abi = [
   {
@@ -330,6 +330,16 @@ export const abi = [
             name: "sold",
             type: "bool",
           },
+          {
+            internalType: "address",
+            name: "farmer",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "index",
+            type: "uint256",
+          },
         ],
         internalType: "struct CropLink.Produce[]",
         name: "",
@@ -370,6 +380,16 @@ export const abi = [
             internalType: "bool",
             name: "sold",
             type: "bool",
+          },
+          {
+            internalType: "address",
+            name: "farmer",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "index",
+            type: "uint256",
           },
         ],
         internalType: "struct CropLink.Produce[]",
@@ -457,6 +477,16 @@ export const abi = [
         internalType: "bool",
         name: "sold",
         type: "bool",
+      },
+      {
+        internalType: "address",
+        name: "farmer",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "index",
+        type: "uint256",
       },
     ],
     stateMutability: "view",

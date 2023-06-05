@@ -29,7 +29,7 @@ const ProductForm: FC<{
     address: contractAddress,
     abi,
     functionName: "addProduce",
-    args: [name, price, quantity],
+    args: [name, quantity, price],
   });
 
   const { data, write, isLoading } = useContractWrite({
