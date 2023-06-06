@@ -1,6 +1,8 @@
 import { useRouter } from "next/router";
 import React, { useCallback, useEffect, useState } from "react";
+import { useAccount, useContractRead } from "wagmi";
 
+import { abi, contractAddress } from "../../../constants/croplink";
 import {
   buyerPaths,
   farmerPaths,
@@ -12,9 +14,29 @@ import LoadingPage from "../LoadingPage";
 import { AuthContextProps, useAuthContext } from "@/context/useUserContext";
 
 function ProtectedRoute({ children }: any) {
+  // const { address } = useAccount();
+
   const { state } = useAuthContext() as AuthContextProps;
   const router = useRouter();
   const [authorized, setAuthorized] = useState(false);
+
+  // const farmers = useContractRead({
+  //   address: contractAddress,
+  //   abi,
+  //   functionName: "farmers",
+  //   args: [address],
+  // });
+  // const buyers = useContractRead({
+  //   address: contractAddress,
+  //   abi,
+  //   functionName: "buyers",
+  //   args: [address],
+  // });
+
+  // console.log({
+  //   farmers: farmers.data,
+  //   buyers: buyers.data,
+  // });
 
   const authCheck = useCallback(
     (url: string) => {
@@ -23,16 +45,7 @@ function ProtectedRoute({ children }: any) {
       if (isLoading) return;
 
       const path = url.split("?")[0].split("#")[0];
-      // if (!state?.user && !publicPaths.includes(path)) {
-      //   setAuthorized(false);
-      //   router.push({
-      //     pathname: "/login",
-      //     query: { returnUrl: router.asPath },
-      //   });
-      // } else {
-      //   setAuthorized(true);
-      // }
-      console.log(role, path);
+
       if (!user && !publicPaths.includes(path)) {
         setAuthorized(false);
         return router.push({ pathname: "/login" });

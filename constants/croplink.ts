@@ -1,4 +1,4 @@
-export const contractAddress = "0x9E56E1b3B941b2F0D1E128be0891905feb505227";
+export const contractAddress = "0x789CBEa6a14cFD172ea7a384a62A0Ee3E08Fe91F";
 
 export const abi = [
   {
@@ -435,6 +435,19 @@ export const abi = [
   {
     inputs: [
       {
+        internalType: "address payable",
+        name: "_buyer",
+        type: "address",
+      },
+    ],
+    name: "sellProduceAtMarketPrice",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "uint256",
         name: "_price",
         type: "uint256",
@@ -465,6 +478,25 @@ export const abi = [
       {
         internalType: "uint256",
         name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "truflationDataMap",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "truflationRate",
         type: "uint256",
       },
     ],
