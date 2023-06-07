@@ -48,7 +48,7 @@ contract CropLink {
 
         // Set the oracle, jobId, and fee according to your Chainlink configuration
         oracle = 0xB9756312523826A566e222a34793E414A81c88E1;
-        jobId = 0x3065663665363038383065323463623639636239396131636164373666313561;
+        jobId = 0xb0897686c545045aFc77CF20eC7A532E3120E0F1;
         fee = 10000000000;
     
     }
