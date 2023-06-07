@@ -5,6 +5,7 @@ import {
   Heading,
   Table,
   TableCaption,
+  TableContainer,
   Tbody,
   Td,
   Th,
@@ -43,25 +44,27 @@ export default function PriceFeeds() {
             </Flex>
 
             <Box overflowX="auto">
-              <Table variant="simple">
-                <TableCaption>Produce Price Feeds</TableCaption>
-                <Thead>
-                  <Tr>
-                    <Th>Produce</Th>
-                    <Th>Demand Price</Th>
-                    <Th>Supply Price</Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {data.map((item, index) => (
-                    <Tr key={index}>
-                      <Td>{item.produce}</Td>
-                      <Td>{item.demandPrice}</Td>
-                      <Td>{item.supplyPrice}</Td>
+              <TableContainer>
+                <Table variant="simple">
+                  <TableCaption>Produce Price Feeds</TableCaption>
+                  <Thead>
+                    <Tr>
+                      <Th>Produce</Th>
+                      <Th>Demand Price</Th>
+                      <Th>Supply Price</Th>
                     </Tr>
-                  ))}
-                </Tbody>
-              </Table>
+                  </Thead>
+                  <Tbody>
+                    {data.map((item, index) => (
+                      <Tr key={index}>
+                        <Th>{item.produce}</Th>
+                        <Th>{item.demandPrice}</Th>
+                        <Th>{item.supplyPrice}</Th>
+                      </Tr>
+                    ))}
+                  </Tbody>
+                </Table>
+              </TableContainer>
             </Box>
           </Box>
         </Sidebar>

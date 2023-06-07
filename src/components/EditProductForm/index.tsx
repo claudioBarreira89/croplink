@@ -87,9 +87,7 @@ const EditProductForm: FC<{
               <Input
                 type="number"
                 value={price}
-                onChange={(e) =>
-                  setPrice(parseFloat(e.target.value).toString())
-                }
+                onChange={(e) => setPrice(e.target.value)}
               />
             </FormControl>
 

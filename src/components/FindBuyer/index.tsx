@@ -13,7 +13,13 @@ import {
   ModalHeader,
   ModalOverlay,
   Spinner,
+  Table,
+  TableContainer,
+  Tbody,
   Text,
+  Th,
+  Thead,
+  Tr,
   VStack,
   useColorModeValue,
   useDisclosure,
@@ -32,9 +38,10 @@ import { abi, contractAddress } from "../../../constants/croplink";
 import Sidebar from "../Sidebar";
 
 import { truncateAddress } from "@/utils";
+import { parseWeiToEth } from "@/utils/parseProductPrice";
 
 type BuyerPrice = {
-  price: bigint;
+  price: any;
   buyer: string;
 };
 
@@ -110,9 +117,22 @@ export default function FindBuyer() {
             {waitForLoading ? (
               <Spinner />
             ) : (
-              buyerPrices?.map((item: BuyerPrice, i: number) => (
-                <BuyerListing key={i} item={item} onSell={handleSell} />
-              ))
+              <TableContainer>
+                <Table variant="simple">
+                  <Thead>
+                    <Tr>
+                      <Th>Address</Th>
+                      <Th>Price in ETH</Th>
+                      <Th></Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {buyerPrices?.map((item: BuyerPrice, i: number) => (
+                      <BuyerListing key={i} item={item} onSell={handleSell} />
+                    ))}
+                  </Tbody>
+                </Table>
+              </TableContainer>
             )}
             {selectedBuyer && (
               <Modal isOpen={isOpen} onClose={onClose}>
@@ -126,7 +146,7 @@ export default function FindBuyer() {
                     <Text>
                       Are you sure you want to sell your produce to{" "}
                       <b>{truncateAddress(selectedBuyer.buyer)}</b> at the price
-                      of <b>{selectedBuyer.price.toString()}</b>?
+                      of <b>{parseWeiToEth(selectedBuyer.price)} ETH</b>?
                     </Text>
                   </ModalBody>
                   <ModalFooter>
@@ -160,36 +180,22 @@ const BuyerListing = ({
   onSell: (item: BuyerPrice) => void;
 }) => {
   return (
-    <HStack
-      bg={useColorModeValue("gray.100", "gray.700")}
-      p={4}
-      borderRadius="md"
-      justifyContent="space-between"
-      align="center"
-      spacing={4}
-      mb={2}
-    >
-      <VStack align="start">
-        <Text fontSize="md" fontWeight="bold">
-          {truncateAddress(item.buyer)}
-        </Text>
-        <Text
-          fontSize="lg"
-          fontWeight="bold"
-          color={useColorModeValue("green.600", "green.200")}
+    <Tr>
+      <Th>{item.buyer}</Th>
+      <Th>{parseWeiToEth(item.price)}</Th>
+
+      <Th>
+        <Button
+          bg={"green.400"}
+          _hover={{ bg: "green.500" }}
+          colorScheme={"green"}
+          fontWeight={"normal"}
+          size="xs"
+          onClick={() => onSell(item)}
         >
-          Price: {item.price.toString()} ETH/kg
-        </Text>
-      </VStack>
-      <VStack align="start">
-        <Text fontSize="sm">Wallet Address:</Text>
-        <Text fontSize="sm" color={useColorModeValue("gray.500", "gray.200")}>
-          {item.buyer}
-        </Text>
-      </VStack>
-      <Button colorScheme="green" onClick={() => onSell(item)}>
-        Market sell
-      </Button>
-    </HStack>
+          Market sell
+        </Button>
+      </Th>
+    </Tr>
   );
 };

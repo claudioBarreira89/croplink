@@ -37,6 +37,8 @@ import { abi, contractAddress } from "../../../constants/croplink";
 import LoadingPage from "../LoadingPage";
 import Sidebar from "../Sidebar";
 
+import { parseWeiToEth } from "@/utils/parseProductPrice";
+
 const MarketPrices: FC = () => {
   const [price, setPrice] = useState<number | undefined>();
 
@@ -119,7 +121,7 @@ const MarketPrices: FC = () => {
                   {marketPrices?.map((item: any, i: number) => (
                     <Tr key={i} bg={item.buyer === address ? "green.200" : ""}>
                       <Td>{item.buyer}</Td>
-                      <Td>{item.price.toString()}</Td>
+                      <Td>{parseWeiToEth(item.price).toString()}</Td>
                       <Td />
                     </Tr>
                   ))}

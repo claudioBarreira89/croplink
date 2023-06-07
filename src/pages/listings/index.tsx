@@ -6,7 +6,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 
 const ListingsPage = () => {
   const Listings = dynamic(
-    () => import("../../components/Listings").then((res) => res.default),
+    () => import("@/components/Listings").then((res) => res.default),
     {
       ssr: false,
     }

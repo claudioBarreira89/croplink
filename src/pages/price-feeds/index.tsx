@@ -6,7 +6,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 
 const PriceFeedsPage = () => {
   const PriceFeeds = dynamic(
-    () => import("../../components/PriceFeeds").then((res) => res.default),
+    () => import("@/components/PriceFeeds").then((res) => res.default),
     {
       ssr: false,
     }
