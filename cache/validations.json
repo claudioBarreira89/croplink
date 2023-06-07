@@ -1,0 +1,2951 @@
+{
+  "version": "3.4",
+  "log": [
+    {
+      "@chainlink/contracts/src/v0.8/Chainlink.sol:Chainlink": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\Chainlink.sol:11",
+        "version": {
+          "withMetadata": "6f475ced21729cde322daba6a39576e812d7ab03151b3705c1f240c5762315e0",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [
+          "@chainlink/contracts/src/v0.8/vendor/CBORChainlink.sol:CBORChainlink",
+          "@chainlink/contracts/src/v0.8/vendor/BufferChainlink.sol:BufferChainlink"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/ChainlinkClient.sol:ChainlinkClient": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:17",
+        "inherit": [],
+        "libraries": [
+          "@chainlink/contracts/src/v0.8/Chainlink.sol:Chainlink"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "state-variable-assignment",
+            "name": "s_requestCount",
+            "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:33"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "s_ens",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_contract(ENSInterface)1191",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:29"
+            },
+            {
+              "label": "s_ensNode",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_bytes32",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:30"
+            },
+            {
+              "label": "s_link",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_contract(LinkTokenInterface)1286",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:31"
+            },
+            {
+              "label": "s_oracle",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_contract(OperatorInterface)1366",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:32"
+            },
+            {
+              "label": "s_requestCount",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_uint256",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:33"
+            },
+            {
+              "label": "s_pendingRequests",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_mapping(t_bytes32,t_address)",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:34"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_bytes32": {
+              "label": "bytes32",
+              "numberOfBytes": "32"
+            },
+            "t_contract(ENSInterface)1191": {
+              "label": "contract ENSInterface",
+              "numberOfBytes": "20"
+            },
+            "t_contract(LinkTokenInterface)1286": {
+              "label": "contract LinkTokenInterface",
+              "numberOfBytes": "20"
+            },
+            "t_contract(OperatorInterface)1366": {
+              "label": "contract OperatorInterface",
+              "numberOfBytes": "20"
+            },
+            "t_mapping(t_bytes32,t_address)": {
+              "label": "mapping(bytes32 => address)",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol:VRFConsumerBase": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\VRFConsumerBase.sol:101",
+        "inherit": [
+          "@chainlink/contracts/src/v0.8/VRFRequestIDBase.sol:VRFRequestIDBase"
+        ],
+        "libraries": [],
+        "methods": [
+          "rawFulfillRandomness(bytes32,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "VRFConsumerBase",
+            "src": "@chainlink\\contracts\\src\\v0.8\\VRFConsumerBase.sol:183"
+          },
+          {
+            "kind": "state-variable-immutable",
+            "name": "LINK",
+            "src": "@chainlink\\contracts\\src\\v0.8\\VRFConsumerBase.sol:168"
+          },
+          {
+            "kind": "state-variable-immutable",
+            "name": "vrfCoordinator",
+            "src": "@chainlink\\contracts\\src\\v0.8\\VRFConsumerBase.sol:169"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "nonces",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_mapping(t_bytes32,t_uint256)",
+              "contract": "VRFConsumerBase",
+              "src": "@chainlink\\contracts\\src\\v0.8\\VRFConsumerBase.sol:174"
+            }
+          ],
+          "types": {
+            "t_bytes32": {
+              "label": "bytes32",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_bytes32,t_uint256)": {
+              "label": "mapping(bytes32 => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/VRFRequestIDBase.sol:VRFRequestIDBase": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\VRFRequestIDBase.sol:4",
+        "version": {
+          "withMetadata": "a9a2c7534369e5b7560f8437e4536ec845e2ea7b2396d3d5368915806023829b",
+          "withoutMetadata": "ac0db523ddc3e330f735df7b3b0b24460531c71290a891170e840f8f67d5ff6b",
+          "linkedWithoutMetadata": "ac0db523ddc3e330f735df7b3b0b24460531c71290a891170e840f8f67d5ff6b"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol:AggregatorV3Interface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\AggregatorV3Interface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "decimals()",
+          "description()",
+          "version()",
+          "getRoundData(uint80)",
+          "latestRoundData()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/ChainlinkRequestInterface.sol:ChainlinkRequestInterface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\ChainlinkRequestInterface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "oracleRequest(address,uint256,bytes32,address,bytes4,uint256,uint256,bytes)",
+          "cancelOracleRequest(bytes32,uint256,bytes4,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/ENSInterface.sol:ENSInterface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\ENSInterface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "setSubnodeOwner(bytes32,bytes32,address)",
+          "setResolver(bytes32,address)",
+          "setOwner(bytes32,address)",
+          "setTTL(bytes32,uint64)",
+          "owner(bytes32)",
+          "resolver(bytes32)",
+          "ttl(bytes32)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol:LinkTokenInterface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\LinkTokenInterface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "balanceOf(address)",
+          "decimals()",
+          "decreaseApproval(address,uint256)",
+          "increaseApproval(address,uint256)",
+          "name()",
+          "symbol()",
+          "totalSupply()",
+          "transfer(address,uint256)",
+          "transferAndCall(address,uint256,bytes)",
+          "transferFrom(address,address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/OperatorInterface.sol:OperatorInterface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\OperatorInterface.sol:7",
+        "inherit": [
+          "@chainlink/contracts/src/v0.8/interfaces/ChainlinkRequestInterface.sol:ChainlinkRequestInterface",
+          "@chainlink/contracts/src/v0.8/interfaces/OracleInterface.sol:OracleInterface"
+        ],
+        "libraries": [],
+        "methods": [
+          "operatorRequest(address,uint256,bytes32,bytes4,uint256,uint256,bytes)",
+          "fulfillOracleRequest2(bytes32,uint256,address,bytes4,uint256,bytes)",
+          "ownerTransferAndCall(address,uint256,bytes)",
+          "distributeFunds(address payable[],uint256[])",
+          "getAuthorizedSenders()",
+          "setAuthorizedSenders(address[])",
+          "getForwarder()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/OracleInterface.sol:OracleInterface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\OracleInterface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "fulfillOracleRequest(bytes32,uint256,address,bytes4,uint256,bytes32)",
+          "isAuthorizedSender(address)",
+          "withdraw(address,uint256)",
+          "withdrawable()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/PointerInterface.sol:PointerInterface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\PointerInterface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getAddress()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/vendor/BufferChainlink.sol:BufferChainlink": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\vendor\\BufferChainlink.sol:12",
+        "version": {
+          "withMetadata": "eb9f6629dcb20fff7bb3c104694ca23a419c66992d002380d0e8d6c68e1106a0",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/vendor/CBORChainlink.sol:CBORChainlink": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\vendor\\CBORChainlink.sol:6",
+        "version": {
+          "withMetadata": "d6502f67c514674a8d6b9398b70714bbdcd9abc0101004418c19bd8a8e79d7bc",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [
+          "@chainlink/contracts/src/v0.8/vendor/BufferChainlink.sol:BufferChainlink"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/vendor/ENSResolver.sol:ENSResolver": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\vendor\\ENSResolver.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "addr(bytes32)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "contracts/AccuweatherConsumer.sol:AccuweatherConsumer": {
+        "src": "contracts\\AccuweatherConsumer.sol:72",
+        "version": {
+          "withMetadata": "3b0a245a2ddd65c439e9197ad5bc8c4d148f78127102eb63e64b1672e7ca88ed",
+          "withoutMetadata": "2a6bd7e6a2f14ed0b821e1376e70fe3d42e5db01d0d8b1665df20f271024b056",
+          "linkedWithoutMetadata": "2a6bd7e6a2f14ed0b821e1376e70fe3d42e5db01d0d8b1665df20f271024b056"
+        },
+        "inherit": [
+          "@chainlink/contracts/src/v0.8/ChainlinkClient.sol:ChainlinkClient"
+        ],
+        "libraries": [
+          "@chainlink/contracts/src/v0.8/Chainlink.sol:Chainlink"
+        ],
+        "methods": [
+          "(address,address)",
+          "requestLocation(bytes32,uint256,string,string)",
+          "requestCurrentConditions(bytes32,uint256,uint256,string)",
+          "requestLocationCurrentConditions(bytes32,uint256,string,string,string)",
+          "fulfillLocation(bytes32,bool,bytes)",
+          "fulfillCurrentConditions(bytes32,bytes)",
+          "fulfillLocationCurrentConditions(bytes32,bool,bytes,bytes)",
+          "getOracleAddress()",
+          "setOracle(address)",
+          "withdrawLink()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "AccuweatherConsumer",
+            "src": "contracts\\AccuweatherConsumer.sol:110"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "s_ens",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_contract(ENSInterface)1191",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:29"
+            },
+            {
+              "label": "s_ensNode",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_bytes32",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:30"
+            },
+            {
+              "label": "s_link",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_contract(LinkTokenInterface)1286",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:31"
+            },
+            {
+              "label": "s_oracle",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_contract(OperatorInterface)1366",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:32"
+            },
+            {
+              "label": "s_requestCount",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_uint256",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:33"
+            },
+            {
+              "label": "s_pendingRequests",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_mapping(t_bytes32,t_address)",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:34"
+            },
+            {
+              "label": "requestIdCurrentConditionsResult",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_mapping(t_bytes32,t_struct(CurrentConditionsResult)2445_storage)",
+              "contract": "AccuweatherConsumer",
+              "src": "contracts\\AccuweatherConsumer.sol:102"
+            },
+            {
+              "label": "requestIdLocationResult",
+              "offset": 0,
+              "slot": "7",
+              "type": "t_mapping(t_bytes32,t_struct(LocationResult)2420_storage)",
+              "contract": "AccuweatherConsumer",
+              "src": "contracts\\AccuweatherConsumer.sol:103"
+            },
+            {
+              "label": "requestIdRequestParams",
+              "offset": 0,
+              "slot": "8",
+              "type": "t_mapping(t_bytes32,t_struct(RequestParams)2413_storage)",
+              "contract": "AccuweatherConsumer",
+              "src": "contracts\\AccuweatherConsumer.sol:104"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_bytes2": {
+              "label": "bytes2",
+              "numberOfBytes": "2"
+            },
+            "t_bytes32": {
+              "label": "bytes32",
+              "numberOfBytes": "32"
+            },
+            "t_contract(ENSInterface)1191": {
+              "label": "contract ENSInterface",
+              "numberOfBytes": "20"
+            },
+            "t_contract(LinkTokenInterface)1286": {
+              "label": "contract LinkTokenInterface",
+              "numberOfBytes": "20"
+            },
+            "t_contract(OperatorInterface)1366": {
+              "label": "contract OperatorInterface",
+              "numberOfBytes": "20"
+            },
+            "t_int16": {
+              "label": "int16",
+              "numberOfBytes": "2"
+            },
+            "t_mapping(t_bytes32,t_address)": {
+              "label": "mapping(bytes32 => address)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_bytes32,t_struct(CurrentConditionsResult)2445_storage)": {
+              "label": "mapping(bytes32 => struct AccuweatherConsumer.CurrentConditionsResult)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_bytes32,t_struct(LocationResult)2420_storage)": {
+              "label": "mapping(bytes32 => struct AccuweatherConsumer.LocationResult)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_bytes32,t_struct(RequestParams)2413_storage)": {
+              "label": "mapping(bytes32 => struct AccuweatherConsumer.RequestParams)",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_struct(CurrentConditionsResult)2445_storage": {
+              "label": "struct AccuweatherConsumer.CurrentConditionsResult",
+              "members": [
+                {
+                  "label": "timestamp",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "precipitationPast12Hours",
+                  "type": "t_uint24",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "precipitationPast24Hours",
+                  "type": "t_uint24",
+                  "offset": 3,
+                  "slot": "1"
+                },
+                {
+                  "label": "precipitationPastHour",
+                  "type": "t_uint24",
+                  "offset": 6,
+                  "slot": "1"
+                },
+                {
+                  "label": "pressure",
+                  "type": "t_uint24",
+                  "offset": 9,
+                  "slot": "1"
+                },
+                {
+                  "label": "temperature",
+                  "type": "t_int16",
+                  "offset": 12,
+                  "slot": "1"
+                },
+                {
+                  "label": "windDirectionDegrees",
+                  "type": "t_uint16",
+                  "offset": 14,
+                  "slot": "1"
+                },
+                {
+                  "label": "windSpeed",
+                  "type": "t_uint16",
+                  "offset": 16,
+                  "slot": "1"
+                },
+                {
+                  "label": "precipitationType",
+                  "type": "t_uint8",
+                  "offset": 18,
+                  "slot": "1"
+                },
+                {
+                  "label": "relativeHumidity",
+                  "type": "t_uint8",
+                  "offset": 19,
+                  "slot": "1"
+                },
+                {
+                  "label": "uvIndex",
+                  "type": "t_uint8",
+                  "offset": 20,
+                  "slot": "1"
+                },
+                {
+                  "label": "weatherIcon",
+                  "type": "t_uint8",
+                  "offset": 21,
+                  "slot": "1"
+                }
+              ],
+              "numberOfBytes": "64"
+            },
+            "t_struct(LocationResult)2420_storage": {
+              "label": "struct AccuweatherConsumer.LocationResult",
+              "members": [
+                {
+                  "label": "locationKey",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "name",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "countryCode",
+                  "type": "t_bytes2",
+                  "offset": 0,
+                  "slot": "2"
+                }
+              ],
+              "numberOfBytes": "96"
+            },
+            "t_struct(RequestParams)2413_storage": {
+              "label": "struct AccuweatherConsumer.RequestParams",
+              "members": [
+                {
+                  "label": "locationKey",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "endpoint",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "lat",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "lon",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "units",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "4"
+                }
+              ],
+              "numberOfBytes": "160"
+            },
+            "t_uint16": {
+              "label": "uint16",
+              "numberOfBytes": "2"
+            },
+            "t_uint24": {
+              "label": "uint24",
+              "numberOfBytes": "3"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      },
+      "contracts/Croplink.sol:CropLink": {
+        "src": "contracts\\Croplink.sol:11",
+        "version": {
+          "withMetadata": "2de151a3c5a80e4b988bd6bd995774c8389348d7155f394d881e46bdb3765dea",
+          "withoutMetadata": "2dc8650ebce3f406255c26c9eae29b91d3dba823790e83b10c43832593de074d",
+          "linkedWithoutMetadata": "2dc8650ebce3f406255c26c9eae29b91d3dba823790e83b10c43832593de074d"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "(address,address)",
+          "fulfill(bytes32,int256)",
+          "registerAsFarmer()",
+          "registerAsBuyer()",
+          "verifyFarmer()",
+          "verifyBuyer()",
+          "claimTreasury()",
+          "addProduce(string,uint256,uint256)",
+          "getFarmers()",
+          "getBuyers()",
+          "getAllProduceList()",
+          "getProduceList(address)",
+          "getMarketPrices()",
+          "purchaseProduce(address,uint256)",
+          "editProduce(uint256,string,uint256,uint256)",
+          "deleteProduce(uint256)",
+          "setMarketPrice(uint256)",
+          "getWeatherTemperature(string,string,string)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "CropLink",
+            "src": "contracts\\Croplink.sol:44"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "weatherContract",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_contract(Weathercontract)3728",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:12"
+            },
+            {
+              "label": "accuweatherConsumer",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_contract(AccuweatherConsumer)2904",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:13"
+            },
+            {
+              "label": "treasury",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_address_payable",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:14"
+            },
+            {
+              "label": "treasuryBalance",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_uint256",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:15"
+            },
+            {
+              "label": "farmerAddresses",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_array(t_address)dyn_storage",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:29"
+            },
+            {
+              "label": "buyerAddresses",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_array(t_address)dyn_storage",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:30"
+            },
+            {
+              "label": "oracle",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_address",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:31"
+            },
+            {
+              "label": "jobId",
+              "offset": 0,
+              "slot": "7",
+              "type": "t_bytes32",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:32"
+            },
+            {
+              "label": "fee",
+              "offset": 0,
+              "slot": "8",
+              "type": "t_uint256",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:33"
+            },
+            {
+              "label": "farmers",
+              "offset": 0,
+              "slot": "9",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:36"
+            },
+            {
+              "label": "buyers",
+              "offset": 0,
+              "slot": "10",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:37"
+            },
+            {
+              "label": "farmerVerifications",
+              "offset": 0,
+              "slot": "11",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:38"
+            },
+            {
+              "label": "buyerVerifications",
+              "offset": 0,
+              "slot": "12",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:39"
+            },
+            {
+              "label": "produceList",
+              "offset": 0,
+              "slot": "13",
+              "type": "t_mapping(t_address,t_array(t_struct(Produce)2930_storage)dyn_storage)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:40"
+            },
+            {
+              "label": "marketPrices",
+              "offset": 0,
+              "slot": "14",
+              "type": "t_mapping(t_address,t_struct(MarketPrice)2935_storage)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:41"
+            },
+            {
+              "label": "marketPriceVerified",
+              "offset": 0,
+              "slot": "15",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:42"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_address_payable": {
+              "label": "address payable",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]",
+              "numberOfBytes": "32"
+            },
+            "t_array(t_struct(Produce)2930_storage)dyn_storage": {
+              "label": "struct CropLink.Produce[]",
+              "numberOfBytes": "32"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_bytes32": {
+              "label": "bytes32",
+              "numberOfBytes": "32"
+            },
+            "t_contract(AccuweatherConsumer)2904": {
+              "label": "contract AccuweatherConsumer",
+              "numberOfBytes": "20"
+            },
+            "t_contract(Weathercontract)3728": {
+              "label": "contract Weathercontract",
+              "numberOfBytes": "20"
+            },
+            "t_mapping(t_address,t_array(t_struct(Produce)2930_storage)dyn_storage)": {
+              "label": "mapping(address => struct CropLink.Produce[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_bool)": {
+              "label": "mapping(address => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_struct(MarketPrice)2935_storage)": {
+              "label": "mapping(address => struct CropLink.MarketPrice)",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_struct(MarketPrice)2935_storage": {
+              "label": "struct CropLink.MarketPrice",
+              "members": [
+                {
+                  "label": "buyer",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "price",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                }
+              ],
+              "numberOfBytes": "64"
+            },
+            "t_struct(Produce)2930_storage": {
+              "label": "struct CropLink.Produce",
+              "members": [
+                {
+                  "label": "name",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "quantity",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "price",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "sold",
+                  "type": "t_bool",
+                  "offset": 0,
+                  "slot": "3"
+                }
+              ],
+              "numberOfBytes": "128"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      },
+      "contracts/Weathercontract.sol:Weathercontract": {
+        "src": "contracts\\Weathercontract.sol:5",
+        "version": {
+          "withMetadata": "0b2da32c9ce3259da43fe7d62e484d0b5b3281fb6aef21cd841f2a8ff98db725",
+          "withoutMetadata": "ba959612aeb86bd879b9b3528888c32c97d437aa240f92c28fab184fe90f95f7",
+          "linkedWithoutMetadata": "ba959612aeb86bd879b9b3528888c32c97d437aa240f92c28fab184fe90f95f7"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getWeatherTemperature(string,string,string)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      }
+    },
+    {
+      "@chainlink/contracts/src/v0.8/Chainlink.sol:Chainlink": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\Chainlink.sol:11",
+        "version": {
+          "withMetadata": "6f475ced21729cde322daba6a39576e812d7ab03151b3705c1f240c5762315e0",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [
+          "@chainlink/contracts/src/v0.8/vendor/CBORChainlink.sol:CBORChainlink",
+          "@chainlink/contracts/src/v0.8/vendor/BufferChainlink.sol:BufferChainlink"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/ChainlinkClient.sol:ChainlinkClient": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:17",
+        "inherit": [],
+        "libraries": [
+          "@chainlink/contracts/src/v0.8/Chainlink.sol:Chainlink"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "state-variable-assignment",
+            "name": "s_requestCount",
+            "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:33"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "s_ens",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_contract(ENSInterface)1191",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:29"
+            },
+            {
+              "label": "s_ensNode",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_bytes32",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:30"
+            },
+            {
+              "label": "s_link",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_contract(LinkTokenInterface)1286",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:31"
+            },
+            {
+              "label": "s_oracle",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_contract(OperatorInterface)1366",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:32"
+            },
+            {
+              "label": "s_requestCount",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_uint256",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:33"
+            },
+            {
+              "label": "s_pendingRequests",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_mapping(t_bytes32,t_address)",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:34"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_bytes32": {
+              "label": "bytes32",
+              "numberOfBytes": "32"
+            },
+            "t_contract(ENSInterface)1191": {
+              "label": "contract ENSInterface",
+              "numberOfBytes": "20"
+            },
+            "t_contract(LinkTokenInterface)1286": {
+              "label": "contract LinkTokenInterface",
+              "numberOfBytes": "20"
+            },
+            "t_contract(OperatorInterface)1366": {
+              "label": "contract OperatorInterface",
+              "numberOfBytes": "20"
+            },
+            "t_mapping(t_bytes32,t_address)": {
+              "label": "mapping(bytes32 => address)",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/VRFConsumerBase.sol:VRFConsumerBase": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\VRFConsumerBase.sol:101",
+        "inherit": [
+          "@chainlink/contracts/src/v0.8/VRFRequestIDBase.sol:VRFRequestIDBase"
+        ],
+        "libraries": [],
+        "methods": [
+          "rawFulfillRandomness(bytes32,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "VRFConsumerBase",
+            "src": "@chainlink\\contracts\\src\\v0.8\\VRFConsumerBase.sol:183"
+          },
+          {
+            "kind": "state-variable-immutable",
+            "name": "LINK",
+            "src": "@chainlink\\contracts\\src\\v0.8\\VRFConsumerBase.sol:168"
+          },
+          {
+            "kind": "state-variable-immutable",
+            "name": "vrfCoordinator",
+            "src": "@chainlink\\contracts\\src\\v0.8\\VRFConsumerBase.sol:169"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "nonces",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_mapping(t_bytes32,t_uint256)",
+              "contract": "VRFConsumerBase",
+              "src": "@chainlink\\contracts\\src\\v0.8\\VRFConsumerBase.sol:174"
+            }
+          ],
+          "types": {
+            "t_bytes32": {
+              "label": "bytes32",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_bytes32,t_uint256)": {
+              "label": "mapping(bytes32 => uint256)",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/VRFRequestIDBase.sol:VRFRequestIDBase": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\VRFRequestIDBase.sol:4",
+        "version": {
+          "withMetadata": "a9a2c7534369e5b7560f8437e4536ec845e2ea7b2396d3d5368915806023829b",
+          "withoutMetadata": "ac0db523ddc3e330f735df7b3b0b24460531c71290a891170e840f8f67d5ff6b",
+          "linkedWithoutMetadata": "ac0db523ddc3e330f735df7b3b0b24460531c71290a891170e840f8f67d5ff6b"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol:AggregatorV3Interface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\AggregatorV3Interface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "decimals()",
+          "description()",
+          "version()",
+          "getRoundData(uint80)",
+          "latestRoundData()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/ChainlinkRequestInterface.sol:ChainlinkRequestInterface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\ChainlinkRequestInterface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "oracleRequest(address,uint256,bytes32,address,bytes4,uint256,uint256,bytes)",
+          "cancelOracleRequest(bytes32,uint256,bytes4,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/ENSInterface.sol:ENSInterface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\ENSInterface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "setSubnodeOwner(bytes32,bytes32,address)",
+          "setResolver(bytes32,address)",
+          "setOwner(bytes32,address)",
+          "setTTL(bytes32,uint64)",
+          "owner(bytes32)",
+          "resolver(bytes32)",
+          "ttl(bytes32)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol:LinkTokenInterface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\LinkTokenInterface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "balanceOf(address)",
+          "decimals()",
+          "decreaseApproval(address,uint256)",
+          "increaseApproval(address,uint256)",
+          "name()",
+          "symbol()",
+          "totalSupply()",
+          "transfer(address,uint256)",
+          "transferAndCall(address,uint256,bytes)",
+          "transferFrom(address,address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/OperatorInterface.sol:OperatorInterface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\OperatorInterface.sol:7",
+        "inherit": [
+          "@chainlink/contracts/src/v0.8/interfaces/ChainlinkRequestInterface.sol:ChainlinkRequestInterface",
+          "@chainlink/contracts/src/v0.8/interfaces/OracleInterface.sol:OracleInterface"
+        ],
+        "libraries": [],
+        "methods": [
+          "operatorRequest(address,uint256,bytes32,bytes4,uint256,uint256,bytes)",
+          "fulfillOracleRequest2(bytes32,uint256,address,bytes4,uint256,bytes)",
+          "ownerTransferAndCall(address,uint256,bytes)",
+          "distributeFunds(address payable[],uint256[])",
+          "getAuthorizedSenders()",
+          "setAuthorizedSenders(address[])",
+          "getForwarder()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/OracleInterface.sol:OracleInterface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\OracleInterface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "fulfillOracleRequest(bytes32,uint256,address,bytes4,uint256,bytes32)",
+          "isAuthorizedSender(address)",
+          "withdraw(address,uint256)",
+          "withdrawable()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/PointerInterface.sol:PointerInterface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\PointerInterface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getAddress()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/vendor/BufferChainlink.sol:BufferChainlink": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\vendor\\BufferChainlink.sol:12",
+        "version": {
+          "withMetadata": "eb9f6629dcb20fff7bb3c104694ca23a419c66992d002380d0e8d6c68e1106a0",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/vendor/CBORChainlink.sol:CBORChainlink": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\vendor\\CBORChainlink.sol:6",
+        "version": {
+          "withMetadata": "d6502f67c514674a8d6b9398b70714bbdcd9abc0101004418c19bd8a8e79d7bc",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [
+          "@chainlink/contracts/src/v0.8/vendor/BufferChainlink.sol:BufferChainlink"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/vendor/ENSResolver.sol:ENSResolver": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\vendor\\ENSResolver.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "addr(bytes32)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "contracts/AccuweatherConsumer.sol:AccuweatherConsumer": {
+        "src": "contracts\\AccuweatherConsumer.sol:72",
+        "version": {
+          "withMetadata": "3b0a245a2ddd65c439e9197ad5bc8c4d148f78127102eb63e64b1672e7ca88ed",
+          "withoutMetadata": "2a6bd7e6a2f14ed0b821e1376e70fe3d42e5db01d0d8b1665df20f271024b056",
+          "linkedWithoutMetadata": "2a6bd7e6a2f14ed0b821e1376e70fe3d42e5db01d0d8b1665df20f271024b056"
+        },
+        "inherit": [
+          "@chainlink/contracts/src/v0.8/ChainlinkClient.sol:ChainlinkClient"
+        ],
+        "libraries": [
+          "@chainlink/contracts/src/v0.8/Chainlink.sol:Chainlink"
+        ],
+        "methods": [
+          "(address,address)",
+          "requestLocation(bytes32,uint256,string,string)",
+          "requestCurrentConditions(bytes32,uint256,uint256,string)",
+          "requestLocationCurrentConditions(bytes32,uint256,string,string,string)",
+          "fulfillLocation(bytes32,bool,bytes)",
+          "fulfillCurrentConditions(bytes32,bytes)",
+          "fulfillLocationCurrentConditions(bytes32,bool,bytes,bytes)",
+          "getOracleAddress()",
+          "setOracle(address)",
+          "withdrawLink()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "AccuweatherConsumer",
+            "src": "contracts\\AccuweatherConsumer.sol:110"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "s_ens",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_contract(ENSInterface)1191",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:29"
+            },
+            {
+              "label": "s_ensNode",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_bytes32",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:30"
+            },
+            {
+              "label": "s_link",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_contract(LinkTokenInterface)1286",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:31"
+            },
+            {
+              "label": "s_oracle",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_contract(OperatorInterface)1366",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:32"
+            },
+            {
+              "label": "s_requestCount",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_uint256",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:33"
+            },
+            {
+              "label": "s_pendingRequests",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_mapping(t_bytes32,t_address)",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:34"
+            },
+            {
+              "label": "requestIdCurrentConditionsResult",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_mapping(t_bytes32,t_struct(CurrentConditionsResult)2445_storage)",
+              "contract": "AccuweatherConsumer",
+              "src": "contracts\\AccuweatherConsumer.sol:102"
+            },
+            {
+              "label": "requestIdLocationResult",
+              "offset": 0,
+              "slot": "7",
+              "type": "t_mapping(t_bytes32,t_struct(LocationResult)2420_storage)",
+              "contract": "AccuweatherConsumer",
+              "src": "contracts\\AccuweatherConsumer.sol:103"
+            },
+            {
+              "label": "requestIdRequestParams",
+              "offset": 0,
+              "slot": "8",
+              "type": "t_mapping(t_bytes32,t_struct(RequestParams)2413_storage)",
+              "contract": "AccuweatherConsumer",
+              "src": "contracts\\AccuweatherConsumer.sol:104"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_bytes2": {
+              "label": "bytes2",
+              "numberOfBytes": "2"
+            },
+            "t_bytes32": {
+              "label": "bytes32",
+              "numberOfBytes": "32"
+            },
+            "t_contract(ENSInterface)1191": {
+              "label": "contract ENSInterface",
+              "numberOfBytes": "20"
+            },
+            "t_contract(LinkTokenInterface)1286": {
+              "label": "contract LinkTokenInterface",
+              "numberOfBytes": "20"
+            },
+            "t_contract(OperatorInterface)1366": {
+              "label": "contract OperatorInterface",
+              "numberOfBytes": "20"
+            },
+            "t_int16": {
+              "label": "int16",
+              "numberOfBytes": "2"
+            },
+            "t_mapping(t_bytes32,t_address)": {
+              "label": "mapping(bytes32 => address)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_bytes32,t_struct(CurrentConditionsResult)2445_storage)": {
+              "label": "mapping(bytes32 => struct AccuweatherConsumer.CurrentConditionsResult)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_bytes32,t_struct(LocationResult)2420_storage)": {
+              "label": "mapping(bytes32 => struct AccuweatherConsumer.LocationResult)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_bytes32,t_struct(RequestParams)2413_storage)": {
+              "label": "mapping(bytes32 => struct AccuweatherConsumer.RequestParams)",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_struct(CurrentConditionsResult)2445_storage": {
+              "label": "struct AccuweatherConsumer.CurrentConditionsResult",
+              "members": [
+                {
+                  "label": "timestamp",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "precipitationPast12Hours",
+                  "type": "t_uint24",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "precipitationPast24Hours",
+                  "type": "t_uint24",
+                  "offset": 3,
+                  "slot": "1"
+                },
+                {
+                  "label": "precipitationPastHour",
+                  "type": "t_uint24",
+                  "offset": 6,
+                  "slot": "1"
+                },
+                {
+                  "label": "pressure",
+                  "type": "t_uint24",
+                  "offset": 9,
+                  "slot": "1"
+                },
+                {
+                  "label": "temperature",
+                  "type": "t_int16",
+                  "offset": 12,
+                  "slot": "1"
+                },
+                {
+                  "label": "windDirectionDegrees",
+                  "type": "t_uint16",
+                  "offset": 14,
+                  "slot": "1"
+                },
+                {
+                  "label": "windSpeed",
+                  "type": "t_uint16",
+                  "offset": 16,
+                  "slot": "1"
+                },
+                {
+                  "label": "precipitationType",
+                  "type": "t_uint8",
+                  "offset": 18,
+                  "slot": "1"
+                },
+                {
+                  "label": "relativeHumidity",
+                  "type": "t_uint8",
+                  "offset": 19,
+                  "slot": "1"
+                },
+                {
+                  "label": "uvIndex",
+                  "type": "t_uint8",
+                  "offset": 20,
+                  "slot": "1"
+                },
+                {
+                  "label": "weatherIcon",
+                  "type": "t_uint8",
+                  "offset": 21,
+                  "slot": "1"
+                }
+              ],
+              "numberOfBytes": "64"
+            },
+            "t_struct(LocationResult)2420_storage": {
+              "label": "struct AccuweatherConsumer.LocationResult",
+              "members": [
+                {
+                  "label": "locationKey",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "name",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "countryCode",
+                  "type": "t_bytes2",
+                  "offset": 0,
+                  "slot": "2"
+                }
+              ],
+              "numberOfBytes": "96"
+            },
+            "t_struct(RequestParams)2413_storage": {
+              "label": "struct AccuweatherConsumer.RequestParams",
+              "members": [
+                {
+                  "label": "locationKey",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "endpoint",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "lat",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "lon",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "units",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "4"
+                }
+              ],
+              "numberOfBytes": "160"
+            },
+            "t_uint16": {
+              "label": "uint16",
+              "numberOfBytes": "2"
+            },
+            "t_uint24": {
+              "label": "uint24",
+              "numberOfBytes": "3"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      },
+      "contracts/Croplink.sol:CropLink": {
+        "src": "contracts\\Croplink.sol:10",
+        "version": {
+          "withMetadata": "fbfbd41f123d85af4009c91f02d7a026f1aa3cca1dfe4b6ffb2516cf1e285042",
+          "withoutMetadata": "a687279b76fa9b7fe7e306e98346cb4227fb0cdc60ac9ab71d591f634878c868",
+          "linkedWithoutMetadata": "a687279b76fa9b7fe7e306e98346cb4227fb0cdc60ac9ab71d591f634878c868"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "(address,address)",
+          "fulfill(bytes32,int256)",
+          "registerAsFarmer()",
+          "registerAsBuyer()",
+          "verifyFarmer()",
+          "verifyBuyer()",
+          "claimTreasury()",
+          "addProduce(string,uint256,uint256)",
+          "getFarmers()",
+          "getBuyers()",
+          "getAllProduceList()",
+          "getProduceList(address)",
+          "getMarketPrices()",
+          "purchaseProduce(address,uint256)",
+          "editProduce(uint256,string,uint256,uint256)",
+          "deleteProduce(uint256)",
+          "setMarketPrice(uint256)",
+          "getWeatherTemperature(string,string,string)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "CropLink",
+            "src": "contracts\\Croplink.sol:43"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "weatherContract",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_contract(Weathercontract)3728",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:11"
+            },
+            {
+              "label": "accuweatherConsumer",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_contract(AccuweatherConsumer)2904",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:12"
+            },
+            {
+              "label": "treasury",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_address_payable",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:13"
+            },
+            {
+              "label": "treasuryBalance",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_uint256",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:14"
+            },
+            {
+              "label": "farmerAddresses",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_array(t_address)dyn_storage",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:28"
+            },
+            {
+              "label": "buyerAddresses",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_array(t_address)dyn_storage",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:29"
+            },
+            {
+              "label": "oracle",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_address",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:30"
+            },
+            {
+              "label": "jobId",
+              "offset": 0,
+              "slot": "7",
+              "type": "t_bytes32",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:31"
+            },
+            {
+              "label": "fee",
+              "offset": 0,
+              "slot": "8",
+              "type": "t_uint256",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:32"
+            },
+            {
+              "label": "farmers",
+              "offset": 0,
+              "slot": "9",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:35"
+            },
+            {
+              "label": "buyers",
+              "offset": 0,
+              "slot": "10",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:36"
+            },
+            {
+              "label": "farmerVerifications",
+              "offset": 0,
+              "slot": "11",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:37"
+            },
+            {
+              "label": "buyerVerifications",
+              "offset": 0,
+              "slot": "12",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:38"
+            },
+            {
+              "label": "produceList",
+              "offset": 0,
+              "slot": "13",
+              "type": "t_mapping(t_address,t_array(t_struct(Produce)2930_storage)dyn_storage)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:39"
+            },
+            {
+              "label": "marketPrices",
+              "offset": 0,
+              "slot": "14",
+              "type": "t_mapping(t_address,t_struct(MarketPrice)2935_storage)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:40"
+            },
+            {
+              "label": "marketPriceVerified",
+              "offset": 0,
+              "slot": "15",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:41"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_address_payable": {
+              "label": "address payable",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]",
+              "numberOfBytes": "32"
+            },
+            "t_array(t_struct(Produce)2930_storage)dyn_storage": {
+              "label": "struct CropLink.Produce[]",
+              "numberOfBytes": "32"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_bytes32": {
+              "label": "bytes32",
+              "numberOfBytes": "32"
+            },
+            "t_contract(AccuweatherConsumer)2904": {
+              "label": "contract AccuweatherConsumer",
+              "numberOfBytes": "20"
+            },
+            "t_contract(Weathercontract)3728": {
+              "label": "contract Weathercontract",
+              "numberOfBytes": "20"
+            },
+            "t_mapping(t_address,t_array(t_struct(Produce)2930_storage)dyn_storage)": {
+              "label": "mapping(address => struct CropLink.Produce[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_bool)": {
+              "label": "mapping(address => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_struct(MarketPrice)2935_storage)": {
+              "label": "mapping(address => struct CropLink.MarketPrice)",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_struct(MarketPrice)2935_storage": {
+              "label": "struct CropLink.MarketPrice",
+              "members": [
+                {
+                  "label": "buyer",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "price",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                }
+              ],
+              "numberOfBytes": "64"
+            },
+            "t_struct(Produce)2930_storage": {
+              "label": "struct CropLink.Produce",
+              "members": [
+                {
+                  "label": "name",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "quantity",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "price",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "sold",
+                  "type": "t_bool",
+                  "offset": 0,
+                  "slot": "3"
+                }
+              ],
+              "numberOfBytes": "128"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      },
+      "contracts/Weathercontract.sol:Weathercontract": {
+        "src": "contracts\\Weathercontract.sol:5",
+        "version": {
+          "withMetadata": "c7480872ceb2ec9668f7cac12598573d55bda83a7e0ef12b208ff94d60c47061",
+          "withoutMetadata": "ba959612aeb86bd879b9b3528888c32c97d437aa240f92c28fab184fe90f95f7",
+          "linkedWithoutMetadata": "ba959612aeb86bd879b9b3528888c32c97d437aa240f92c28fab184fe90f95f7"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getWeatherTemperature(string,string,string)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      }
+    },
+    {
+      "@chainlink/contracts/src/v0.8/Chainlink.sol:Chainlink": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\Chainlink.sol:11",
+        "version": {
+          "withMetadata": "6f475ced21729cde322daba6a39576e812d7ab03151b3705c1f240c5762315e0",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [
+          "@chainlink/contracts/src/v0.8/vendor/CBORChainlink.sol:CBORChainlink",
+          "@chainlink/contracts/src/v0.8/vendor/BufferChainlink.sol:BufferChainlink"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/ChainlinkClient.sol:ChainlinkClient": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:17",
+        "inherit": [],
+        "libraries": [
+          "@chainlink/contracts/src/v0.8/Chainlink.sol:Chainlink"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "state-variable-assignment",
+            "name": "s_requestCount",
+            "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:33"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "s_ens",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_contract(ENSInterface)1020",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:29"
+            },
+            {
+              "label": "s_ensNode",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_bytes32",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:30"
+            },
+            {
+              "label": "s_link",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_contract(LinkTokenInterface)1115",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:31"
+            },
+            {
+              "label": "s_oracle",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_contract(OperatorInterface)1195",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:32"
+            },
+            {
+              "label": "s_requestCount",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_uint256",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:33"
+            },
+            {
+              "label": "s_pendingRequests",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_mapping(t_bytes32,t_address)",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:34"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_bytes32": {
+              "label": "bytes32",
+              "numberOfBytes": "32"
+            },
+            "t_contract(ENSInterface)1020": {
+              "label": "contract ENSInterface",
+              "numberOfBytes": "20"
+            },
+            "t_contract(LinkTokenInterface)1115": {
+              "label": "contract LinkTokenInterface",
+              "numberOfBytes": "20"
+            },
+            "t_contract(OperatorInterface)1195": {
+              "label": "contract OperatorInterface",
+              "numberOfBytes": "20"
+            },
+            "t_mapping(t_bytes32,t_address)": {
+              "label": "mapping(bytes32 => address)",
+              "numberOfBytes": "32"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol:AggregatorV3Interface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\AggregatorV3Interface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "decimals()",
+          "description()",
+          "version()",
+          "getRoundData(uint80)",
+          "latestRoundData()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/ChainlinkRequestInterface.sol:ChainlinkRequestInterface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\ChainlinkRequestInterface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "oracleRequest(address,uint256,bytes32,address,bytes4,uint256,uint256,bytes)",
+          "cancelOracleRequest(bytes32,uint256,bytes4,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/ENSInterface.sol:ENSInterface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\ENSInterface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "setSubnodeOwner(bytes32,bytes32,address)",
+          "setResolver(bytes32,address)",
+          "setOwner(bytes32,address)",
+          "setTTL(bytes32,uint64)",
+          "owner(bytes32)",
+          "resolver(bytes32)",
+          "ttl(bytes32)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol:LinkTokenInterface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\LinkTokenInterface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "allowance(address,address)",
+          "approve(address,uint256)",
+          "balanceOf(address)",
+          "decimals()",
+          "decreaseApproval(address,uint256)",
+          "increaseApproval(address,uint256)",
+          "name()",
+          "symbol()",
+          "totalSupply()",
+          "transfer(address,uint256)",
+          "transferAndCall(address,uint256,bytes)",
+          "transferFrom(address,address,uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/OperatorInterface.sol:OperatorInterface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\OperatorInterface.sol:7",
+        "inherit": [
+          "@chainlink/contracts/src/v0.8/interfaces/ChainlinkRequestInterface.sol:ChainlinkRequestInterface",
+          "@chainlink/contracts/src/v0.8/interfaces/OracleInterface.sol:OracleInterface"
+        ],
+        "libraries": [],
+        "methods": [
+          "operatorRequest(address,uint256,bytes32,bytes4,uint256,uint256,bytes)",
+          "fulfillOracleRequest2(bytes32,uint256,address,bytes4,uint256,bytes)",
+          "ownerTransferAndCall(address,uint256,bytes)",
+          "distributeFunds(address payable[],uint256[])",
+          "getAuthorizedSenders()",
+          "setAuthorizedSenders(address[])",
+          "getForwarder()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/OracleInterface.sol:OracleInterface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\OracleInterface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "fulfillOracleRequest(bytes32,uint256,address,bytes4,uint256,bytes32)",
+          "isAuthorizedSender(address)",
+          "withdraw(address,uint256)",
+          "withdrawable()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/interfaces/PointerInterface.sol:PointerInterface": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\interfaces\\PointerInterface.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "getAddress()"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/vendor/BufferChainlink.sol:BufferChainlink": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\vendor\\BufferChainlink.sol:12",
+        "version": {
+          "withMetadata": "eb9f6629dcb20fff7bb3c104694ca23a419c66992d002380d0e8d6c68e1106a0",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/vendor/CBORChainlink.sol:CBORChainlink": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\vendor\\CBORChainlink.sol:6",
+        "version": {
+          "withMetadata": "d6502f67c514674a8d6b9398b70714bbdcd9abc0101004418c19bd8a8e79d7bc",
+          "withoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db",
+          "linkedWithoutMetadata": "a64c6cf9c6ba9368f5132c93a0196b3204a7963dbb4dd05dfddb4ab23126b8db"
+        },
+        "inherit": [],
+        "libraries": [
+          "@chainlink/contracts/src/v0.8/vendor/BufferChainlink.sol:BufferChainlink"
+        ],
+        "methods": [],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "@chainlink/contracts/src/v0.8/vendor/ENSResolver.sol:ENSResolver": {
+        "src": "@chainlink\\contracts\\src\\v0.8\\vendor\\ENSResolver.sol:4",
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "addr(bytes32)"
+        ],
+        "linkReferences": [],
+        "errors": [],
+        "layout": {
+          "storage": [],
+          "types": {},
+          "layoutVersion": "1.2",
+          "flat": false
+        },
+        "solcVersion": "0.8.18"
+      },
+      "contracts/AccuweatherConsumer.sol:AccuweatherConsumer": {
+        "src": "contracts\\AccuweatherConsumer.sol:72",
+        "version": {
+          "withMetadata": "3b0a245a2ddd65c439e9197ad5bc8c4d148f78127102eb63e64b1672e7ca88ed",
+          "withoutMetadata": "2a6bd7e6a2f14ed0b821e1376e70fe3d42e5db01d0d8b1665df20f271024b056",
+          "linkedWithoutMetadata": "2a6bd7e6a2f14ed0b821e1376e70fe3d42e5db01d0d8b1665df20f271024b056"
+        },
+        "inherit": [
+          "@chainlink/contracts/src/v0.8/ChainlinkClient.sol:ChainlinkClient"
+        ],
+        "libraries": [
+          "@chainlink/contracts/src/v0.8/Chainlink.sol:Chainlink"
+        ],
+        "methods": [
+          "(address,address)",
+          "requestLocation(bytes32,uint256,string,string)",
+          "requestCurrentConditions(bytes32,uint256,uint256,string)",
+          "requestLocationCurrentConditions(bytes32,uint256,string,string,string)",
+          "fulfillLocation(bytes32,bool,bytes)",
+          "fulfillCurrentConditions(bytes32,bytes)",
+          "fulfillLocationCurrentConditions(bytes32,bool,bytes,bytes)",
+          "getOracleAddress()",
+          "setOracle(address)",
+          "withdrawLink()"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "AccuweatherConsumer",
+            "src": "contracts\\AccuweatherConsumer.sol:110"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "s_ens",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_contract(ENSInterface)1020",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:29"
+            },
+            {
+              "label": "s_ensNode",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_bytes32",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:30"
+            },
+            {
+              "label": "s_link",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_contract(LinkTokenInterface)1115",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:31"
+            },
+            {
+              "label": "s_oracle",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_contract(OperatorInterface)1195",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:32"
+            },
+            {
+              "label": "s_requestCount",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_uint256",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:33"
+            },
+            {
+              "label": "s_pendingRequests",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_mapping(t_bytes32,t_address)",
+              "contract": "ChainlinkClient",
+              "src": "@chainlink\\contracts\\src\\v0.8\\ChainlinkClient.sol:34"
+            },
+            {
+              "label": "requestIdCurrentConditionsResult",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_mapping(t_bytes32,t_struct(CurrentConditionsResult)2274_storage)",
+              "contract": "AccuweatherConsumer",
+              "src": "contracts\\AccuweatherConsumer.sol:102"
+            },
+            {
+              "label": "requestIdLocationResult",
+              "offset": 0,
+              "slot": "7",
+              "type": "t_mapping(t_bytes32,t_struct(LocationResult)2249_storage)",
+              "contract": "AccuweatherConsumer",
+              "src": "contracts\\AccuweatherConsumer.sol:103"
+            },
+            {
+              "label": "requestIdRequestParams",
+              "offset": 0,
+              "slot": "8",
+              "type": "t_mapping(t_bytes32,t_struct(RequestParams)2242_storage)",
+              "contract": "AccuweatherConsumer",
+              "src": "contracts\\AccuweatherConsumer.sol:104"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_bytes2": {
+              "label": "bytes2",
+              "numberOfBytes": "2"
+            },
+            "t_bytes32": {
+              "label": "bytes32",
+              "numberOfBytes": "32"
+            },
+            "t_contract(ENSInterface)1020": {
+              "label": "contract ENSInterface",
+              "numberOfBytes": "20"
+            },
+            "t_contract(LinkTokenInterface)1115": {
+              "label": "contract LinkTokenInterface",
+              "numberOfBytes": "20"
+            },
+            "t_contract(OperatorInterface)1195": {
+              "label": "contract OperatorInterface",
+              "numberOfBytes": "20"
+            },
+            "t_int16": {
+              "label": "int16",
+              "numberOfBytes": "2"
+            },
+            "t_mapping(t_bytes32,t_address)": {
+              "label": "mapping(bytes32 => address)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_bytes32,t_struct(CurrentConditionsResult)2274_storage)": {
+              "label": "mapping(bytes32 => struct AccuweatherConsumer.CurrentConditionsResult)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_bytes32,t_struct(LocationResult)2249_storage)": {
+              "label": "mapping(bytes32 => struct AccuweatherConsumer.LocationResult)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_bytes32,t_struct(RequestParams)2242_storage)": {
+              "label": "mapping(bytes32 => struct AccuweatherConsumer.RequestParams)",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_struct(CurrentConditionsResult)2274_storage": {
+              "label": "struct AccuweatherConsumer.CurrentConditionsResult",
+              "members": [
+                {
+                  "label": "timestamp",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "precipitationPast12Hours",
+                  "type": "t_uint24",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "precipitationPast24Hours",
+                  "type": "t_uint24",
+                  "offset": 3,
+                  "slot": "1"
+                },
+                {
+                  "label": "precipitationPastHour",
+                  "type": "t_uint24",
+                  "offset": 6,
+                  "slot": "1"
+                },
+                {
+                  "label": "pressure",
+                  "type": "t_uint24",
+                  "offset": 9,
+                  "slot": "1"
+                },
+                {
+                  "label": "temperature",
+                  "type": "t_int16",
+                  "offset": 12,
+                  "slot": "1"
+                },
+                {
+                  "label": "windDirectionDegrees",
+                  "type": "t_uint16",
+                  "offset": 14,
+                  "slot": "1"
+                },
+                {
+                  "label": "windSpeed",
+                  "type": "t_uint16",
+                  "offset": 16,
+                  "slot": "1"
+                },
+                {
+                  "label": "precipitationType",
+                  "type": "t_uint8",
+                  "offset": 18,
+                  "slot": "1"
+                },
+                {
+                  "label": "relativeHumidity",
+                  "type": "t_uint8",
+                  "offset": 19,
+                  "slot": "1"
+                },
+                {
+                  "label": "uvIndex",
+                  "type": "t_uint8",
+                  "offset": 20,
+                  "slot": "1"
+                },
+                {
+                  "label": "weatherIcon",
+                  "type": "t_uint8",
+                  "offset": 21,
+                  "slot": "1"
+                }
+              ],
+              "numberOfBytes": "64"
+            },
+            "t_struct(LocationResult)2249_storage": {
+              "label": "struct AccuweatherConsumer.LocationResult",
+              "members": [
+                {
+                  "label": "locationKey",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "name",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "countryCode",
+                  "type": "t_bytes2",
+                  "offset": 0,
+                  "slot": "2"
+                }
+              ],
+              "numberOfBytes": "96"
+            },
+            "t_struct(RequestParams)2242_storage": {
+              "label": "struct AccuweatherConsumer.RequestParams",
+              "members": [
+                {
+                  "label": "locationKey",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "endpoint",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "lat",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "lon",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "3"
+                },
+                {
+                  "label": "units",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "4"
+                }
+              ],
+              "numberOfBytes": "160"
+            },
+            "t_uint16": {
+              "label": "uint16",
+              "numberOfBytes": "2"
+            },
+            "t_uint24": {
+              "label": "uint24",
+              "numberOfBytes": "3"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            },
+            "t_uint8": {
+              "label": "uint8",
+              "numberOfBytes": "1"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      },
+      "contracts/Croplink.sol:CropLink": {
+        "src": "contracts\\Croplink.sol:7",
+        "version": {
+          "withMetadata": "908321dcb5b5a5de237a64cd4172f795decd0bbb9299bda0bd1772f43fcab864",
+          "withoutMetadata": "4070bf0e993186860511f5e20824df3cb94d729330153fbb47ca5b4ccdd86140",
+          "linkedWithoutMetadata": "4070bf0e993186860511f5e20824df3cb94d729330153fbb47ca5b4ccdd86140"
+        },
+        "inherit": [],
+        "libraries": [],
+        "methods": [
+          "(address,address)",
+          "registerAsFarmer()",
+          "registerAsBuyer()",
+          "verifyFarmer()",
+          "verifyBuyer()",
+          "claimTreasury()",
+          "addProduce(string,uint256,uint256)",
+          "getFarmers()",
+          "getBuyers()",
+          "getAllProduceList()",
+          "getProduceList(address)",
+          "getMarketPrices()",
+          "purchaseProduce(address,uint256)",
+          "editProduce(uint256,string,uint256,uint256)",
+          "deleteProduce(uint256)",
+          "setMarketPrice(uint256)"
+        ],
+        "linkReferences": [],
+        "errors": [
+          {
+            "kind": "constructor",
+            "contract": "CropLink",
+            "src": "contracts\\Croplink.sol:35"
+          }
+        ],
+        "layout": {
+          "storage": [
+            {
+              "label": "accuweatherConsumer",
+              "offset": 0,
+              "slot": "0",
+              "type": "t_contract(AccuweatherConsumer)2733",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:8"
+            },
+            {
+              "label": "treasury",
+              "offset": 0,
+              "slot": "1",
+              "type": "t_address_payable",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:9"
+            },
+            {
+              "label": "treasuryBalance",
+              "offset": 0,
+              "slot": "2",
+              "type": "t_uint256",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:10"
+            },
+            {
+              "label": "farmerAddresses",
+              "offset": 0,
+              "slot": "3",
+              "type": "t_array(t_address)dyn_storage",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:24"
+            },
+            {
+              "label": "buyerAddresses",
+              "offset": 0,
+              "slot": "4",
+              "type": "t_array(t_address)dyn_storage",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:25"
+            },
+            {
+              "label": "farmers",
+              "offset": 0,
+              "slot": "5",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:27"
+            },
+            {
+              "label": "buyers",
+              "offset": 0,
+              "slot": "6",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:28"
+            },
+            {
+              "label": "farmerVerifications",
+              "offset": 0,
+              "slot": "7",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:29"
+            },
+            {
+              "label": "buyerVerifications",
+              "offset": 0,
+              "slot": "8",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:30"
+            },
+            {
+              "label": "produceList",
+              "offset": 0,
+              "slot": "9",
+              "type": "t_mapping(t_address,t_array(t_struct(Produce)2753_storage)dyn_storage)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:31"
+            },
+            {
+              "label": "marketPrices",
+              "offset": 0,
+              "slot": "10",
+              "type": "t_mapping(t_address,t_struct(MarketPrice)2758_storage)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:32"
+            },
+            {
+              "label": "marketPriceVerified",
+              "offset": 0,
+              "slot": "11",
+              "type": "t_mapping(t_address,t_bool)",
+              "contract": "CropLink",
+              "src": "contracts\\Croplink.sol:33"
+            }
+          ],
+          "types": {
+            "t_address": {
+              "label": "address",
+              "numberOfBytes": "20"
+            },
+            "t_address_payable": {
+              "label": "address payable",
+              "numberOfBytes": "20"
+            },
+            "t_array(t_address)dyn_storage": {
+              "label": "address[]",
+              "numberOfBytes": "32"
+            },
+            "t_array(t_struct(Produce)2753_storage)dyn_storage": {
+              "label": "struct CropLink.Produce[]",
+              "numberOfBytes": "32"
+            },
+            "t_bool": {
+              "label": "bool",
+              "numberOfBytes": "1"
+            },
+            "t_contract(AccuweatherConsumer)2733": {
+              "label": "contract AccuweatherConsumer",
+              "numberOfBytes": "20"
+            },
+            "t_mapping(t_address,t_array(t_struct(Produce)2753_storage)dyn_storage)": {
+              "label": "mapping(address => struct CropLink.Produce[])",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_bool)": {
+              "label": "mapping(address => bool)",
+              "numberOfBytes": "32"
+            },
+            "t_mapping(t_address,t_struct(MarketPrice)2758_storage)": {
+              "label": "mapping(address => struct CropLink.MarketPrice)",
+              "numberOfBytes": "32"
+            },
+            "t_string_storage": {
+              "label": "string",
+              "numberOfBytes": "32"
+            },
+            "t_struct(MarketPrice)2758_storage": {
+              "label": "struct CropLink.MarketPrice",
+              "members": [
+                {
+                  "label": "buyer",
+                  "type": "t_address",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "price",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                }
+              ],
+              "numberOfBytes": "64"
+            },
+            "t_struct(Produce)2753_storage": {
+              "label": "struct CropLink.Produce",
+              "members": [
+                {
+                  "label": "name",
+                  "type": "t_string_storage",
+                  "offset": 0,
+                  "slot": "0"
+                },
+                {
+                  "label": "quantity",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "1"
+                },
+                {
+                  "label": "price",
+                  "type": "t_uint256",
+                  "offset": 0,
+                  "slot": "2"
+                },
+                {
+                  "label": "sold",
+                  "type": "t_bool",
+                  "offset": 0,
+                  "slot": "3"
+                }
+              ],
+              "numberOfBytes": "128"
+            },
+            "t_uint256": {
+              "label": "uint256",
+              "numberOfBytes": "32"
+            }
+          },
+          "layoutVersion": "1.2",
+          "flat": true
+        },
+        "solcVersion": "0.8.18"
+      }
+    }
+  ]
+}
