@@ -1,4 +1,5 @@
 const expressRoutes = require("express");
+const { withIronSessionApiRoute } = require("iron-session/next");
 const { SiweMessage } = require("siwe");
 
 const ddb = require("../controllers/dynamo");
@@ -14,7 +15,6 @@ const ironOptions = {
     secure: false,
   },
 };
-const { withIronSessionApiRoute } = require("iron-session/next");
 
 const router = expressRoutes.Router();
 

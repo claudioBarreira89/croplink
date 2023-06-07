@@ -14,6 +14,8 @@ contract CropLink {
         uint256 quantity;
         uint256 price;
         bool sold;
+        uint256 index;
+        address farmer;
     }
 
     struct MarketPrice {
@@ -112,7 +114,8 @@ contract CropLink {
         uint256 _price
     ) public {
         require(farmers[msg.sender], "Only registered farmers can add produce");
-        produceList[msg.sender].push(Produce(_name, _quantity, _price, false));
+        uint256 index = produceList[msg.sender].length;
+        produceList[msg.sender].push(Produce(_name, _quantity, _price, false, index, msg.sender));
     }
 
     function getFarmers() public view returns (address[] memory) {
@@ -162,15 +165,15 @@ contract CropLink {
         return allPrices;
     }
 
-    function purchaseProduce(address _farmer, uint256 _index) public payable {
+    function purchaseProduce(address payable _farmer, uint256 _index) public payable {
         require(
             buyers[msg.sender],
             "Only registered buyers can purchase produce"
         );
-        require(
-            buyerVerifications[msg.sender],
-            "Only verified buyers can purchase produce"
-        );
+        // require(
+        //     buyerVerifications[msg.sender],
+        //     "Only verified buyers can purchase produce"
+        // );
         Produce[] storage produces = produceList[_farmer];
         require(_index < produces.length, "Invalid produce index");
         Produce storage produce = produces[_index];
@@ -183,11 +186,12 @@ contract CropLink {
             );
             produce.price = marketPrices[_farmer].price;
         } else {
-            require(msg.value == produce.price, "Incorrect amount of funds");
+            require(msg.value >= produce.price * produce.quantity, "Incorrect amount of funds");
         }
 
         produce.sold = true;
         removeSoldProduce(_farmer, _index);
+        _farmer.transfer(msg.value);
     }
 
     function editProduce(
@@ -218,17 +222,15 @@ contract CropLink {
         require(_index < produces.length, "Invalid produce index");
         Produce storage produce = produces[_index];
         require(!produce.sold, "Cannot delete sold produce");
-        // Move the last element to the position of the item to be deleted
-        produces[_index] = produces[produces.length - 1];
-        produces.pop();
+        //Deleted the element at the index without modifying array len
+        delete produces[_index];
     }
 
     function removeSoldProduce(address _farmer, uint256 _index) internal {
         Produce[] storage produces = produceList[_farmer];
         require(_index < produces.length, "Invalid produce index");
-        // Move the last element to the position of the item to be deleted
-        produces[_index] = produces[produces.length - 1];
-        produces.pop();
+        //Deleted the element at the index without modifying array len
+        delete produces[_index];
     }
 
     function setMarketPrice(uint256 _price) public {
@@ -386,3 +388,4 @@ contract CropLink {
             keccak256(abi.encodePacked("rainy")));
     }
 }
+

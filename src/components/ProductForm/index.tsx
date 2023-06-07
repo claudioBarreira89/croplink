@@ -12,10 +12,13 @@ import {
   Stack,
   useToast,
 } from "@chakra-ui/react";
+import { ethers } from "ethers";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { useContractWrite, usePrepareContractWrite } from "wagmi";
 
 import { abi, contractAddress } from "../../../constants/croplink";
+
+import { parseEthToWei } from "@/utils/parseProductPrice";
 
 const ProductForm: FC<{
   setHash: (hash?: `0x${string}`) => void;
@@ -29,7 +32,7 @@ const ProductForm: FC<{
     address: contractAddress,
     abi,
     functionName: "addProduce",
-    args: [name, price, quantity],
+    args: [name, quantity, parseEthToWei(price)],
   });
 
   const { data, write, isLoading } = useContractWrite({
@@ -65,10 +68,10 @@ const ProductForm: FC<{
             </FormControl>
 
             <FormControl id="product-price" isRequired>
-              <FormLabel>Price</FormLabel>
+              <FormLabel>Price in ETH</FormLabel>
               <Input
                 type="number"
-                onChange={(e) => setPrice(parseInt(e.target.value))}
+                onChange={(e) => setPrice(parseFloat(e.target.value))}
               />
             </FormControl>
 

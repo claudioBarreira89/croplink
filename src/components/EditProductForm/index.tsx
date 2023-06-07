@@ -21,13 +21,15 @@ import {
 
 import { abi, contractAddress } from "../../../constants/croplink";
 
+import { parseEthToWei, parseWeiToEth } from "@/utils/parseProductPrice";
+
 const EditProductForm: FC<{
   details: { index: number; name: string; price: number; quantity: number };
   refetch: () => void;
   onClose: () => void;
 }> = ({ details, refetch, onClose }) => {
   const [name, setName] = useState<string>(details.name);
-  const [price, setPrice] = useState<number>(details.price);
+  const [price, setPrice] = useState<string>(parseWeiToEth(details.price));
   const [quantity, setQuantity] = useState<number>(details.quantity);
   const toast = useToast();
 
@@ -35,7 +37,7 @@ const EditProductForm: FC<{
     address: contractAddress,
     abi,
     functionName: "editProduce",
-    args: [details.index, name, quantity, price],
+    args: [details.index, name, quantity, parseEthToWei(Number(price))],
   });
 
   const { data, write, isLoading } = useContractWrite(config);
@@ -81,11 +83,13 @@ const EditProductForm: FC<{
             </FormControl>
 
             <FormControl id="product-price" isRequired>
-              <FormLabel>Price</FormLabel>
+              <FormLabel>Price in ETH</FormLabel>
               <Input
                 type="number"
-                value={price.toString()}
-                onChange={(e) => setPrice(parseInt(e.target.value))}
+                value={price}
+                onChange={(e) =>
+                  setPrice(parseFloat(e.target.value).toString())
+                }
               />
             </FormControl>
 
