@@ -42,12 +42,16 @@ const BuyProductForm: FC<{
     abi,
     functionName: "purchaseProduce",
     args: [details?.farmer, details?.index],
-    value: details?.price * details?.quantity,
+    value: (details ? details?.price * details?.quantity : 0) as any,
   });
 
   const { data, write, isLoading } = useContractWrite(config);
 
-  const { isLoading: isBuyLoading, isSuccess } = useWaitForTransaction({
+  const {
+    isLoading: isBuyLoading,
+    isSuccess,
+    error: transactionError,
+  } = useWaitForTransaction({
     hash: data?.hash,
   });
 
@@ -56,16 +60,26 @@ const BuyProductForm: FC<{
   };
 
   useEffect(() => {
+    if (transactionError) {
+      toast({
+        title: "Transaction error buying product",
+        description: transactionError.message,
+        status: "error",
+        duration: 10000,
+        isClosable: true,
+      });
+    }
+
     if (error) {
       toast({
-        title: "Error buying product",
+        title: "Simulation error buying product",
         description: error.message,
         status: "error",
         duration: 10000,
         isClosable: true,
       });
     }
-  }, [error]);
+  }, [error, transactionError, toast]);
 
   useEffect(() => {
     if (isSuccess) {
