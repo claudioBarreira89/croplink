@@ -11,9 +11,15 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FaEthereum, FaCheckCircle } from "react-icons/fa";
-import { useContractWrite, usePrepareContractWrite } from "wagmi";
+import {
+  useAccount,
+  useContractRead,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
 
 import { abi, contractAddress } from "../../../constants/croplink";
 import FileUploader from "../FileUploader";
@@ -27,11 +33,20 @@ function Benefits() {
   const { data = {}, isLoading: isAuthLoading, refetch } = useAuth();
   const { id, isVerified } = data;
 
+  const { address } = useAccount();
   const [verificationStep, setVerificationStep] = useState(1);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
 
   const [isVerificationLoading, setIsVerificationLoading] = useState(false);
   const [isClaimingLoading, setIsClaimingLoading] = useState(false);
+
+  const { data: verificationData, isLoading: verificationLoading } =
+    useContractRead({
+      address: contractAddress,
+      abi,
+      functionName: "farmerVerifications",
+      args: [address],
+    });
 
   const { config } = usePrepareContractWrite({
     address: contractAddress,
@@ -45,6 +60,7 @@ function Benefits() {
   });
 
   const {
+    data: verifyFarmerData,
     write: verifyFarmer,
     isLoading: isVerifyFarmerLoading,
     isError: isVerifyFarmerError,
@@ -63,29 +79,31 @@ function Benefits() {
     setSelectedFile(e.target.files?.item(0)?.name ?? null);
   };
 
-  const handleVerification = async () => {
-    setIsVerificationLoading(true);
+  const handleVerification = useCallback(() => {
+    async () => {
+      setIsVerificationLoading(true);
 
-    try {
-      await axios.put(`/api/ddb/users/${id}/setIsVerified`, {
-        verified: true,
-      });
-      await refetch();
+      try {
+        await axios.put(`/api/ddb/users/${id}/setIsVerified`, {
+          verified: true,
+        });
+        await refetch();
 
-      toast({
-        title: "Verified successfully",
-        status: "success",
-        duration: 2000,
-        isClosable: true,
-      });
+        toast({
+          title: "Verified successfully",
+          status: "success",
+          duration: 2000,
+          isClosable: true,
+        });
 
-      setVerificationStep(2);
-    } catch (error) {
-      console.error(error);
-    }
+        setVerificationStep(2);
+      } catch (error) {
+        console.error(error);
+      }
 
-    setIsVerificationLoading(false);
-  };
+      setIsVerificationLoading(false);
+    };
+  }, [id, refetch, toast]);
 
   const handleClaimTreasury = async () => {
     setIsClaimingLoading(true);
@@ -108,6 +126,16 @@ function Benefits() {
 
     setIsVerificationLoading(false);
   };
+
+  const { isLoading: waitForLoading, isSuccess } = useWaitForTransaction({
+    hash: verifyFarmerData?.hash,
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      handleVerification();
+    }
+  }, [handleVerification, isSuccess]);
 
   const renderStepContent = () => {
     switch (verificationStep) {
@@ -169,7 +197,7 @@ function Benefits() {
               rounded="full"
               onClick={() => setVerificationStep(0)}
               width={300}
-              isLoading={isVerificationLoading}
+              isLoading={isVerificationLoading || waitForLoading}
             >
               Continue
             </Button>
@@ -182,7 +210,7 @@ function Benefits() {
 
   const cardBg = useColorModeValue("gray.50", "gray.900");
 
-  if (isAuthLoading) return <LoadingPage />;
+  if (isAuthLoading || verificationLoading) return <LoadingPage />;
 
   return (
     <Container maxW={"7xl"} my={10}>
@@ -193,7 +221,7 @@ function Benefits() {
 
         <Card>
           <CardBody bg={cardBg} textAlign={"center"}>
-            {isVerified && verificationStep !== 2 ? (
+            {verificationData && verificationStep !== 2 ? (
               <>
                 <Box>
                   <Heading size="md" mb="5" textAlign={"center"}>

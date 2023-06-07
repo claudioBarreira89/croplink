@@ -486,7 +486,20 @@ export const abi = [
         type: "address",
       },
     ],
-    stateMutability: "view",
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address payable",
+        name: "_buyer",
+        type: "address",
+      },
+    ],
+    name: "sellProduceAtMarketPrice",
+    outputs: [],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {

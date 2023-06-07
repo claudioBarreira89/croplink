@@ -6,7 +6,7 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 
 const FindBuyerPage = () => {
   const FindBuyer = dynamic(
-    () => import("../../components/FindBuyer").then((res) => res.default),
+    () => import("@/components/FindBuyer").then((res) => res.default),
     {
       ssr: false,
     }

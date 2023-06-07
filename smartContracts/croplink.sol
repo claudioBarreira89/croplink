@@ -2,6 +2,8 @@
 pragma solidity ^0.8.0;
 
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
+import "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol";
 
 contract CropLink {
     address payable public treasury;
@@ -21,6 +23,21 @@ contract CropLink {
         uint256 price;
     }
 
+    struct WeatherData {
+        string weatherCondition;
+        bool isRainy;
+    }
+
+    struct TruflationData {
+        uint256 truflationRate;
+        // Add any other relevant Truflation data fields
+    }
+
+    AggregatorV3Interface private demandAggregator;
+    AggregatorV3Interface private supplyAggregator;
+    AggregatorV3Interface private truflationAggregator;
+    LinkTokenInterface private link;
+
     address[] public farmerAddresses;
     address[] public buyerAddresses;
 
@@ -32,7 +49,18 @@ contract CropLink {
     mapping(address => MarketPrice) public marketPrices;
     mapping(address => bool) public marketPriceVerified;
 
+    mapping(bytes32 => address) private requestIdToAddress;
+    mapping(bytes32 => uint256) private requestIdToIndex;
+
+    mapping(bytes32 => WeatherData) private requestIdToWeatherData;
+    mapping(bytes32 => TruflationData) private requestIdToTruflationData;
+    mapping(address => TruflationData) public truflationDataMap;
+
     constructor() {
+        // accuweatherConsumer = new AccuweatherConsumer(
+        //     linkAddress,
+        //     oracleAddress
+        // );
         treasury = payable(msg.sender);
         treasuryBalance = 5 ether;
     }
@@ -212,6 +240,152 @@ contract CropLink {
         );
         marketPrices[msg.sender] = MarketPrice(msg.sender, _price);
         marketPriceVerified[msg.sender] = true;
+    }
+
+    // Chainlink Integration
+
+    // function updateProduceDemand() public {
+    //     bytes32 requestId = requestDemandData();
+    //     requestIdToAddress[requestId] = msg.sender;
+    // }
+
+    // function fulfillProduceDemand(
+    //     bytes32 _requestId,
+    //     int256 _demand
+    // ) public recordKeeperAction(_requestId) {
+    //     address farmer = requestIdToAddress[_requestId];
+    //     uint256 index = requestIdToIndex[_requestId];
+
+    //     require(farmers[farmer], "Invalid farmer address");
+
+    //     Produce[] storage produces = produceList[farmer];
+    //     require(index < produces.length, "Invalid produce index");
+    //     Produce storage produce = produces[index];
+    //     require(!produce.sold, "Produce has already been sold");
+
+    //     require(_demand > 0, "Invalid demand value");
+    //     produce.quantity = uint256(_demand);
+    // }
+
+    // function updateProduceSupply() public {
+    //     bytes32 requestId = requestSupplyData();
+    //     requestIdToAddress[requestId] = msg.sender;
+    // }
+
+    // function fulfillProduceSupply(
+    //     bytes32 _requestId,
+    //     int256 _supply
+    // ) public recordKeeperAction(_requestId) {
+    //     address farmer = requestIdToAddress[_requestId];
+    //     uint256 index = requestIdToIndex[_requestId];
+
+    //     require(farmers[farmer], "Invalid farmer address");
+
+    //     Produce[] storage produces = produceList[farmer];
+    //     require(index < produces.length, "Invalid produce index");
+    //     Produce storage produce = produces[index];
+    //     require(!produce.sold, "Produce has already been sold");
+
+    //     require(_supply > 0, "Invalid supply value");
+    //     produce.quantity = uint256(_supply);
+    // }
+
+    function calculateAdjustedPrice(
+        address _farmer,
+        uint256 _index
+    ) internal view returns (uint256) {
+        uint256 originalPrice = produceList[_farmer][_index].price;
+        uint256 truflationRate = truflationDataMap[_farmer].truflationRate;
+        uint256 adjustedPrice = (originalPrice * truflationRate) / 100; // Adjust the price based on the truflation rate
+        return adjustedPrice;
+    }
+
+    // Treasury Functions
+
+    // function updateTruflationData() public {
+    //     bytes32 requestId = requestTruflationData();
+    //     requestIdToAddress[requestId] = msg.sender;
+    // }
+
+    // function fulfillTruflationData(
+    //     bytes32 _requestId,
+    //     int256 _truflation
+    // ) public recordKeeperAction(_requestId) {
+    //     address farmer = requestIdToAddress[_requestId];
+
+    //     require(farmers[farmer], "Invalid farmer address");
+
+    //     TruflationData storage truflationData = requestIdToTruflationData[
+    //         _requestId
+    //     ];
+    //     truflationData.truflationRate = uint256(_truflation);
+
+    //     // Process Truflation data
+    //     // ...
+    // }
+
+    // Selling Produce at Market Price
+
+    // function checkWeather() public {
+    //     bytes32 requestId = requestWeatherData();
+    //     requestIdToAddress[requestId] = msg.sender;
+    // }
+
+    // function fulfillWeather(
+    //     bytes32 _requestId,
+    //     string memory _weatherCondition
+    // ) public recordKeeperAction(_requestId) {
+    //     address buyer = requestIdToAddress[_requestId];
+
+    //     require(buyers[buyer], "Invalid buyer address");
+    //     require(
+    //         buyerVerifications[buyer],
+    //         "Only verified buyers can purchase produce"
+    //     );
+
+    //     WeatherData storage weatherData = requestIdToWeatherData[_requestId];
+    //     weatherData.weatherCondition = _weatherCondition;
+    //     weatherData.isRainy = isRainy(_weatherCondition);
+
+    //     if (weatherData.isRainy) {
+    //         sellProduceAtMarketPrice(buyer);
+    //     }
+    // }
+
+    function sellProduceAtMarketPrice(address payable _buyer) public {
+        Produce[] storage produces = produceList[msg.sender];
+
+        for (uint256 i = 0; i < produces.length; i++) {
+            Produce storage produce = produces[i];
+
+            if (!produce.sold) {
+                transferFunds(_buyer, produce.price);
+                produce.sold = true;
+            }
+        }
+    }
+
+    function transferFunds(
+        address payable _recipient,
+        uint256 _amount
+    ) internal {
+        require(_amount > 0, "Invalid amount");
+        require(
+            treasuryBalance >= _amount,
+            "Insufficient funds in the treasury"
+        );
+
+        _recipient.transfer(_amount);
+        treasuryBalance -= _amount;
+    }
+
+    // Helper Functions
+
+    function isRainy(
+        string memory _weatherCondition
+    ) internal pure returns (bool) {
+        return (keccak256(abi.encodePacked(_weatherCondition)) ==
+            keccak256(abi.encodePacked("rainy")));
     }
 }
 
