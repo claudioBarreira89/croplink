@@ -21,10 +21,14 @@ import Sidebar from "../Sidebar";
 
 import useDeleteActions from "./useDeleteActions";
 
+import { parseWeiToEth } from "@/utils/parseProductPrice";
+
 type Product = {
   name: string;
-  price: BigInt;
-  quantity: BigInt;
+  price: number;
+  quantity: number;
+  index: number;
+  farmer: string;
 };
 
 const MyListings: FC = () => {
@@ -97,54 +101,56 @@ const MyListings: FC = () => {
             </Flex>
 
             <VStack spacing={3} marginBottom={5}>
-              {data?.map((product: Product, i: number) => (
-                <Box
-                  key={i}
-                  borderWidth="1px"
-                  borderRadius="lg"
-                  padding={3}
-                  width="100%"
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Box>
-                    <Text
-                      fontSize="xl"
-                      fontWeight="semibold"
-                      lineHeight="tight"
-                    >
-                      {product.name}
-                    </Text>
-                    <Text fontSize="sm">
-                      Price: {product.price.toString()} - Stock:{" "}
-                      {product.quantity.toString()}
-                    </Text>
-                  </Box>
+              {data
+                ?.filter((product: Product) => product.name.length)
+                .map((product: Product, i: number) => (
+                  <Box
+                    key={i}
+                    borderWidth="1px"
+                    borderRadius="lg"
+                    padding={3}
+                    width="100%"
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Box>
+                      <Text
+                        fontSize="xl"
+                        fontWeight="semibold"
+                        lineHeight="tight"
+                      >
+                        {product.name}
+                      </Text>
+                      <Text fontSize="sm">
+                        Price: {parseWeiToEth(product.price).toString()} ETH -
+                        Stock: {product.quantity.toString()}
+                      </Text>
+                    </Box>
 
-                  <Box>
-                    <Button
-                      colorScheme="teal"
-                      variant="outline"
-                      marginRight={2}
-                      isDisabled={deleteLoading === i}
-                      onClick={() => handleEdit(i)}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      colorScheme="red"
-                      variant="outline"
-                      isLoading={deleteLoading === i}
-                      onClick={() => {
-                        onDeleteItem(i);
-                      }}
-                    >
-                      Delete
-                    </Button>
+                    <Box>
+                      <Button
+                        colorScheme="teal"
+                        variant="outline"
+                        marginRight={2}
+                        isDisabled={deleteLoading === i}
+                        onClick={() => handleEdit(product.index)}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        colorScheme="red"
+                        variant="outline"
+                        isLoading={deleteLoading === i}
+                        onClick={() => {
+                          onDeleteItem(i);
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </Box>
                   </Box>
-                </Box>
-              ))}
+                ))}
             </VStack>
           </Box>
         </Sidebar>

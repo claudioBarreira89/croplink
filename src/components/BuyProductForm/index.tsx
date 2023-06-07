@@ -1,18 +1,17 @@
 import {
   Button,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
   FormControl,
   FormLabel,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
   ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Stack,
   useToast,
-  Flex,
 } from "@chakra-ui/react";
-import React, { FC, useCallback, useEffect, useState } from "react";
+import { FC, useEffect } from "react";
 import {
   useContractWrite,
   usePrepareContractWrite,
@@ -20,6 +19,8 @@ import {
 } from "wagmi";
 
 import { abi, contractAddress } from "../../../constants/croplink";
+
+import { parseWeiToEth } from "@/utils/parseProductPrice";
 
 type Product = {
   name: string;
@@ -32,17 +33,17 @@ type Product = {
 const BuyProductForm: FC<{
   details: Product | null;
   onClose: () => void;
-}> = ({ details, onClose }) => {
+  refetchListings: () => void;
+}> = ({ details, onClose, refetchListings }) => {
   const toast = useToast();
 
-  const { config } = usePrepareContractWrite({
+  const { config, error } = usePrepareContractWrite({
     address: contractAddress,
     abi,
     functionName: "purchaseProduce",
     args: [details?.farmer, details?.index],
+    value: details?.price * details?.quantity,
   });
-
-  console.log(details);
 
   const { data, write, isLoading } = useContractWrite(config);
 
@@ -50,13 +51,26 @@ const BuyProductForm: FC<{
     hash: data?.hash,
   });
 
-  const onBuyProduct = useCallback(() => {
+  const onBuyProduct = () => {
     if (write) write();
-  }, [write]);
+  };
+
+  useEffect(() => {
+    if (error) {
+      toast({
+        title: "Error buying product",
+        description: error.message,
+        status: "error",
+        duration: 10000,
+        isClosable: true,
+      });
+    }
+  }, [error]);
 
   useEffect(() => {
     if (isSuccess) {
       onClose();
+      refetchListings();
 
       toast({
         title: "Product sale successful",
@@ -65,7 +79,7 @@ const BuyProductForm: FC<{
         isClosable: true,
       });
     }
-  }, [isSuccess, onClose, toast]);
+  }, [isSuccess, onClose, toast, refetchListings]);
 
   if (!details) return null;
 
@@ -82,7 +96,7 @@ const BuyProductForm: FC<{
             </FormControl>
 
             <FormControl id="product-price">
-              <FormLabel>{`Price: ${details.price}`}</FormLabel>
+              <FormLabel>{`Price: ${parseWeiToEth(details.price)}`}</FormLabel>
             </FormControl>
 
             <FormControl id="product-quantity">
@@ -90,9 +104,9 @@ const BuyProductForm: FC<{
             </FormControl>
 
             <FormControl id="total">
-              <FormLabel fontWeight="bold">{`Total: ${
+              <FormLabel fontWeight="bold">{`Total: ${parseWeiToEth(
                 details.quantity * details.price
-              }`}</FormLabel>
+              )} ETH`}</FormLabel>
             </FormControl>
           </Stack>
         </ModalBody>
