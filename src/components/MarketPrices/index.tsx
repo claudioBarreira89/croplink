@@ -37,10 +37,10 @@ import { abi, contractAddress } from "../../../constants/croplink";
 import LoadingPage from "../LoadingPage";
 import Sidebar from "../Sidebar";
 
-import { parseWeiToEth } from "@/utils/parseProductPrice";
+import { parseEthToWei, parseWeiToEth } from "@/utils/parseProductPrice";
 
 const MarketPrices: FC = () => {
-  const [price, setPrice] = useState<number | undefined>();
+  const [price, setPrice] = useState<number | undefined>(0);
 
   const { address } = useAccount();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -55,19 +55,14 @@ const MarketPrices: FC = () => {
     functionName: "getMarketPrices",
   }) as any;
 
-  const { config } = usePrepareContractWrite({
-    address: contractAddress,
-    abi,
-    functionName: "setMarketPrice",
-    args: [price],
-  });
-
   const {
     data: setMarketPriceData,
     write,
     isLoading,
   } = useContractWrite({
-    ...config,
+    address: contractAddress,
+    abi,
+    functionName: "setMarketPrice",
     onSuccess: () => {
       onClose();
       setPrice(undefined);
@@ -113,16 +108,16 @@ const MarketPrices: FC = () => {
                 <Thead>
                   <Tr>
                     <Th>Address</Th>
-                    <Th>Price</Th>
+                    <Th>Price in ETH</Th>
                     <Th />
                   </Tr>
                 </Thead>
                 <Tbody>
                   {marketPrices?.map((item: any, i: number) => (
                     <Tr key={i} bg={item.buyer === address ? "green.200" : ""}>
-                      <Td>{item.buyer}</Td>
-                      <Td>{parseWeiToEth(item.price).toString()}</Td>
-                      <Td />
+                      <Th>{item.buyer}</Th>
+                      <Th>{parseWeiToEth(item.price).toString()}</Th>
+                      <Th />
                     </Tr>
                   ))}
                 </Tbody>
@@ -137,7 +132,13 @@ const MarketPrices: FC = () => {
         isLoading={isLoading}
         setPrice={setPrice}
         onClose={onClose}
-        onSubmit={write}
+        onSubmit={() => {
+          if (write) {
+            write({
+              value: BigInt(parseEthToWei(price || 0)),
+            });
+          }
+        }}
       />
     </>
   );
@@ -160,11 +161,8 @@ const AddMarketPriceModal = ({
         <ModalBody>
           <Stack spacing={3}>
             <FormControl id="price" isRequired>
-              <FormLabel>Price</FormLabel>
-              <Input
-                type="number"
-                onChange={(e) => setPrice(parseInt(e.target.value))}
-              />
+              <FormLabel>Price in ETH</FormLabel>
+              <Input type="number" onChange={(e) => setPrice(e.target.value)} />
             </FormControl>
           </Stack>
         </ModalBody>

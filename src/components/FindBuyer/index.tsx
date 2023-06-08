@@ -64,19 +64,18 @@ export default function FindBuyer() {
     abi,
     functionName: "getMarketPrices",
   }) as any;
-  console.log(selectedBuyer?.buyer);
-  const { config } = usePrepareContractWrite({
-    address: contractAddress,
-    abi,
-    functionName: "sellProduceAtMarketPrice",
-    args: [selectedBuyer?.buyer],
-  });
+
   const {
     write,
     data: sellProduceData,
     isLoading: sellProduceLoading,
     isError,
-  } = useContractWrite({ ...config, onSuccess: onClose });
+  } = useContractWrite({
+    address: contractAddress,
+    abi,
+    functionName: "sellProduceAtMarketPrice",
+    onSuccess: onClose,
+  });
 
   const { isLoading: waitForLoading, isSuccess } = useWaitForTransaction({
     hash: sellProduceData?.hash,
@@ -153,7 +152,13 @@ export default function FindBuyer() {
                     <Button
                       colorScheme="green"
                       mr={3}
-                      onClick={write}
+                      onClick={() => {
+                        if (write) {
+                          write({
+                            args: [selectedBuyer?.buyer],
+                          });
+                        }
+                      }}
                       isLoading={sellProduceLoading}
                     >
                       Confirm Sale

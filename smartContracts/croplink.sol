@@ -115,7 +115,9 @@ contract CropLink {
     ) public {
         require(farmers[msg.sender], "Only registered farmers can add produce");
         uint256 index = produceList[msg.sender].length;
-        produceList[msg.sender].push(Produce(_name, _quantity, _price, false, index, msg.sender));
+        produceList[msg.sender].push(
+            Produce(_name, _quantity, _price, false, index, msg.sender)
+        );
     }
 
     function getFarmers() public view returns (address[] memory) {
@@ -165,7 +167,10 @@ contract CropLink {
         return allPrices;
     }
 
-    function purchaseProduce(address payable _farmer, uint256 _index) public payable {
+    function purchaseProduce(
+        address payable _farmer,
+        uint256 _index
+    ) public payable {
         require(
             buyers[msg.sender],
             "Only registered buyers can purchase produce"
@@ -186,7 +191,10 @@ contract CropLink {
             );
             produce.price = marketPrices[_farmer].price;
         } else {
-            require(msg.value >= produce.price * produce.quantity, "Incorrect amount of funds");
+            require(
+                msg.value >= produce.price * produce.quantity,
+                "Incorrect amount of funds"
+            );
         }
 
         produce.sold = true;
@@ -233,12 +241,13 @@ contract CropLink {
         delete produces[_index];
     }
 
-    function setMarketPrice(uint256 _price) public {
+    function setMarketPrice() public payable {
         require(
             buyers[msg.sender],
             "Only registered buyers can set market price"
         );
-        marketPrices[msg.sender] = MarketPrice(msg.sender, _price);
+
+        marketPrices[msg.sender] = MarketPrice(msg.sender, msg.value);
         marketPriceVerified[msg.sender] = true;
     }
 
@@ -354,15 +363,27 @@ contract CropLink {
 
     function sellProduceAtMarketPrice(address payable _buyer) public {
         Produce[] storage produces = produceList[msg.sender];
+        MarketPrice storage buyerPrice = marketPrices[_buyer];
+
+        uint256 totalCost = 0;
 
         for (uint256 i = 0; i < produces.length; i++) {
             Produce storage produce = produces[i];
 
-            if (!produce.sold) {
-                transferFunds(_buyer, produce.price);
+            if (!produce.sold && produce.price <= buyerPrice.price) {
+                totalCost += produce.price;
+                removeSoldProduce(msg.sender, i);
                 produce.sold = true;
             }
         }
+
+        require(
+            buyerPrice.price >= totalCost,
+            "The buyer doesn't have enough balance to buy the produce"
+        );
+
+        payable(msg.sender).transfer(totalCost);
+        buyerPrice.price -= totalCost;
     }
 
     function transferFunds(
@@ -388,4 +409,3 @@ contract CropLink {
             keccak256(abi.encodePacked("rainy")));
     }
 }
-
