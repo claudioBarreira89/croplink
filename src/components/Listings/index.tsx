@@ -13,6 +13,7 @@ import {
   Button,
   Modal,
   useDisclosure,
+  Text,
 } from "@chakra-ui/react";
 import { FC, useCallback, useState } from "react";
 import { useContractRead } from "wagmi";
@@ -36,7 +37,7 @@ const Listings: FC = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const {
-    data,
+    data: produceListData = [],
     isLoading: isListLoading,
     refetch,
   } = useContractRead({
@@ -45,12 +46,17 @@ const Listings: FC = () => {
     functionName: "getAllProduceList",
   }) as any;
 
+  const [data, adjustment] = produceListData;
+
   const onBuyModalOpen = useCallback(
     (product: Product) => {
-      setSelectedProduct(product);
+      setSelectedProduct({
+        ...product,
+        price: product.price + product.price / adjustment,
+      });
       onOpen();
     },
-    [onOpen]
+    [adjustment, onOpen]
   );
 
   if (isListLoading) return <LoadingPage />;
@@ -85,7 +91,21 @@ const Listings: FC = () => {
                   .map((product: Product, i: number) => (
                     <Tr key={i}>
                       <Th>{product.name}</Th>
-                      <Th>{parseWeiToEth(product.price).toString()}</Th>
+                      <Th>
+                        {parseWeiToEth(
+                          product.price + product.price / adjustment
+                        ).toString()}{" "}
+                        {adjustment > 0 && (
+                          <Text color={"green.400"} as="span">
+                            (+{parseWeiToEth(product.price / adjustment)})
+                          </Text>
+                        )}
+                        {adjustment < 0 && (
+                          <Text color={"red.400"} as="span">
+                            ({parseWeiToEth(product.price / adjustment)})
+                          </Text>
+                        )}
+                      </Th>
                       <Th>{product.quantity.toString()}</Th>
                       <Th>
                         <Button
@@ -104,6 +124,9 @@ const Listings: FC = () => {
               </Tbody>
             </Table>
           </TableContainer>
+          <Text fontSize="xs" color="gray.600" mt={5}>
+            Prices may change due to weather conditions
+          </Text>
         </Sidebar>
       </Container>
 

@@ -10,9 +10,8 @@ import {
   Input,
   ModalFooter,
   Stack,
-  useToast,
+  Select,
 } from "@chakra-ui/react";
-import { ethers } from "ethers";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import { useContractWrite, usePrepareContractWrite } from "wagmi";
 
@@ -64,7 +63,12 @@ const ProductForm: FC<{
           <Stack spacing={3}>
             <FormControl id="product-name" isRequired>
               <FormLabel>Product Name</FormLabel>
-              <Input type="text" onChange={(e) => setName(e.target.value)} />
+
+              <Select onChange={(e) => setName(e.target.value)}>
+                <option></option>
+                <option>Corn</option>
+                <option>Wheat</option>
+              </Select>
             </FormControl>
 
             <FormControl id="product-price" isRequired>

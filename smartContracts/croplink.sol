@@ -4,10 +4,17 @@ pragma solidity ^0.8.0;
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/KeeperCompatibleInterface.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/LinkTokenInterface.sol";
+import "@chainlink/contracts/src/v0.8/ChainlinkClient.sol";
 
-contract CropLink {
+contract CropLink is ChainlinkClient {
+    using Chainlink for Chainlink.Request;
+
+    uint256 private constant ORACLE_PAYMENT = (1 * LINK_DIVISIBILITY) / 10; // 0.1 * 10**18
+
     address payable public treasury;
     uint256 public treasuryBalance;
+
+    int256 public temperature;
 
     struct Produce {
         string name;
@@ -57,10 +64,8 @@ contract CropLink {
     mapping(address => TruflationData) public truflationDataMap;
 
     constructor() {
-        // accuweatherConsumer = new AccuweatherConsumer(
-        //     linkAddress,
-        //     oracleAddress
-        // );
+        setChainlinkToken(0x779877A7B0D9E8603169DdbD7836e478b4624789);
+
         treasury = payable(msg.sender);
         treasuryBalance = 5 ether;
     }
@@ -120,6 +125,16 @@ contract CropLink {
         );
     }
 
+    function adjustPriceByWeather() public view returns (int256) {
+        if (temperature > 50) {
+            return 10;
+        } else if (temperature < 10) {
+            return -10;
+        }
+
+        return 0;
+    }
+
     function getFarmers() public view returns (address[] memory) {
         return farmerAddresses;
     }
@@ -128,7 +143,11 @@ contract CropLink {
         return buyerAddresses;
     }
 
-    function getAllProduceList() public view returns (Produce[] memory) {
+    function getAllProduceList()
+        public
+        view
+        returns (Produce[] memory, int256 priceAdjustment)
+    {
         uint totalProduces = 0;
         for (uint i = 0; i < farmerAddresses.length; i++) {
             totalProduces += produceList[farmerAddresses[i]].length;
@@ -143,14 +162,17 @@ contract CropLink {
             }
         }
 
-        return allProduces;
+        priceAdjustment = this.adjustPriceByWeather();
+        return (allProduces, priceAdjustment);
     }
 
     function getProduceList(
         address _farmer
-    ) public view returns (Produce[] memory) {
+    ) public view returns (Produce[] memory, int256 priceAdjustment) {
         require(farmers[_farmer], "Invalid farmer address");
-        return produceList[_farmer];
+
+        priceAdjustment = this.adjustPriceByWeather();
+        return (produceList[_farmer], priceAdjustment);
     }
 
     function getMarketPrices() public view returns (MarketPrice[] memory) {
@@ -190,11 +212,6 @@ contract CropLink {
                 "Insufficient funds"
             );
             produce.price = marketPrices[_farmer].price;
-        } else {
-            require(
-                msg.value >= produce.price * produce.quantity,
-                "Incorrect amount of funds"
-            );
         }
 
         produce.sold = true;
@@ -252,6 +269,32 @@ contract CropLink {
     }
 
     // Chainlink Integration
+
+    function getLocationWeather(
+        address _oracle,
+        string memory _jobId
+    ) public returns (bytes32 requestId) {
+        Chainlink.Request memory req = buildChainlinkRequest(
+            stringToBytes32(_jobId),
+            address(this),
+            this.fulfillLocationWeather.selector
+        );
+
+        req.add("path", "DailyForecasts,0,Temperature,Maximum,Value");
+
+        return sendChainlinkRequestTo(_oracle, req, ORACLE_PAYMENT);
+    }
+
+    function fulfillLocationWeather(
+        bytes32 _requestId,
+        int256 _temp
+    ) public recordChainlinkFulfillment(_requestId) {
+        temperature = _temp;
+    }
+
+    function getTemperature() public view returns (int256) {
+        return temperature;
+    }
 
     // function updateProduceDemand() public {
     //     bytes32 requestId = requestDemandData();
@@ -382,8 +425,12 @@ contract CropLink {
             "The buyer doesn't have enough balance to buy the produce"
         );
 
-        payable(msg.sender).transfer(totalCost);
-        buyerPrice.price -= totalCost;
+        int256 priceAdjustment = this.adjustPriceByWeather();
+        int256 totalAdjustedPrice = int(totalCost) +
+            (int(totalCost) / priceAdjustment);
+
+        payable(msg.sender).transfer(uint(totalAdjustedPrice));
+        buyerPrice.price -= uint(totalAdjustedPrice);
     }
 
     function transferFunds(
@@ -407,5 +454,19 @@ contract CropLink {
     ) internal pure returns (bool) {
         return (keccak256(abi.encodePacked(_weatherCondition)) ==
             keccak256(abi.encodePacked("rainy")));
+    }
+
+    function stringToBytes32(
+        string memory source
+    ) private pure returns (bytes32 result) {
+        bytes memory tempEmptyStringTest = bytes(source);
+        if (tempEmptyStringTest.length == 0) {
+            return 0x0;
+        }
+
+        assembly {
+            // solhint-disable-line no-inline-assembly
+            result := mload(add(source, 32))
+        }
     }
 }

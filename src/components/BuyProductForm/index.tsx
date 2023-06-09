@@ -12,11 +12,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { FC, useEffect } from "react";
-import {
-  useContractWrite,
-  usePrepareContractWrite,
-  useWaitForTransaction,
-} from "wagmi";
+import { useContractWrite, useWaitForTransaction } from "wagmi";
 
 import { abi, contractAddress } from "../../../constants/croplink";
 
@@ -37,15 +33,12 @@ const BuyProductForm: FC<{
 }> = ({ details, onClose, refetchListings }) => {
   const toast = useToast();
 
-  const { config, error } = usePrepareContractWrite({
+  const { data, write, isLoading, error } = useContractWrite({
     address: contractAddress,
     abi,
     functionName: "purchaseProduce",
     args: [details?.farmer, details?.index],
-    value: (details ? details?.price * details?.quantity : 0) as any,
   });
-
-  const { data, write, isLoading } = useContractWrite(config);
 
   const {
     isLoading: isBuyLoading,
@@ -56,7 +49,8 @@ const BuyProductForm: FC<{
   });
 
   const onBuyProduct = () => {
-    if (write) write();
+    const value = BigInt(details?.price || 0);
+    if (write) write({ value });
   };
 
   useEffect(() => {
@@ -110,17 +104,13 @@ const BuyProductForm: FC<{
             </FormControl>
 
             <FormControl id="product-price">
-              <FormLabel>{`Price: ${parseWeiToEth(details.price)}`}</FormLabel>
+              <FormLabel>{`Price: ${parseWeiToEth(
+                Number(details.price)
+              )}`}</FormLabel>
             </FormControl>
 
             <FormControl id="product-quantity">
               <FormLabel>{`Quantity: ${details.quantity}`}</FormLabel>
-            </FormControl>
-
-            <FormControl id="total">
-              <FormLabel fontWeight="bold">{`Total: ${parseWeiToEth(
-                details.quantity * details.price
-              )} ETH`}</FormLabel>
             </FormControl>
           </Stack>
         </ModalBody>

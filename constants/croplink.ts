@@ -1,10 +1,60 @@
-export const contractAddress = "0x11Be4abd0099d9B9953A3B651eACef7b23FF1c6a";
+export const contractAddress = "0x0c3554Eb26d0E6C69fB2aE705A024f155006c933";
 
 export const abi = [
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: "address",
+        name: "_oracle",
+        type: "address",
+      },
+      {
+        internalType: "string",
+        name: "_jobId",
+        type: "string",
+      },
+    ],
     stateMutability: "nonpayable",
     type: "constructor",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "id",
+        type: "bytes32",
+      },
+    ],
+    name: "ChainlinkCancelled",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "id",
+        type: "bytes32",
+      },
+    ],
+    name: "ChainlinkFulfilled",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "bytes32",
+        name: "id",
+        type: "bytes32",
+      },
+    ],
+    name: "ChainlinkRequested",
+    type: "event",
   },
   {
     inputs: [
@@ -27,6 +77,19 @@ export const abi = [
     name: "addProduce",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "adjustPriceByWeather",
+    outputs: [
+      {
+        internalType: "int256",
+        name: "",
+        type: "int256",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {
@@ -192,6 +255,24 @@ export const abi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "bytes32",
+        name: "_requestId",
+        type: "bytes32",
+      },
+      {
+        internalType: "int256",
+        name: "_temp",
+        type: "int256",
+      },
+    ],
+    name: "fulfillLocationWeather",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "getAllProduceList",
     outputs: [
@@ -232,6 +313,11 @@ export const abi = [
         name: "",
         type: "tuple[]",
       },
+      {
+        internalType: "int256",
+        name: "priceAdjustment",
+        type: "int256",
+      },
     ],
     stateMutability: "view",
     type: "function",
@@ -260,6 +346,19 @@ export const abi = [
       },
     ],
     stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getLocationWeather",
+    outputs: [
+      {
+        internalType: "bytes32",
+        name: "requestId",
+        type: "bytes32",
+      },
+    ],
+    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -333,6 +432,24 @@ export const abi = [
         internalType: "struct CropLink.Produce[]",
         name: "",
         type: "tuple[]",
+      },
+      {
+        internalType: "int256",
+        name: "priceAdjustment",
+        type: "int256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getTemperature",
+    outputs: [
+      {
+        internalType: "int256",
+        name: "",
+        type: "int256",
       },
     ],
     stateMutability: "view",
@@ -480,6 +597,19 @@ export const abi = [
     name: "setMarketPrice",
     outputs: [],
     stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "temperature",
+    outputs: [
+      {
+        internalType: "int256",
+        name: "",
+        type: "int256",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
   {

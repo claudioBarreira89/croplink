@@ -46,7 +46,7 @@ const MyListings: FC = () => {
   const [selectedItem, setSelectedItem] = useState<number | undefined>();
 
   const {
-    data,
+    data: produceListData = [],
     isLoading: isListLoading,
     refetch,
   } = useContractRead({
@@ -55,6 +55,8 @@ const MyListings: FC = () => {
     functionName: address && "getProduceList",
     args: [address],
   }) as any;
+
+  const [data, adjustment] = produceListData;
 
   const { onDeleteItem, deleteLoading } = useDeleteActions(refetch);
 
@@ -123,8 +125,21 @@ const MyListings: FC = () => {
                         {product.name}
                       </Text>
                       <Text fontSize="sm">
-                        Price: {parseWeiToEth(product.price).toString()} ETH -
-                        Stock: {product.quantity.toString()}
+                        Price:{" "}
+                        {parseWeiToEth(
+                          product.price + product.price / adjustment
+                        ).toString()}{" "}
+                        {adjustment > 0 && (
+                          <Text color={"green.400"} as="span">
+                            (+{parseWeiToEth(product.price / adjustment)})
+                          </Text>
+                        )}
+                        {adjustment < 0 && (
+                          <Text color={"red.400"} as="span">
+                            ({parseWeiToEth(product.price / adjustment)})
+                          </Text>
+                        )}{" "}
+                        ETH - Stock: {product.quantity.toString()}
                       </Text>
                     </Box>
 
@@ -153,13 +168,14 @@ const MyListings: FC = () => {
                 ))}
             </VStack>
           </Box>
+          <Text fontSize="xs" color="gray.600">
+            Prices may change due to weather conditions
+          </Text>
         </Sidebar>
       </Container>
-
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ProductForm onClose={onClose} setHash={(hash) => setHash(hash)} />
       </Modal>
-
       <Modal isOpen={isEditOpen} onClose={onEditClose} isCentered>
         <EditProductForm
           details={{

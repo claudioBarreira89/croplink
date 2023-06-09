@@ -1,6 +1,7 @@
-import { Box, ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { AppProps } from "next/app";
+import Head from "next/head";
 import { sepolia } from "viem/chains";
 import { WagmiConfig, configureChains, createConfig } from "wagmi";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
@@ -30,6 +31,10 @@ export default function App({ Component, pageProps }: AppProps) {
     <WagmiConfig config={config}>
       <ChakraProvider>
         <QueryClientProvider client={queryClient}>
+          <Head>
+            <title>Croplink</title>
+          </Head>
+
           <AuthProvider>
             <Layout>
               <Component {...pageProps} />
