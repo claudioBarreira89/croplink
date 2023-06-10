@@ -197,10 +197,6 @@ contract CropLink is ChainlinkClient {
             buyers[msg.sender],
             "Only registered buyers can purchase produce"
         );
-        // require(
-        //     buyerVerifications[msg.sender],
-        //     "Only verified buyers can purchase produce"
-        // );
         Produce[] storage produces = produceList[_farmer];
         require(_index < produces.length, "Invalid produce index");
         Produce storage produce = produces[_index];
@@ -296,52 +292,6 @@ contract CropLink is ChainlinkClient {
         return temperature;
     }
 
-    // function updateProduceDemand() public {
-    //     bytes32 requestId = requestDemandData();
-    //     requestIdToAddress[requestId] = msg.sender;
-    // }
-
-    // function fulfillProduceDemand(
-    //     bytes32 _requestId,
-    //     int256 _demand
-    // ) public recordKeeperAction(_requestId) {
-    //     address farmer = requestIdToAddress[_requestId];
-    //     uint256 index = requestIdToIndex[_requestId];
-
-    //     require(farmers[farmer], "Invalid farmer address");
-
-    //     Produce[] storage produces = produceList[farmer];
-    //     require(index < produces.length, "Invalid produce index");
-    //     Produce storage produce = produces[index];
-    //     require(!produce.sold, "Produce has already been sold");
-
-    //     require(_demand > 0, "Invalid demand value");
-    //     produce.quantity = uint256(_demand);
-    // }
-
-    // function updateProduceSupply() public {
-    //     bytes32 requestId = requestSupplyData();
-    //     requestIdToAddress[requestId] = msg.sender;
-    // }
-
-    // function fulfillProduceSupply(
-    //     bytes32 _requestId,
-    //     int256 _supply
-    // ) public recordKeeperAction(_requestId) {
-    //     address farmer = requestIdToAddress[_requestId];
-    //     uint256 index = requestIdToIndex[_requestId];
-
-    //     require(farmers[farmer], "Invalid farmer address");
-
-    //     Produce[] storage produces = produceList[farmer];
-    //     require(index < produces.length, "Invalid produce index");
-    //     Produce storage produce = produces[index];
-    //     require(!produce.sold, "Produce has already been sold");
-
-    //     require(_supply > 0, "Invalid supply value");
-    //     produce.quantity = uint256(_supply);
-    // }
-
     function calculateAdjustedPrice(
         address _farmer,
         uint256 _index
@@ -351,58 +301,6 @@ contract CropLink is ChainlinkClient {
         uint256 adjustedPrice = (originalPrice * truflationRate) / 100; // Adjust the price based on the truflation rate
         return adjustedPrice;
     }
-
-    // Treasury Functions
-
-    // function updateTruflationData() public {
-    //     bytes32 requestId = requestTruflationData();
-    //     requestIdToAddress[requestId] = msg.sender;
-    // }
-
-    // function fulfillTruflationData(
-    //     bytes32 _requestId,
-    //     int256 _truflation
-    // ) public recordKeeperAction(_requestId) {
-    //     address farmer = requestIdToAddress[_requestId];
-
-    //     require(farmers[farmer], "Invalid farmer address");
-
-    //     TruflationData storage truflationData = requestIdToTruflationData[
-    //         _requestId
-    //     ];
-    //     truflationData.truflationRate = uint256(_truflation);
-
-    //     // Process Truflation data
-    //     // ...
-    // }
-
-    // Selling Produce at Market Price
-
-    // function checkWeather() public {
-    //     bytes32 requestId = requestWeatherData();
-    //     requestIdToAddress[requestId] = msg.sender;
-    // }
-
-    // function fulfillWeather(
-    //     bytes32 _requestId,
-    //     string memory _weatherCondition
-    // ) public recordKeeperAction(_requestId) {
-    //     address buyer = requestIdToAddress[_requestId];
-
-    //     require(buyers[buyer], "Invalid buyer address");
-    //     require(
-    //         buyerVerifications[buyer],
-    //         "Only verified buyers can purchase produce"
-    //     );
-
-    //     WeatherData storage weatherData = requestIdToWeatherData[_requestId];
-    //     weatherData.weatherCondition = _weatherCondition;
-    //     weatherData.isRainy = isRainy(_weatherCondition);
-
-    //     if (weatherData.isRainy) {
-    //         sellProduceAtMarketPrice(buyer);
-    //     }
-    // }
 
     function sellProduceAtMarketPrice(address payable _buyer) public {
         Produce[] storage produces = produceList[msg.sender];
@@ -448,13 +346,6 @@ contract CropLink is ChainlinkClient {
     }
 
     // Helper Functions
-
-    function isRainy(
-        string memory _weatherCondition
-    ) internal pure returns (bool) {
-        return (keccak256(abi.encodePacked(_weatherCondition)) ==
-            keccak256(abi.encodePacked("rainy")));
-    }
 
     function stringToBytes32(
         string memory source
