@@ -3,7 +3,7 @@ export const REGISTER = "/register";
 export const MY_LISTINGS = "/my-listings";
 export const LISTINGS = "/listings";
 export const FIND_BUYER = "/find-buyer";
-export const PRICE_FEEDS = "/price-feeds";
+export const DEMAND_FEEDS = "/demand-feeds";
 export const BENEFITS = "/benefits";
 export const FIND_FARMERS = "/find-farmers";
 export const MARKET_PRICES = "/market-prices";
@@ -18,7 +18,7 @@ const farmerPaths = [
     ...privatePaths,
     MY_LISTINGS,
     FIND_BUYER,
-    PRICE_FEEDS,
+    DEMAND_FEEDS,
     BENEFITS,
   ]),
 ];
@@ -29,6 +29,7 @@ const buyerPaths = [
     ...privatePaths,
     LISTINGS,
     FIND_FARMERS,
+    DEMAND_FEEDS,
     MARKET_PRICES,
   ]),
 ];

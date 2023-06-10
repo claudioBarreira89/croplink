@@ -93,6 +93,27 @@ router.post("/users/", validateProperty("id"), async (req: any, res: any) => {
   }
 });
 
+router.get("/demandData/", async (req: any, res: any) => {
+  const body = { id: 0, data: { year: "2023" } };
+  const options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  };
+
+  try {
+    const response = await fetch(
+      "https://xitzbn1spc.execute-api.us-east-1.amazonaws.com/default/croplink-ea-2",
+      options
+    );
+    const data = await response.json();
+    res.status(200).json(data);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ "Error occurred": error });
+  }
+});
+
 router.put(
   "/users/:id",
   validateRequestBodyUser,

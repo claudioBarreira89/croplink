@@ -24,7 +24,7 @@ import {
   LISTINGS,
   MARKET_PRICES,
   MY_LISTINGS,
-  PRICE_FEEDS,
+  DEMAND_FEEDS,
 } from "../../../constants/paths";
 
 import {
@@ -75,7 +75,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       ? [
           { name: "My listings", icon: FiList, link: MY_LISTINGS },
           { name: "Find buyer", icon: GiReceiveMoney, link: FIND_BUYER },
-          { name: "Price feeds", icon: FiDollarSign, link: PRICE_FEEDS },
+          { name: "Demand feeds", icon: FiDollarSign, link: DEMAND_FEEDS },
           { name: "Benefits", icon: HiOutlineEmojiHappy, link: BENEFITS },
         ]
       : []),
@@ -83,6 +83,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       ? [
           { name: "Listings", icon: FiList, link: LISTINGS },
           { name: "Find farmer", icon: GiReceiveMoney, link: FIND_FARMERS },
+          { name: "Demand feeds", icon: FiDollarSign, link: DEMAND_FEEDS },
           { name: "Market prices", icon: FiTrendingUp, link: MARKET_PRICES },
         ]
       : []),
