@@ -16,6 +16,10 @@ import React, { FC, useCallback, useEffect, useState } from "react";
 import { useContractWrite, usePrepareContractWrite } from "wagmi";
 
 import { abi, contractAddress } from "../../../constants/croplink";
+import {
+  supportedCommodities,
+  type SupportedCommodityType,
+} from "../../../constants/supportedCommodities";
 
 import { parseEthToWei } from "@/utils/parseProductPrice";
 
@@ -64,10 +68,17 @@ const ProductForm: FC<{
             <FormControl id="product-name" isRequired>
               <FormLabel>Product Name</FormLabel>
 
-              <Select onChange={(e) => setName(e.target.value)}>
-                <option></option>
-                <option>Corn</option>
-                <option>Wheat</option>
+              <Select
+                placeholder="Select crop"
+                onChange={(e) => setName(e.target.value)}
+              >
+                {supportedCommodities.map(
+                  (commodity: SupportedCommodityType, idx: number) => (
+                    <option key={idx} value={commodity.commodityName}>
+                      {commodity.commodityName}
+                    </option>
+                  )
+                )}
               </Select>
             </FormControl>
 
