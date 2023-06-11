@@ -1,4 +1,11 @@
-import { Box, Container, Flex, Heading, Select } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  Flex,
+  Heading,
+  Select,
+  useToast,
+} from "@chakra-ui/react";
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -49,7 +56,7 @@ const MyChart = ({ rawData, idx }: { rawData: CropType[]; idx: number }) => {
     datasets: [
       {
         fill: {
-          target: "origin", // 3. Set the fill options
+          target: "origin",
           above: "rgba(72, 187, 120, 0.3)",
         },
         backgroundColor: "rgb(72, 187, 120)",
@@ -85,17 +92,36 @@ const MyChart = ({ rawData, idx }: { rawData: CropType[]; idx: number }) => {
 };
 
 const fetchDemandData = async () => {
-  const response = await fetch("api/ddb/demandData");
-  const data = await response.json();
-  return data;
+  try {
+    const response = await fetch("api/ddb/demandData");
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    } else {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    console.error("Error occurred while fetching demand data:", error);
+  }
 };
 
 export default function DemandFeeds() {
   const [data, setData] = useState<any>([]);
   const [currCropDataIdx, setCurrCropDataIdx] = useState<number>(0);
+  const toast = useToast();
 
   useEffect(() => {
-    fetchDemandData().then((data) => setData(data.data));
+    fetchDemandData()
+      .then((data) => setData(data.data))
+      .catch(() => {
+        toast({
+          title: "Error fetching demand data",
+          status: "error",
+          duration: 10000,
+          isClosable: true,
+        });
+      });
   }, []);
 
   if (!data || !data.length) return null;
