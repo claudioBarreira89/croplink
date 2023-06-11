@@ -8,6 +8,7 @@ import {
   PointElement,
   Title,
   Tooltip,
+  Filler,
 } from "chart.js";
 import { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
@@ -19,7 +20,8 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 );
 
 import Sidebar from "../Sidebar";
@@ -40,9 +42,26 @@ type CropType = {
 const MyChart = ({ rawData, idx }: { rawData: CropType[]; idx: number }) => {
   if (!rawData || !rawData.length) return null;
 
+  const currCropData = rawData[idx].data;
+
   const data = {
-    labels: [],
-    datasets: [{ data: [] }],
+    labels: currCropData.map((d) => d.date),
+    datasets: [
+      {
+        fill: {
+          target: "origin", // 3. Set the fill options
+          above: "rgba(72, 187, 120, 0.3)",
+        },
+        backgroundColor: "rgb(72, 187, 120)",
+        borderColor: "rgb(72, 187, 120)",
+        pointRadius: 4,
+        pointHoverBorderWidth: 4,
+        tension: 0.4,
+        pointHoverBackgroundColor: "rgb(72, 187, 120)",
+        pointHoverBorderColor: "rgb(72, 187, 120)",
+        data: currCropData.map((d) => d.grossNewSales),
+      },
+    ],
   };
 
   const options = {
@@ -61,15 +80,6 @@ const MyChart = ({ rawData, idx }: { rawData: CropType[]; idx: number }) => {
       },
     },
   } as any;
-
-  const currCropData = rawData[idx].data;
-
-  for (let i = 0; i < currCropData.length; i++) {
-    const d = currCropData[i];
-    let { date, grossNewSales } = d;
-    data.labels.push(date as never);
-    data.datasets[0].data.push(grossNewSales as never);
-  }
 
   return <Line data={data} options={options}></Line>;
 };
@@ -103,6 +113,7 @@ export default function DemandFeeds() {
               <Heading size="lg">Demand feeds</Heading>
             </Flex>
             <Select
+              focusBorderColor="rgb(226, 232, 240)"
               size="sm"
               value={currCropDataIdx}
               onChange={(e) => setCurrCropDataIdx(Number(e.target.value))}
@@ -120,6 +131,7 @@ export default function DemandFeeds() {
               <Flex
                 flexDir="column"
                 color="gray"
+                fontWeight={700}
                 fontSize="md"
                 marginBottom="10"
               >
