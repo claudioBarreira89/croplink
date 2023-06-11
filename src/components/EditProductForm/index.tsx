@@ -13,6 +13,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { FC, useCallback, useEffect, useState } from "react";
+import { useDebounce } from "usehooks-ts";
 import {
   useContractWrite,
   usePrepareContractWrite,
@@ -31,13 +32,20 @@ const EditProductForm: FC<{
   const [name, setName] = useState<string>(details.name);
   const [price, setPrice] = useState<string>(parseWeiToEth(details.price));
   const [quantity, setQuantity] = useState<number>(details.quantity);
+  const debouncedPrice = useDebounce(price, 500);
+  const debouncedQuantity = useDebounce(quantity, 500);
   const toast = useToast();
 
   const { config } = usePrepareContractWrite({
     address: contractAddress,
     abi,
     functionName: "editProduce",
-    args: [details.index, name, quantity, parseEthToWei(Number(price))],
+    args: [
+      details.index,
+      name,
+      debouncedQuantity,
+      parseEthToWei(Number(debouncedPrice)),
+    ],
   });
 
   const { data, write, isLoading } = useContractWrite(config);
