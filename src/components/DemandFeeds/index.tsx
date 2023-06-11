@@ -1,4 +1,4 @@
-import { Box, Container, Flex, Heading, Select, Text } from "@chakra-ui/react";
+import { Box, Container, Flex, Heading, Select } from "@chakra-ui/react";
 import {
   CategoryScale,
   Chart as ChartJS,
@@ -64,7 +64,7 @@ const MyChart = ({ rawData, idx }: { rawData: CropType[]; idx: number }) => {
 
   const currCropData = rawData[idx].data;
 
-  for (let i = currCropData.length - 1; i >= 0; i--) {
+  for (let i = 0; i < currCropData.length; i++) {
     const d = currCropData[i];
     let { date, grossNewSales } = d;
     data.labels.push(date as never);
@@ -87,6 +87,8 @@ export default function DemandFeeds() {
   useEffect(() => {
     fetchDemandData().then((data) => setData(data.data));
   }, []);
+
+  if (!data || !data.length) return null;
 
   return (
     <Box mt="10">
@@ -115,9 +117,15 @@ export default function DemandFeeds() {
             </Select>
 
             <Flex p="3%" flexDir="column" overflow="auto" minHeight="100vh">
-              <Text color="gray" fontSize="md" marginBottom="3">
-                {`Gross New Sales, Metric Tones`}
-              </Text>
+              <Flex
+                flexDir="column"
+                color="gray"
+                fontSize="md"
+                marginBottom="10"
+              >
+                Gross New Sales,
+                <Flex>Metric Tones</Flex>
+              </Flex>
               <MyChart rawData={data} idx={currCropDataIdx} />
             </Flex>
           </Box>
