@@ -107,7 +107,7 @@ router.get("/demandData/", async (req: any, res: any) => {
       options
     );
     const data = await response.json();
-    res.status(200).json(data);
+    res.status(data.statusCode ? data.statusCode : 200).json(data);
   } catch (error) {
     console.error(error);
     res.status(500).json({ "Error occurred": error });

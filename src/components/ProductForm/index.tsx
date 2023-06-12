@@ -13,6 +13,7 @@ import {
   Select,
 } from "@chakra-ui/react";
 import React, { FC, useCallback, useEffect, useState } from "react";
+import { useDebounce } from "usehooks-ts";
 import { useContractWrite, usePrepareContractWrite } from "wagmi";
 
 import { abi, contractAddress } from "../../../constants/croplink";
@@ -30,12 +31,14 @@ const ProductForm: FC<{
   const [name, setName] = useState<string>("");
   const [price, setPrice] = useState<number>(0);
   const [quantity, setQuantity] = useState<number>(0);
+  const debouncedPrice = useDebounce(price, 500);
+  const debouncedQuantity = useDebounce(quantity, 500);
 
   const { config } = usePrepareContractWrite({
     address: contractAddress,
     abi,
     functionName: "addProduce",
-    args: [name, quantity, parseEthToWei(price)],
+    args: [name, debouncedQuantity, parseEthToWei(debouncedPrice)],
   });
 
   const { data, write, isLoading } = useContractWrite({
